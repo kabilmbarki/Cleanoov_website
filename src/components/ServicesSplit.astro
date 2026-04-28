@@ -1,0 +1,81 @@
+---
+// Deux services côte-à-côte, asymétrique, éditorial
+const services = [
+  {
+    eyebrow: "01",
+    title: "Nettoyage",
+    image: "/imgs/robot_brush_3.jpg",
+    points: [
+      "Restitution complète du rendement",
+      "Diagnostic thermique et optique",
+      "Dosage intelligent de l'eau",
+    ],
+    href: "/services#nettoyage",
+  },
+  {
+    eyebrow: "02",
+    title: "Installation",
+    image: "/imgs/supervision_panneaux_8.jpg",
+    points: [
+      "Étude de site et dimensionnement",
+      "Pose résidentielle et industrielle",
+      "Mise en service et reporting",
+    ],
+    href: "/services#installation",
+  },
+];
+---
+
+<section id="services" class="py-24 lg:py-32 bg-cream-warm">
+  <div class="container-wide">
+    <div class="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-6 mb-16">
+      <div class="reveal">
+        <p class="eyebrow">Nos services</p>
+        <h2 class="mt-4 max-w-2xl">
+          Deux savoir-faire, <span class="italic text-ocre">une seule exigence</span>.
+        </h2>
+      </div>
+      <a href="/services" class="reveal btn-ghost text-sm font-medium">
+        Voir le détail des services →
+      </a>
+    </div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-px bg-ink/10">
+      {
+        services.map((s) => (
+          <article class="bg-cream group reveal">
+            <a href={s.href} class="block">
+              <div class="relative aspect-[4/3] overflow-hidden bg-sand">
+                <img
+                  src={s.image}
+                  alt={s.title}
+                  class="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
+                  loading="lazy"
+                />
+              </div>
+              <div class="p-8 lg:p-12">
+                <div class="flex items-baseline gap-4">
+                  <span class="font-display text-sm text-ocre">{s.eyebrow}</span>
+                  <h3 class="font-display text-2xl lg:text-3xl text-ink">
+                    {s.title}
+                  </h3>
+                </div>
+                <ul class="mt-6 space-y-3">
+                  {s.points.map((p) => (
+                    <li class="flex items-start gap-3 text-ink-soft">
+                      <span class="mt-2 inline-block w-2 h-px bg-ocre flex-shrink-0" />
+                      <span>{p}</span>
+                    </li>
+                  ))}
+                </ul>
+                <span class="mt-8 inline-block text-sm font-medium text-ink group-hover:text-ocre transition-colors">
+                  En savoir plus →
+                </span>
+              </div>
+            </a>
+          </article>
+        ))
+      }
+    </div>
+  </div>
+</section>

@@ -1,0 +1,82 @@
+---
+const year = new Date().getFullYear();
+
+const cols = [
+  {
+    title: "Services",
+    links: [
+      { href: "/services#nettoyage", label: "Nettoyage" },
+      { href: "/services#installation", label: "Installation" },
+      { href: "/services#maintenance", label: "Maintenance" },
+    ],
+  },
+  {
+    title: "Entreprise",
+    links: [
+      { href: "/#a-propos", label: "À propos" },
+      { href: "/#innovation", label: "Innovation & R&D" },
+      { href: "/#realisations", label: "Réalisations" },
+    ],
+  },
+  {
+    title: "Contact",
+    links: [
+      { href: "/contact", label: "Demander un devis" },
+      { href: "mailto:contact@cleanoov.com", label: "contact@cleanoov.com" },
+      { href: "tel:+216000000000", label: "+216 00 000 000" },
+    ],
+  },
+];
+---
+
+<footer class="bg-ink text-cream/80 mt-32">
+  <div class="container-wide py-20">
+    <div class="grid grid-cols-1 md:grid-cols-12 gap-12 md:gap-8">
+      <div class="md:col-span-4">
+        <a href="/" class="inline-flex items-center gap-2 group">
+          <span class="font-display text-3xl text-cream">
+            Cleanoov<span class="text-ocre">.</span>
+          </span>
+        </a>
+        <p class="mt-6 text-sm leading-relaxed text-cream/70 max-w-xs">
+          Énergie solaire, performance durable.
+          Tunisie · depuis 20XX.
+        </p>
+      </div>
+
+      <div class="md:col-span-8 grid grid-cols-1 sm:grid-cols-3 gap-10">
+        {
+          cols.map((col) => (
+            <div>
+              <h4 class="text-xs font-medium uppercase tracking-[0.18em] text-cream font-body">
+                {col.title}
+              </h4>
+              <ul class="mt-5 space-y-3">
+                {col.links.map((l) => (
+                  <li>
+                    <a
+                      href={l.href}
+                      class="text-sm text-cream/70 hover:text-ocre transition-colors"
+                    >
+                      {l.label}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+
+    <div
+      class="mt-16 pt-8 border-t border-cream/10 flex flex-col md:flex-row gap-4 md:items-center md:justify-between text-xs text-cream/50"
+    >
+      <p>© {year} Cleanoov. Tous droits réservés.</p>
+      <div class="flex gap-5">
+        <a href="/mentions-legales" class="hover:text-cream">Mentions légales</a>
+        <a href="/confidentialite" class="hover:text-cream">Confidentialité</a>
+      </div>
+    </div>
+  </div>
+</footer>

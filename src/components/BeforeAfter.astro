@@ -1,0 +1,123 @@
+---
+// Slider Avant / Après — drag handle, plein cadre
+const before = "/imgs/fond_hero_5.jpg";
+const after = "/imgs/fond_hero_6.jpg";
+const caption = "Centrale industrielle, Sfax — 2024";
+---
+
+<section class="py-24 lg:py-32 bg-ink text-cream">
+  <div class="container-wide">
+    <div class="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-6 mb-12">
+      <div class="reveal">
+        <p class="eyebrow text-cream/60">Démonstration</p>
+        <h2 class="mt-4 text-cream max-w-xl">
+          Avant / <span class="italic text-ocre">après</span>.
+        </h2>
+      </div>
+      <p class="text-cream/70 max-w-md reveal">
+        Glissez la poignée pour comparer. Effet immédiat sur la production
+        après une opération de nettoyage.
+      </p>
+    </div>
+
+    <figure
+      class="relative w-full aspect-[16/9] overflow-hidden rounded-sm select-none reveal"
+      data-ba-root
+    >
+      <img
+        src={after}
+        alt="Après nettoyage"
+        class="absolute inset-0 h-full w-full object-cover"
+        draggable="false"
+      />
+      <div
+        class="absolute inset-0 overflow-hidden"
+        data-ba-clip
+        style="clip-path: inset(0 50% 0 0);"
+      >
+        <img
+          src={before}
+          alt="Avant nettoyage"
+          class="absolute inset-0 h-full w-full object-cover"
+          draggable="false"
+        />
+      </div>
+
+      <span class="absolute top-4 left-4 px-3 py-1.5 text-xs font-medium uppercase tracking-wider bg-ink/70 text-cream rounded-full backdrop-blur">
+        Avant
+      </span>
+      <span class="absolute top-4 right-4 px-3 py-1.5 text-xs font-medium uppercase tracking-wider bg-cream/90 text-ink rounded-full backdrop-blur">
+        Après
+      </span>
+
+      <div
+        class="absolute top-0 bottom-0 w-px bg-cream/90 pointer-events-none"
+        data-ba-line
+        style="left: 50%;"
+      ></div>
+      <button
+        type="button"
+        aria-label="Faire glisser pour comparer"
+        class="absolute top-1/2 -translate-y-1/2 -translate-x-1/2 w-12 h-12 rounded-full bg-cream text-ink shadow-lg flex items-center justify-center cursor-ew-resize touch-none"
+        data-ba-handle
+        style="left: 50%;"
+      >
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+          <path d="M7 4L3 10l4 6M13 4l4 6-4 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </button>
+
+      <figcaption class="absolute bottom-4 left-4 right-4 text-xs text-cream/70 text-center">
+        {caption}
+      </figcaption>
+    </figure>
+  </div>
+</section>
+
+<script>
+  document.querySelectorAll<HTMLElement>("[data-ba-root]").forEach((root) => {
+    const clip = root.querySelector<HTMLElement>("[data-ba-clip]");
+    const line = root.querySelector<HTMLElement>("[data-ba-line]");
+    const handle = root.querySelector<HTMLElement>("[data-ba-handle]");
+    if (!clip || !line || !handle) return;
+
+    let isDown = false;
+
+    const setPos = (x: number) => {
+      const rect = root.getBoundingClientRect();
+      const pct = Math.max(0, Math.min(100, ((x - rect.left) / rect.width) * 100));
+      clip.style.clipPath = `inset(0 ${100 - pct}% 0 0)`;
+      line.style.left = `${pct}%`;
+      handle.style.left = `${pct}%`;
+    };
+
+    const onMove = (e: PointerEvent) => {
+      if (!isDown) return;
+      setPos(e.clientX);
+    };
+    const onDown = (e: PointerEvent) => {
+      isDown = true;
+      handle.setPointerCapture(e.pointerId);
+      setPos(e.clientX);
+    };
+    const onUp = () => {
+      isDown = false;
+    };
+
+    handle.addEventListener("pointerdown", onDown);
+    handle.addEventListener("pointermove", onMove);
+    handle.addEventListener("pointerup", onUp);
+    handle.addEventListener("pointercancel", onUp);
+
+    // also allow dragging by clicking anywhere on the figure
+    root.addEventListener("pointerdown", (e) => {
+      if (e.target === handle) return;
+      isDown = true;
+      setPos(e.clientX);
+    });
+    window.addEventListener("pointermove", (e) => {
+      if (isDown) setPos(e.clientX);
+    });
+    window.addEventListener("pointerup", onUp);
+  });
+</script>
