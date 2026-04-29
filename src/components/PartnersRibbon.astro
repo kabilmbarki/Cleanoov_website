@@ -1,53 +1,98 @@
 ---
-// Institutional partners — white-tile ribbon over dark background.
+// Institutional partners — auto-scrolling horizontal marquee.
+// Logos are wrapped in light tiles and the track is duplicated for a
+// seamless infinite loop. Hover pauses the animation.
+
 const partners = [
-  { src: "/imgs/partenaires/anme.png",            name: "ANME · Agence Nationale Maîtrise Énergie" },
-  { src: "/imgs/partenaires/min-formation.png",   name: "Ministère de la Formation Professionnelle" },
-  { src: "/imgs/partenaires/api.png",             name: "API · Agence de Promotion de l'Industrie" },
-  { src: "/imgs/partenaires/startup-tunisia.png", name: "Startup Tunisia" },
-  { src: "/imgs/partenaires/iptic.svg",           name: "Programme iptic" },
+  { src: "/imgs/partners/anme.jpg",                  name: "ANME · Agence Nationale Maîtrise de l'Énergie" },
+  { src: "/imgs/partners/api.jpg",                   name: "API · Agence de Promotion de l'Industrie & l'Innovation" },
+  { src: "/imgs/partners/ministere-formation-pro.png", name: "Ministère de la Formation Professionnelle & l'Emploi" },
+  { src: "/imgs/partners/iptic.jpg",                 name: "Programme iptic" },
+  { src: "/imgs/partners/startup-tunisia.png",       name: "Startup Tunisia" },
+  { src: "/imgs/partners/fondation-tunisie.svg",     name: "Fondation Tunisie pour le Développement" },
+  { src: "/imgs/partners/peak-sun-energy.jpg",       name: "Peak Sun Energy" },
 ];
+
+// duplicate the list so the loop is seamless
+const loop = [...partners, ...partners];
 ---
 
-<section class="relative py-24 lg:py-28 border-y border-line">
+<section class="relative py-20 lg:py-24 border-y border-line overflow-hidden">
   <div
     class="absolute inset-0 grid-bg grid-bg-fade opacity-[0.04] pointer-events-none"
     aria-hidden="true"
   ></div>
 
-  <div class="container-wide relative">
-    <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-14">
+  <div class="container-wide relative mb-10 lg:mb-12">
+    <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-6">
       <div class="reveal max-w-2xl">
         <p class="eyebrow">Soutenu par</p>
-        <h2 class="mt-6 text-3xl lg:text-4xl">
-          Des <span class="gradient-leaf italic">institutions</span> qui valident notre démarche.
+        <h2 class="mt-6 text-3xl lg:text-4xl" style="text-wrap: balance;">
+          Des <span class="gradient-leaf italic font-semibold">institutions</span> qui valident notre démarche.
         </h2>
       </div>
-      <p class="text-ink-muted text-sm font-mono uppercase tracking-[0.16em] reveal">
-        5 partenaires · publics & privés
+      <p class="flex items-center gap-3 text-ink-muted text-sm font-mono uppercase tracking-[0.16em] reveal">
+        <span class="block w-6 h-px bg-leaf"></span>
+        {partners.length} partenaires · publics &amp; privés
       </p>
     </div>
+  </div>
 
-    <ul class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4 lg:gap-5">
-      {
-        partners.map((p) => (
-          <li class="reveal">
-            <div class="aspect-[5/3] rounded-xl bg-ink/[0.02] border border-line hover:border-line-strong transition-colors flex items-center justify-center p-6 group">
-              <div class="w-full h-full bg-ink/[0.96] rounded-lg flex items-center justify-center p-5 transition-all group-hover:bg-ink">
+  <!-- Marquee track -->
+  <div class="relative" data-marquee>
+    <!-- edge fades -->
+    <div
+      class="pointer-events-none absolute inset-y-0 left-0 w-16 sm:w-24 lg:w-32 z-10 bg-gradient-to-r from-bg to-transparent"
+      aria-hidden="true"
+    ></div>
+    <div
+      class="pointer-events-none absolute inset-y-0 right-0 w-16 sm:w-24 lg:w-32 z-10 bg-gradient-to-l from-bg to-transparent"
+      aria-hidden="true"
+    ></div>
+
+    <div class="overflow-hidden">
+      <ul
+        class="marquee-track flex items-center gap-4 sm:gap-5 lg:gap-6 w-max"
+        aria-label={`${partners.length} partenaires`}
+      >
+        {
+          loop.map((p, i) => (
+            <li class="shrink-0" aria-hidden={i >= partners.length}>
+              <div class="group h-20 sm:h-24 lg:h-28 w-[160px] sm:w-[200px] lg:w-[230px] rounded-xl bg-white border border-line hover:border-leaf/40 transition-colors flex items-center justify-center px-5 sm:px-6 lg:px-7 shadow-[0_8px_28px_-14px_rgba(10,26,18,0.18)]">
                 <img
                   src={p.src}
                   alt={p.name}
-                  class="max-h-full max-w-full object-contain opacity-90 group-hover:opacity-100 transition-opacity"
+                  class="max-h-full max-w-full object-contain transition-transform duration-500 group-hover:scale-[1.04]"
                   loading="lazy"
+                  draggable="false"
                 />
               </div>
-            </div>
-            <p class="mt-3 text-[0.72rem] text-ink-muted font-mono uppercase tracking-[0.14em] text-center">
-              {p.name}
-            </p>
-          </li>
-        ))
-      }
-    </ul>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
   </div>
 </section>
+
+<style>
+  .marquee-track {
+    animation: marquee-scroll 40s linear infinite;
+    will-change: transform;
+  }
+
+  [data-marquee]:hover .marquee-track {
+    animation-play-state: paused;
+  }
+
+  @keyframes marquee-scroll {
+    from { transform: translateX(0); }
+    to   { transform: translateX(-50%); }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .marquee-track {
+      animation: none;
+    }
+  }
+</style>

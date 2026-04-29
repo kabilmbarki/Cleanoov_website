@@ -2,7 +2,7 @@ import { defineConfig } from 'astro/config';
 import tailwindcss from '@tailwindcss/vite';
 
 export default defineConfig({
-  site: 'https://cleanoov.com',
+  site: 'https://cleanoov.tn',
   vite: {
     plugins: [tailwindcss()],
   },

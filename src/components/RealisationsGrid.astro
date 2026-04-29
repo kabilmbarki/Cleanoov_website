@@ -1,78 +1,162 @@
 ---
-// Real chantier gallery — asymmetric mosaic with real Cleanoov photos.
-// Layout: 2 columns on tablet, 6-col bento on desktop.
+// Bento mosaic of real chantier photos + 1 featured YouTube video card.
+// Mobile: 1 column, consistent 4/3 aspect.
+// Tablet: 2 columns.
+// Desktop (lg+): 12-col bento with mixed spans + tall hero + featured video.
 
-const items = [
+type Accent = "solar" | "leaf" | "neutral";
+
+type PhotoItem = {
+  kind: "photo";
+  image: string;
+  title: string;
+  location: string;
+  type: string;
+  accent: Accent;
+  span: string;
+};
+
+type VideoItem = {
+  kind: "video";
+  videoId: string;
+  videoUrl: string;
+  title: string;
+  caption: string;
+  type: string;
+  accent: Accent;
+  span: string;
+};
+
+type Item = PhotoItem | VideoItem;
+
+const items: Item[] = [
   {
-    image: "/imgs/chantiers/chantier-jawhara.jpg",
-    title: "Centrale Jawhara",
-    location: "Sousse · Tunisie",
-    type: "Nettoyage",
-    span: "lg:col-span-3 lg:row-span-2",
-    ratio: "aspect-[4/5]",
+    kind: "photo",
+    image: "/imgs/chantiers/chantier-05.jpg",
+    title: "Centrale en Sahel",
+    location: "Sahel tunisien · 2025",
+    type: "Nettoyage robotisé",
+    accent: "leaf",
+    // Hero — tall portrait on lg (5 cols × 2 rows)
+    span: "lg:col-span-5 lg:row-span-2",
   },
   {
-    image: "/imgs/chantiers/chantier-01.jpg",
-    title: "Toiture industrielle",
-    location: "Sfax · 2025",
-    type: "Maintenance",
-    span: "lg:col-span-3",
-    ratio: "aspect-[16/10]",
-  },
-  {
-    image: "/imgs/chantiers/chantier-toit.jpg",
-    title: "Centrale en toiture",
-    location: "Tunis · 2025",
-    type: "Installation",
-    span: "lg:col-span-3",
-    ratio: "aspect-[16/10]",
-  },
-  {
+    kind: "photo",
     image: "/imgs/chantiers/chantier-02.jpg",
-    title: "Audit & inspection",
-    location: "Béjà · 2025",
-    type: "Diagnostic",
-    span: "lg:col-span-2",
-    ratio: "aspect-[4/5]",
+    title: "Toiture industrielle plein soleil",
+    location: "Béjà · 2024",
+    type: "Maintenance",
+    accent: "leaf",
+    span: "lg:col-span-7",
   },
   {
-    image: "/imgs/chantiers/chantier-pres.jpg",
-    title: "Présentation site",
-    location: "Tunisie",
-    type: "Mission",
-    span: "lg:col-span-2",
-    ratio: "aspect-[4/5]",
-  },
-  {
-    image: "/imgs/chantiers/chantier-sousse.jpg",
-    title: "Mission Sousse",
-    location: "Sousse · 2025",
+    kind: "photo",
+    image: "/imgs/chantiers/chantier-01.jpg",
+    title: "Intervention au crépuscule",
+    location: "Tunis · 2025",
     type: "Nettoyage",
-    span: "lg:col-span-2",
-    ratio: "aspect-[4/5]",
+    accent: "neutral",
+    span: "lg:col-span-4",
   },
   {
+    kind: "photo",
     image: "/imgs/chantiers/chantier-04.jpg",
-    title: "Centrale industrielle",
-    location: "Tunisie",
-    type: "Installation",
+    title: "Site résidentiel urbain",
+    location: "Sousse · 2025",
+    type: "Maintenance",
+    accent: "neutral",
     span: "lg:col-span-3",
-    ratio: "aspect-[16/10]",
   },
   {
-    image: "/imgs/chantiers/chantier-detail.jpg",
-    title: "Détail technique",
+    kind: "video",
+    videoId: "Arjrj2yZd0c",
+    videoUrl: "https://www.youtube.com/watch?v=Arjrj2yZd0c",
+    title: "Une mission, en vidéo",
+    caption: "Voir le chantier en action sur YouTube",
+    type: "Vidéo · YouTube",
+    accent: "leaf",
+    span: "lg:col-span-7",
+  },
+  {
+    kind: "photo",
+    image: "/imgs/chantiers/chantier-06.jpg",
+    title: "Toiture résidentielle",
+    location: "Monastir · 2024",
+    type: "Nettoyage",
+    accent: "leaf",
+    span: "lg:col-span-5",
+  },
+  {
+    kind: "photo",
+    image: "/imgs/chantiers/chantier-03.jpg",
+    title: "Outil rotatif — détail",
     location: "Atelier Cleanoov",
     type: "R&D",
-    span: "lg:col-span-3",
-    ratio: "aspect-[16/10]",
+    accent: "solar",
+    span: "lg:col-span-4",
+  },
+  {
+    kind: "photo",
+    image: "/imgs/chantiers/chantier-toit.jpg",
+    title: "Diagnostic thermique IR",
+    location: "Audit terrain",
+    type: "Audit",
+    accent: "solar",
+    span: "lg:col-span-4",
+  },
+  {
+    kind: "photo",
+    image: "/imgs/chantiers/chantier-detail.jpg",
+    title: "Robot autonome — banc d'essai",
+    location: "Sud tunisien · 2025",
+    type: "Innovation",
+    accent: "solar",
+    span: "lg:col-span-4",
   },
 ];
+
+const photoItems = items.filter((it): it is PhotoItem => it.kind === "photo");
+const videoItems = items.filter((it): it is VideoItem => it.kind === "video");
+const cities = new Set(
+  photoItems
+    .map((it) => it.location.split("·")[0].trim())
+    .filter((c) => !["Atelier Cleanoov", "Audit terrain"].includes(c))
+);
+
+// VideoObject schema for any embedded YouTube video — improves Google video search ranking.
+const videoSchemas = videoItems.map((v) => ({
+  "@context": "https://schema.org",
+  "@type": "VideoObject",
+  name: `${v.title} — Cleanoov`,
+  description:
+    "Vidéo terrain d'un chantier Cleanoov en Tunisie — nettoyage et maintenance de panneaux photovoltaïques par notre équipe.",
+  thumbnailUrl: [
+    `https://img.youtube.com/vi/${v.videoId}/maxresdefault.jpg`,
+    `https://img.youtube.com/vi/${v.videoId}/hqdefault.jpg`,
+  ],
+  contentUrl: v.videoUrl,
+  embedUrl: `https://www.youtube.com/embed/${v.videoId}`,
+  uploadDate: "2025-01-01",
+  publisher: {
+    "@type": "Organization",
+    name: "Cleanoov",
+    logo: {
+      "@type": "ImageObject",
+      url: "https://cleanoov.tn/imgs/brand/logo.png",
+    },
+  },
+}));
 ---
 
-<section id="realisations" class="relative py-28 lg:py-36">
-  <div class="container-wide">
-    <div class="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-6 mb-14 lg:mb-20">
+<section id="realisations" class="relative py-20 md:py-28 lg:py-36 overflow-hidden">
+  <!-- subtle decorative wash -->
+  <div
+    class="absolute inset-0 bg-[radial-gradient(900px_500px_at_85%_10%,rgba(43,182,115,0.06),transparent_60%)] pointer-events-none"
+    aria-hidden="true"
+  ></div>
+
+  <div class="container-wide relative">
+    <header class="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-8 mb-12 lg:mb-16">
       <div class="reveal max-w-2xl">
         <p class="eyebrow">Réalisations · Terrain</p>
         <h2 class="mt-6" style="text-wrap: balance;">
@@ -80,48 +164,118 @@ const items = [
           partout en Tunisie.
         </h2>
       </div>
-      <p class="text-ink-soft max-w-md reveal">
-        Quelques chantiers récents — sites industriels, toitures, parcs au sol.
-        Audit, installation ou maintenance.
-      </p>
-    </div>
+      <div class="reveal lg:max-w-md">
+        <p class="text-ink-soft text-[0.95rem] lg:text-base leading-relaxed">
+          Toitures résidentielles, sites industriels, parcs au sol — chaque
+          mission combine audit, intervention et reporting de production.
+        </p>
+        <p class="mt-5 flex items-center gap-3 font-mono text-[0.7rem] uppercase tracking-[0.18em] text-ink-muted">
+          <span class="block w-6 h-px bg-leaf"></span>
+          {photoItems.length} missions · {cities.size} villes · 2024 — 2025
+        </p>
+      </div>
+    </header>
 
-    <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4 lg:gap-5">
+    <div
+      class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-3 sm:gap-4 lg:gap-5 lg:auto-rows-[200px] xl:auto-rows-[230px]"
+    >
       {
-        items.map((it) => (
-          <article
-            class:list={[
-              "reveal group relative overflow-hidden rounded-xl border border-line bg-surface",
-              it.span,
-              it.ratio,
-            ]}
-          >
-            <img
-              src={it.image}
-              alt={`${it.title} — ${it.location}`}
-              class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-[1.04]"
-              loading="lazy"
-            />
-            <div
-              class="absolute inset-0 bg-[linear-gradient(180deg,rgba(7,9,13,0.0)_30%,rgba(7,9,13,0.85)_100%)] opacity-90 transition-opacity duration-500 group-hover:opacity-100"
-              aria-hidden="true"
-            />
+        items.map((it) =>
+          it.kind === "photo" ? (
+            <article
+              class:list={[
+                "reveal group relative overflow-hidden rounded-xl lg:rounded-2xl border border-line bg-surface",
+                "aspect-[4/3] md:aspect-[4/3] lg:aspect-auto lg:h-full",
+                it.span,
+              ]}
+            >
+              <img
+                src={it.image}
+                alt={`${it.title} — ${it.location} — Cleanoov, nettoyage de panneaux solaires en Tunisie`}
+                class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-[1.04]"
+                loading="lazy"
+              />
+              <div
+                class="absolute inset-0 bg-[linear-gradient(180deg,rgba(7,9,13,0.05)_0%,rgba(7,9,13,0.15)_45%,rgba(7,9,13,0.85)_100%)] opacity-95 group-hover:opacity-100 transition-opacity duration-500"
+                aria-hidden="true"
+              />
+              <span
+                class:list={[
+                  "absolute top-3 left-3 sm:top-4 sm:left-4 chip text-[0.6rem] sm:text-[0.65rem] py-1 px-2.5",
+                  it.accent === "solar" && "chip-solar",
+                  it.accent === "leaf" && "chip-leaf",
+                ]}
+              >
+                {it.type}
+              </span>
+              <div class="absolute bottom-0 left-0 right-0 p-4 sm:p-5 lg:p-5">
+                <h3 class="font-display text-base sm:text-lg lg:text-[1.1rem] xl:text-[1.2rem] text-ink leading-tight">
+                  {it.title}
+                </h3>
+                <p class="mt-1.5 font-mono text-[0.65rem] sm:text-[0.7rem] uppercase tracking-[0.16em] text-ink-muted">
+                  {it.location}
+                </p>
+              </div>
+            </article>
+          ) : (
+            <a
+              href={it.videoUrl}
+              target="_blank"
+              rel="noopener"
+              aria-label={`${it.title} — vidéo YouTube`}
+              class:list={[
+                "reveal group relative overflow-hidden rounded-xl lg:rounded-2xl border border-leaf/40 block",
+                "aspect-[4/3] md:aspect-[4/3] lg:aspect-auto lg:h-full",
+                it.span,
+              ]}
+            >
+              <img
+                src={`https://img.youtube.com/vi/${it.videoId}/maxresdefault.jpg`}
+                onerror={`this.onerror=null;this.src='https://img.youtube.com/vi/${it.videoId}/hqdefault.jpg';`}
+                alt={`${it.title} — vidéo YouTube d'un chantier Cleanoov`}
+                class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-[1.04]"
+                loading="lazy"
+              />
+              <div
+                class="absolute inset-0 bg-[linear-gradient(180deg,rgba(7,18,13,0.10)_0%,rgba(7,18,13,0.30)_45%,rgba(7,18,13,0.92)_100%)] transition-opacity duration-500 group-hover:opacity-90"
+                aria-hidden="true"
+              />
 
-            <span class="absolute top-4 left-4 chip">
-              {it.type}
-            </span>
+              <!-- Play button overlay -->
+              <div class="absolute inset-0 flex items-center justify-center pointer-events-none">
+                <span
+                  class="relative w-16 h-16 sm:w-20 sm:h-20 lg:w-24 lg:h-24 rounded-full bg-leaf/95 group-hover:bg-leaf-bright shadow-[0_0_0_8px_rgba(43,182,115,0.18),0_0_0_18px_rgba(43,182,115,0.10)] transition-all duration-300 flex items-center justify-center"
+                  aria-hidden="true"
+                >
+                  <svg width="22" height="22" viewBox="0 0 22 22" fill="white" class="ml-1">
+                    <path d="M5 3l14 8-14 8V3z"/>
+                  </svg>
+                </span>
+              </div>
 
-            <div class="absolute bottom-0 left-0 right-0 p-5 lg:p-6">
-              <h3 class="font-display text-lg lg:text-xl text-ink leading-tight">
-                {it.title}
-              </h3>
-              <p class="mt-1 font-mono text-[0.7rem] uppercase tracking-[0.16em] text-ink-muted">
-                {it.location}
-              </p>
-            </div>
-          </article>
-        ))
+              <span class="absolute top-3 left-3 sm:top-4 sm:left-4 chip chip-leaf text-[0.6rem] sm:text-[0.65rem] py-1 px-2.5">
+                {it.type}
+              </span>
+
+              <div class="absolute bottom-0 left-0 right-0 p-4 sm:p-5 lg:p-5">
+                <h3 class="font-display text-base sm:text-lg lg:text-[1.1rem] xl:text-[1.2rem] text-white leading-tight">
+                  {it.title}
+                </h3>
+                <p class="mt-1.5 flex items-center gap-2 font-mono text-[0.65rem] sm:text-[0.7rem] uppercase tracking-[0.16em] text-white/70">
+                  <svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                    <path d="M23 7.4s-.2-1.6-.9-2.3c-.9-.9-1.8-.9-2.3-1C16.4 3.7 12 3.7 12 3.7s-4.4 0-7.8.4c-.5.1-1.4.1-2.3 1C1.2 5.8 1 7.4 1 7.4S.7 9.3.7 11.2v1.6c0 1.9.3 3.8.3 3.8s.2 1.6.9 2.3c.9.9 2.1.9 2.6 1 1.9.2 8 .3 8 .3s4.4 0 7.8-.4c.5-.1 1.4-.1 2.3-1 .7-.7.9-2.3.9-2.3s.3-1.9.3-3.8v-1.6c0-1.9-.3-3.7-.3-3.7zM9.7 14.9V8.7l5.7 3.1-5.7 3.1z"/>
+                  </svg>
+                  {it.caption}
+                </p>
+              </div>
+            </a>
+          )
+        )
       }
     </div>
   </div>
+
+  {videoSchemas.map((s) => (
+    <script type="application/ld+json" set:html={JSON.stringify(s)} />
+  ))}
 </section>

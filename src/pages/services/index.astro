@@ -7,48 +7,63 @@ const services = [
     id: "nettoyage",
     eyebrow: "Service · 01",
     title: "Nettoyage de panneaux",
-    image: "/imgs/chantiers/chantier-detail.jpg",
+    image: "/imgs/chantiers/chantier-02.jpg",
     intro:
-      "Le sable, la poussière et les fientes peuvent réduire le rendement d'une installation jusqu'à 25 %. Notre intervention restaure la production et prolonge la durée de vie des panneaux.",
+      "Le sable, la poussière et les fientes peuvent réduire le rendement d'une centrale jusqu'à 25 %. Notre intervention restaure la production et prolonge la durée de vie des modules.",
     method: [
-      { n: "01", title: "Audit & diagnostic", text: "Inspection visuelle et thermique, évaluation du soiling, mesure des pertes." },
-      { n: "02", title: "Plan d'intervention", text: "Sélection de la méthode (à sec, eau dosée, robotisée selon le site) et planning." },
+      { n: "01", title: "Audit initial", text: "Inspection visuelle, évaluation du soiling, mesure des pertes de production." },
+      { n: "02", title: "Plan d'intervention", text: "Sélection de la méthode (à sec, eau dosée, brossage robotisé selon le site) et planning." },
       { n: "03", title: "Opération sur site", text: "Équipe qualifiée, matériel dédié, eau déminéralisée à dosage maîtrisé." },
       { n: "04", title: "Reporting", text: "Rapport photo + courbe de rendement avant/après et recommandations de maintenance." },
     ],
   },
   {
-    id: "installation",
+    id: "diagnostic",
     eyebrow: "Service · 02",
-    title: "Installation photovoltaïque",
+    title: "Diagnostic technique",
     image: "/imgs/chantiers/chantier-toit.jpg",
     intro:
-      "De l'étude à la mise en service, nous concevons et installons des systèmes adaptés à votre site, en toiture industrielle, sur ombrière ou au sol.",
+      "Avant d'agir, on mesure. Imagerie thermique infrarouge, inspection optique, analyse des courbes de production : on identifie précisément où votre installation perd du rendement.",
     method: [
-      { n: "01", title: "Étude de site", text: "Visite technique, analyse d'ensoleillement, dimensionnement précis selon vos besoins." },
-      { n: "02", title: "Conception", text: "Plans, schémas électriques, choix des composants (modules, onduleurs, structure)." },
-      { n: "03", title: "Pose", text: "Installation par notre équipe certifiée, dans le respect des normes en vigueur." },
-      { n: "04", title: "Mise en service & suivi", text: "Tests, raccordement, formation utilisateur, monitoring de production." },
+      { n: "01", title: "Visite de site", text: "Reconnaissance complète, prise de mesures, conditions d'exploitation et historique de production." },
+      { n: "02", title: "Imagerie IR & optique", text: "Caméra thermique pour repérer hot-spots et modules défaillants ; inspection visuelle haute résolution." },
+      { n: "03", title: "Analyse", text: "Corrélation des images, des mesures électriques et des données de monitoring pour quantifier les pertes." },
+      { n: "04", title: "Rapport & recommandations", text: "Document détaillé avec priorisation des actions correctives — nettoyage, remplacement, ajustement." },
+    ],
+  },
+  {
+    id: "maintenance",
+    eyebrow: "Service · 03",
+    title: "Maintenance & diagnostic préventif",
+    image: "/imgs/chantiers/chantier-06.jpg",
+    intro:
+      "Sécuriser le rendement dans la durée. Contrats annuels avec visites planifiées, diagnostic préventif et alertes anticipées — pour anticiper les pannes plutôt que les subir.",
+    method: [
+      { n: "01", title: "Convention annuelle", text: "Cadre clair : périmètre, fréquence des visites, indicateurs suivis, niveau de service garanti." },
+      { n: "02", title: "Calendrier d'interventions", text: "Visites planifiées selon les saisons critiques (sirocco, fientes, post-pluies) et profil du site." },
+      { n: "03", title: "Détection précoce", text: "Diagnostic préventif à chaque passage : on repère les dégradations avant qu'elles n'affectent la production." },
+      { n: "04", title: "Suivi de production", text: "Reporting périodique et alertes — vous gardez la visibilité sur la performance de votre actif." },
     ],
   },
 ];
 ---
 
 <BaseLayout
-  title="Services — Nettoyage et installation photovoltaïque | Cleanoov"
-  description="Deux savoir-faire complémentaires : nettoyage et installation de panneaux solaires pour industriels et collectivités en Tunisie."
+  title="Nettoyage, diagnostic et maintenance de panneaux solaires en Tunisie | Cleanoov"
+  description="Cleanoov, jeune startup tunisienne d'innovation solaire. Nettoyage robotisé, diagnostic thermique infrarouge et maintenance préventive de centrales photovoltaïques. Tunis, Sousse, Monastir, Sfax, Béjà — restaurez jusqu'à +25 % de rendement."
 >
   <!-- Hero page -->
   <section class="pt-16 lg:pt-24 pb-12 border-b border-line">
     <div class="container-wide">
       <p class="eyebrow reveal">Nos services</p>
       <h1 class="mt-8 max-w-4xl reveal" style="text-wrap: balance;">
-        Du chantier neuf à la maintenance,
+        Du diagnostic au suivi long-terme,
         <span class="gradient-solar italic font-semibold">une expertise complète</span>.
       </h1>
       <p class="mt-8 max-w-2xl text-lg text-ink-soft reveal">
-        Cleanoov accompagne ses clients sur l'ensemble du cycle de vie d'une installation
-        solaire, avec une exigence d'ingénierie et un ancrage local fort.
+        Cleanoov accompagne ses clients sur l'ensemble du cycle de vie d'une centrale
+        solaire — nettoyage, diagnostic et maintenance préventive — avec une exigence
+        d'ingénierie et un ancrage local fort.
       </p>
     </div>
   </section>
@@ -112,6 +127,6 @@ const services = [
 
   <CtaBanner
     title="Un site, un besoin précis ? Parlons-en."
-    subtitle="Chaque installation est unique. Décrivez-nous votre contexte, nous revenons vers vous avec une proposition adaptée."
+    subtitle="Chaque centrale est unique. Décrivez-nous votre contexte, nous revenons vers vous avec une proposition adaptée."
   />
 </BaseLayout>

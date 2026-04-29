@@ -18,29 +18,43 @@ const path = Astro.url.pathname;
   id="site-header"
   class:list={[
     "fixed top-0 left-0 right-0 z-40 transition-[background-color,backdrop-filter,padding,border-color] duration-300 py-5 lg:py-6 border-b border-transparent",
+    transparent && "dark-section",
   ]}
   data-transparent={transparent ? "true" : "false"}
 >
-  <div class="container-wide flex items-center justify-between gap-6">
-    <a href="/" class="flex items-center gap-3 group" aria-label="Cleanoov — Accueil">
+  <div class="container-wide flex items-center justify-between gap-4">
+    <a href="/" class="flex items-center gap-3 group shrink-0" aria-label="Cleanoov — Accueil">
+      <!-- Light logo (white) — used when header sits over the dark hero -->
       <img
         src="/imgs/brand/logo-dark.png"
         alt="Cleanoov"
-        class="h-9 lg:h-10 w-auto select-none transition-opacity group-hover:opacity-80"
-        width="500"
-        height="500"
+        class="logo-light h-6 sm:h-7 lg:h-8 w-auto select-none transition-opacity group-hover:opacity-80"
+        width="484"
+        height="90"
+        decoding="async"
+      />
+      <!-- Dark logo — used when header is solid on light backgrounds -->
+      <img
+        src="/imgs/brand/logo.png"
+        alt="Cleanoov"
+        class="logo-dark hidden h-6 sm:h-7 lg:h-8 w-auto select-none transition-opacity group-hover:opacity-80"
+        width="484"
+        height="90"
         decoding="async"
       />
     </a>
 
-    <nav class="hidden lg:flex items-center gap-9" aria-label="Navigation principale">
+    <nav
+      class="hidden md:flex items-center gap-5 lg:gap-9"
+      aria-label="Navigation principale"
+    >
       {
         links.map((l) => (
           <a
             href={l.href}
             class:list={[
-              "text-[0.85rem] font-medium tracking-wide transition-colors",
-              path === l.href ? "text-solar" : "text-ink-soft hover:text-ink",
+              "text-[0.78rem] lg:text-[0.85rem] font-medium tracking-wide transition-colors whitespace-nowrap",
+              path === l.href ? "text-leaf" : "text-ink-soft hover:text-ink",
             ]}
           >
             {l.label}
@@ -49,13 +63,16 @@ const path = Astro.url.pathname;
       }
     </nav>
 
-    <div class="flex items-center gap-3">
-      <a href="/contact" class="hidden sm:inline-flex btn btn-primary text-sm py-2.5 px-5">
+    <div class="flex items-center gap-3 shrink-0">
+      <a
+        href="/contact"
+        class="hidden md:inline-flex btn btn-primary text-[0.8rem] lg:text-sm py-2 lg:py-2.5 px-4 lg:px-5"
+      >
         Devis
       </a>
       <button
         type="button"
-        class="lg:hidden inline-flex flex-col items-center justify-center w-11 h-11 rounded-full border border-line-strong bg-bg-elev/70 backdrop-blur"
+        class="md:hidden inline-flex flex-col items-center justify-center w-10 h-10 rounded-full border border-line-strong bg-bg-elev/70 backdrop-blur"
         aria-label="Menu"
         aria-expanded="false"
         data-mobile-toggle
@@ -67,7 +84,7 @@ const path = Astro.url.pathname;
   </div>
 
   <div
-    class="lg:hidden hidden border-t border-line bg-bg-elev/95 backdrop-blur-xl"
+    class="md:hidden hidden border-t border-line bg-bg-elev/95 backdrop-blur-xl"
     data-mobile-menu
   >
     <nav class="container-wide py-6 flex flex-col gap-1" aria-label="Navigation mobile">
@@ -75,7 +92,7 @@ const path = Astro.url.pathname;
         links.map((l) => (
           <a
             href={l.href}
-            class="block py-3 text-base font-medium text-ink-soft border-b border-line last:border-0 hover:text-solar"
+            class="block py-3 text-base font-medium text-ink-soft border-b border-line last:border-0 hover:text-leaf"
           >
             {l.label}
           </a>
@@ -92,6 +109,7 @@ const path = Astro.url.pathname;
 
 <script>
   const header = document.getElementById("site-header");
+  const transparent = header?.dataset.transparent === "true";
   const SOLID = [
     "bg-bg-elev/85",
     "backdrop-blur-xl",
@@ -100,14 +118,34 @@ const path = Astro.url.pathname;
     "border-line",
   ];
   const AIRY = ["py-5", "lg:py-6"];
+
+  const setLogo = (showLight: boolean) => {
+    const light = header?.querySelector<HTMLImageElement>(".logo-light");
+    const dark = header?.querySelector<HTMLImageElement>(".logo-dark");
+    if (!light || !dark) return;
+    light.classList.toggle("hidden", !showLight);
+    dark.classList.toggle("hidden", showLight);
+  };
+
+  // Non-transparent pages always show dark logo (light header on light page)
+  if (!transparent) setLogo(false);
+
   const onScroll = () => {
     if (!header) return;
-    if (window.scrollY > 24) {
+    const scrolled = window.scrollY > 24;
+    if (scrolled) {
       header.classList.add(...SOLID);
       header.classList.remove(...AIRY);
+      // When scrolled the header is on a light surface — disable dark-section override
+      if (transparent) header.classList.remove("dark-section");
+      setLogo(false);
     } else {
       header.classList.remove(...SOLID);
       header.classList.add(...AIRY);
+      if (transparent) {
+        header.classList.add("dark-section");
+        setLogo(true);
+      }
     }
   };
   window.addEventListener("scroll", onScroll, { passive: true });

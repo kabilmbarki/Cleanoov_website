@@ -6,17 +6,23 @@ import InnovationBlock from "../components/InnovationBlock.astro";
 import PublicationsCarousel from "../components/PublicationsCarousel.astro";
 import RealisationsGrid from "../components/RealisationsGrid.astro";
 import ServicesSplit from "../components/ServicesSplit.astro";
+import FaqSection from "../components/FaqSection.astro";
 import PartnersRibbon from "../components/PartnersRibbon.astro";
 import CtaBanner from "../components/CtaBanner.astro";
 ---
 
-<BaseLayout transparentHeader={true}>
+<BaseLayout
+  title="Cleanoov — Jeune startup tunisienne d'innovation solaire | Nettoyage panneaux photovoltaïques"
+  description="Cleanoov, jeune startup tunisienne d'innovation solaire, lauréate iptic et ctama. Nettoyage, diagnostic et maintenance préventive de panneaux photovoltaïques pour restaurer jusqu'à 25 % du rendement de votre centrale solaire en Tunisie."
+  transparentHeader={true}
+>
   <Hero />
   <MissionStatement />
   <InnovationBlock />
   <PublicationsCarousel />
   <RealisationsGrid />
   <ServicesSplit />
+  <FaqSection />
   <PartnersRibbon />
   <CtaBanner />
 </BaseLayout>
