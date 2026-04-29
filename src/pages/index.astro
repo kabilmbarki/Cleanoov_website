@@ -2,23 +2,21 @@
 import BaseLayout from "../layouts/BaseLayout.astro";
 import Hero from "../components/Hero.astro";
 import MissionStatement from "../components/MissionStatement.astro";
-import ServicesSplit from "../components/ServicesSplit.astro";
-import RealisationsGrid from "../components/RealisationsGrid.astro";
-import BeforeAfter from "../components/BeforeAfter.astro";
 import InnovationBlock from "../components/InnovationBlock.astro";
-import CoverageMap from "../components/CoverageMap.astro";
-import RoiTeaser from "../components/RoiTeaser.astro";
+import PublicationsCarousel from "../components/PublicationsCarousel.astro";
+import RealisationsGrid from "../components/RealisationsGrid.astro";
+import ServicesSplit from "../components/ServicesSplit.astro";
+import PartnersRibbon from "../components/PartnersRibbon.astro";
 import CtaBanner from "../components/CtaBanner.astro";
 ---
 
-<BaseLayout>
+<BaseLayout transparentHeader={true}>
   <Hero />
   <MissionStatement />
-  <ServicesSplit />
-  <RealisationsGrid />
-  <BeforeAfter />
   <InnovationBlock />
-  <CoverageMap />
-  <RoiTeaser />
+  <PublicationsCarousel />
+  <RealisationsGrid />
+  <ServicesSplit />
+  <PartnersRibbon />
   <CtaBanner />
 </BaseLayout>

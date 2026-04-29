@@ -1,72 +1,123 @@
 ---
-// Réalisations vedettes — placeholders sourcés à remplacer par CMS plus tard
-const projects = [
+// Real chantier gallery — asymmetric mosaic with real Cleanoov photos.
+// Layout: 2 columns on tablet, 6-col bento on desktop.
+
+const items = [
   {
-    image: "/imgs/supervision_panneaux_3.png",
-    location: "Sfax",
-    year: "2024",
-    type: "Installation",
-    size: "450 kWc",
-    title: "Toiture industrielle",
-  },
-  {
-    image: "/imgs/robot_brush_9.webp",
-    location: "Tozeur",
-    year: "2024",
+    image: "/imgs/chantiers/chantier-jawhara.jpg",
+    title: "Centrale Jawhara",
+    location: "Sousse · Tunisie",
     type: "Nettoyage",
-    size: "1,2 MW",
-    title: "Centrale au sol",
+    span: "lg:col-span-3 lg:row-span-2",
+    ratio: "aspect-[4/5]",
   },
   {
-    image: "/imgs/supervision_panneaux_6.png",
-    location: "Gabès",
-    year: "2025",
+    image: "/imgs/chantiers/chantier-01.jpg",
+    title: "Toiture industrielle",
+    location: "Sfax · 2025",
+    type: "Maintenance",
+    span: "lg:col-span-3",
+    ratio: "aspect-[16/10]",
+  },
+  {
+    image: "/imgs/chantiers/chantier-toit.jpg",
+    title: "Centrale en toiture",
+    location: "Tunis · 2025",
     type: "Installation",
-    size: "2,5 MW",
-    title: "Parc photovoltaïque",
+    span: "lg:col-span-3",
+    ratio: "aspect-[16/10]",
+  },
+  {
+    image: "/imgs/chantiers/chantier-02.jpg",
+    title: "Audit & inspection",
+    location: "Béjà · 2025",
+    type: "Diagnostic",
+    span: "lg:col-span-2",
+    ratio: "aspect-[4/5]",
+  },
+  {
+    image: "/imgs/chantiers/chantier-pres.jpg",
+    title: "Présentation site",
+    location: "Tunisie",
+    type: "Mission",
+    span: "lg:col-span-2",
+    ratio: "aspect-[4/5]",
+  },
+  {
+    image: "/imgs/chantiers/chantier-sousse.jpg",
+    title: "Mission Sousse",
+    location: "Sousse · 2025",
+    type: "Nettoyage",
+    span: "lg:col-span-2",
+    ratio: "aspect-[4/5]",
+  },
+  {
+    image: "/imgs/chantiers/chantier-04.jpg",
+    title: "Centrale industrielle",
+    location: "Tunisie",
+    type: "Installation",
+    span: "lg:col-span-3",
+    ratio: "aspect-[16/10]",
+  },
+  {
+    image: "/imgs/chantiers/chantier-detail.jpg",
+    title: "Détail technique",
+    location: "Atelier Cleanoov",
+    type: "R&D",
+    span: "lg:col-span-3",
+    ratio: "aspect-[16/10]",
   },
 ];
 ---
 
-<section id="realisations" class="py-24 lg:py-32">
+<section id="realisations" class="relative py-28 lg:py-36">
   <div class="container-wide">
-    <div class="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-6 mb-16">
-      <div class="reveal">
-        <p class="eyebrow">Sélection de projets</p>
-        <h2 class="mt-4 max-w-xl">
-          <span class="italic text-ocre">Réalisations</span> sur le terrain.
+    <div class="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-6 mb-14 lg:mb-20">
+      <div class="reveal max-w-2xl">
+        <p class="eyebrow">Réalisations · Terrain</p>
+        <h2 class="mt-6" style="text-wrap: balance;">
+          <span class="gradient-leaf italic font-semibold">Sur le terrain</span>,
+          partout en Tunisie.
         </h2>
       </div>
       <p class="text-ink-soft max-w-md reveal">
-        Une partie de nos chantiers récents — étude, pose ou maintenance, partout en Tunisie.
+        Quelques chantiers récents — sites industriels, toitures, parcs au sol.
+        Audit, installation ou maintenance.
       </p>
     </div>
 
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 lg:gap-10">
+    <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4 lg:gap-5">
       {
-        projects.map((p) => (
-          <article class="reveal group">
-            <div class="relative aspect-[4/5] overflow-hidden bg-sand">
-              <img
-                src={p.image}
-                alt={`${p.title} — ${p.location}`}
-                class="h-full w-full object-cover transition-transform duration-700 group-hover:scale-[1.03]"
-                loading="lazy"
-              />
-              <span class="absolute top-4 left-4 inline-flex items-center px-3 py-1.5 text-xs font-medium uppercase tracking-wider bg-cream text-ink rounded-full">
-                {p.type}
-              </span>
-            </div>
-            <div class="mt-5 flex items-start justify-between gap-4">
-              <div>
-                <h3 class="font-display text-xl text-ink">{p.title}</h3>
-                <p class="mt-1 text-sm text-graphite">
-                  {p.location} · {p.year}
-                </p>
-              </div>
-              <span class="font-display text-lg text-ocre whitespace-nowrap">
-                {p.size}
-              </span>
+        items.map((it) => (
+          <article
+            class:list={[
+              "reveal group relative overflow-hidden rounded-xl border border-line bg-surface",
+              it.span,
+              it.ratio,
+            ]}
+          >
+            <img
+              src={it.image}
+              alt={`${it.title} — ${it.location}`}
+              class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-[1.04]"
+              loading="lazy"
+            />
+            <div
+              class="absolute inset-0 bg-[linear-gradient(180deg,rgba(7,9,13,0.0)_30%,rgba(7,9,13,0.85)_100%)] opacity-90 transition-opacity duration-500 group-hover:opacity-100"
+              aria-hidden="true"
+            />
+
+            <span class="absolute top-4 left-4 chip">
+              {it.type}
+            </span>
+
+            <div class="absolute bottom-0 left-0 right-0 p-5 lg:p-6">
+              <h3 class="font-display text-lg lg:text-xl text-ink leading-tight">
+                {it.title}
+              </h3>
+              <p class="mt-1 font-mono text-[0.7rem] uppercase tracking-[0.16em] text-ink-muted">
+                {it.location}
+              </p>
             </div>
           </article>
         ))

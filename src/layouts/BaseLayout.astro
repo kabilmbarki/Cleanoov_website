@@ -7,12 +7,15 @@ interface Props {
   title?: string;
   description?: string;
   image?: string;
+  /** When true, the page renders a full-bleed hero behind the header (no top padding) */
+  transparentHeader?: boolean;
 }
 
 const {
-  title = "Cleanoov — Énergie solaire, performance durable",
-  description = "Cleanoov accompagne industriels et collectivités tunisiennes dans le nettoyage et l'installation de panneaux photovoltaïques. Rigueur d'ingénierie, expertise du terrain.",
-  image = "/imgs/hero_background.png",
+  title = "Cleanoov — Innovation solaire tunisienne",
+  description = "Cleanoov, jeune startup tunisienne lauréate iptic et ctama, conçoit des solutions de nettoyage et d'installation photovoltaïque pour accélérer la transition énergétique.",
+  image = "/imgs/chantiers/chantier-01.jpg",
+  transparentHeader = false,
 } = Astro.props;
 
 const canonical = new URL(Astro.url.pathname, Astro.site).toString();
@@ -24,7 +27,7 @@ const canonical = new URL(Astro.url.pathname, Astro.site).toString();
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="generator" content={Astro.generator} />
-    <link rel="icon" type="image/png" href="/imgs/logo.png" />
+    <link rel="icon" type="image/png" href="/imgs/brand/logo.png" />
 
     <title>{title}</title>
     <meta name="description" content={description} />
@@ -38,25 +41,25 @@ const canonical = new URL(Astro.url.pathname, Astro.site).toString();
     <meta property="og:url" content={canonical} />
     <meta property="og:locale" content="fr_FR" />
 
-    <!-- Fonts -->
+    <!-- Fonts: Space Grotesk (display) + Inter (body) + JetBrains Mono (mono accents) -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Inter:wght@400;500;600&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&family=Space+Grotesk:wght@400;500;600;700&display=swap"
       rel="stylesheet"
     />
 
-    <meta name="theme-color" content="#f7f4ee" />
+    <meta name="theme-color" content="#07090d" />
   </head>
-  <body class="min-h-screen bg-cream text-ink antialiased">
+  <body class="min-h-screen bg-bg text-ink antialiased">
     <a
       href="#main"
-      class="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-50 focus:bg-ink focus:text-cream focus:px-4 focus:py-2 focus:rounded-full"
+      class="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-50 focus:bg-solar focus:text-bg focus:px-4 focus:py-2 focus:rounded-full"
     >
       Aller au contenu
     </a>
 
-    <Header />
+    <Header transparent={transparentHeader} />
 
     <main id="main">
       <slot />
@@ -65,7 +68,6 @@ const canonical = new URL(Astro.url.pathname, Astro.site).toString();
     <Footer />
 
     <script>
-      // Discreet scroll reveal — only triggers once
       const reveal = () => {
         const els = document.querySelectorAll<HTMLElement>(".reveal");
         if (!("IntersectionObserver" in window)) {

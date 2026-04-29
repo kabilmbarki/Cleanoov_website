@@ -1,0 +1,53 @@
+---
+// Institutional partners — white-tile ribbon over dark background.
+const partners = [
+  { src: "/imgs/partenaires/anme.png",            name: "ANME · Agence Nationale Maîtrise Énergie" },
+  { src: "/imgs/partenaires/min-formation.png",   name: "Ministère de la Formation Professionnelle" },
+  { src: "/imgs/partenaires/api.png",             name: "API · Agence de Promotion de l'Industrie" },
+  { src: "/imgs/partenaires/startup-tunisia.png", name: "Startup Tunisia" },
+  { src: "/imgs/partenaires/iptic.svg",           name: "Programme iptic" },
+];
+---
+
+<section class="relative py-24 lg:py-28 border-y border-line">
+  <div
+    class="absolute inset-0 grid-bg grid-bg-fade opacity-[0.04] pointer-events-none"
+    aria-hidden="true"
+  ></div>
+
+  <div class="container-wide relative">
+    <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-14">
+      <div class="reveal max-w-2xl">
+        <p class="eyebrow">Soutenu par</p>
+        <h2 class="mt-6 text-3xl lg:text-4xl">
+          Des <span class="gradient-leaf italic">institutions</span> qui valident notre démarche.
+        </h2>
+      </div>
+      <p class="text-ink-muted text-sm font-mono uppercase tracking-[0.16em] reveal">
+        5 partenaires · publics & privés
+      </p>
+    </div>
+
+    <ul class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4 lg:gap-5">
+      {
+        partners.map((p) => (
+          <li class="reveal">
+            <div class="aspect-[5/3] rounded-xl bg-ink/[0.02] border border-line hover:border-line-strong transition-colors flex items-center justify-center p-6 group">
+              <div class="w-full h-full bg-ink/[0.96] rounded-lg flex items-center justify-center p-5 transition-all group-hover:bg-ink">
+                <img
+                  src={p.src}
+                  alt={p.name}
+                  class="max-h-full max-w-full object-contain opacity-90 group-hover:opacity-100 transition-opacity"
+                  loading="lazy"
+                />
+              </div>
+            </div>
+            <p class="mt-3 text-[0.72rem] text-ink-muted font-mono uppercase tracking-[0.14em] text-center">
+              {p.name}
+            </p>
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+</section>

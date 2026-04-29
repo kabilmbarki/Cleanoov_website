@@ -1,0 +1,187 @@
+---
+// Horizontal scroll-snap carousel — Juventus-style story cards.
+// Content can be edited freely — placeholders use real images.
+
+const items = [
+  {
+    img: "/imgs/publications/pub-01.jpg",
+    eyebrow: "Annonce · 2025",
+    title: "Lauréat du concours ctama",
+    excerpt:
+      "Cleanoov remporte le concours national ctama et reçoit une enveloppe de 100 000 dinars pour accélérer l'industrialisation.",
+  },
+  {
+    img: "/imgs/publications/pub-02.jpg",
+    eyebrow: "Programme · 2024",
+    title: "Sélectionnés au programme iptic",
+    excerpt:
+      "Notre projet retenu parmi les startups d'innovation incubées dans le programme iptic.",
+  },
+  {
+    img: "/imgs/publications/pub-03.jpg",
+    eyebrow: "International · 2026",
+    title: "Exposants au JCI World Congress",
+    excerpt:
+      "Cleanoov présente sa technologie de nettoyage solaire aux représentants JCI venus du monde entier.",
+  },
+  {
+    img: "/imgs/publications/pub-04.jpg",
+    eyebrow: "Partenaires",
+    title: "Avec l'ANME et le Ministère de la Formation",
+    excerpt:
+      "Conventions signées pour structurer la filière et former les futurs techniciens du solaire.",
+  },
+  {
+    img: "/imgs/publications/pub-05.jpg",
+    eyebrow: "Terrain · Sousse",
+    title: "Mission de nettoyage haute saison",
+    excerpt:
+      "Restauration de production sur une centrale industrielle après la saison sèche.",
+  },
+  {
+    img: "/imgs/publications/pub-06.jpg",
+    eyebrow: "Médias",
+    title: "Cleanoov dans la presse tunisienne",
+    excerpt:
+      "Couverture médiatique de notre démarche d'innovation et de notre impact sur la transition énergétique.",
+  },
+];
+---
+
+<section id="publications" class="relative py-28 lg:py-36">
+  <div class="container-wide">
+    <div class="flex items-end justify-between gap-8 flex-wrap">
+      <div class="max-w-2xl">
+        <p class="eyebrow reveal">Stories · Presse · Annonces</p>
+        <h2 class="mt-6 reveal" style="text-wrap: balance;">
+          Ce qu'on raconte de
+          <span class="gradient-solar italic font-semibold">Cleanoov</span>.
+        </h2>
+      </div>
+      <div class="flex items-center gap-3 reveal">
+        <button
+          type="button"
+          class="w-11 h-11 rounded-full surface flex items-center justify-center text-ink-soft hover:text-ink hover:border-ink/40 transition-colors disabled:opacity-30"
+          aria-label="Précédent"
+          data-pubs-prev
+        >
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+            <path d="M9 11L5 7l4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </button>
+        <button
+          type="button"
+          class="w-11 h-11 rounded-full surface flex items-center justify-center text-ink-soft hover:text-ink hover:border-ink/40 transition-colors"
+          aria-label="Suivant"
+          data-pubs-next
+        >
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+            <path d="M5 3l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Track: full-bleed scroller, padded by container on the inside -->
+  <div class="mt-12 lg:mt-16 relative">
+    <div
+      class="overflow-x-auto overflow-y-visible no-scrollbar snap-x snap-mandatory scroll-smooth select-none cursor-grab active:cursor-grabbing"
+      data-pubs-track
+    >
+      <ul class="flex gap-5 lg:gap-7 px-6 lg:px-12 pb-4">
+        {
+          items.map((it) => (
+            <li class="snap-start shrink-0 w-[78%] sm:w-[58%] md:w-[44%] lg:w-[34%] xl:w-[28%]">
+              <article class="group relative aspect-[3/4] overflow-hidden rounded-xl border border-line bg-surface">
+                <img
+                  src={it.img}
+                  alt={it.title}
+                  class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-[1.04]"
+                  loading="lazy"
+                  draggable="false"
+                />
+                <!-- Bottom overlay -->
+                <div
+                  class="absolute inset-0 bg-[linear-gradient(180deg,rgba(7,9,13,0.05)_0%,rgba(7,9,13,0.10)_45%,rgba(7,9,13,0.85)_100%)]"
+                  aria-hidden="true"
+                />
+
+                <header class="absolute top-5 left-5 right-5">
+                  <span class="chip">
+                    {it.eyebrow}
+                  </span>
+                </header>
+
+                <footer class="absolute bottom-0 left-0 right-0 p-6 lg:p-7">
+                  <h3 class="font-display text-xl lg:text-[1.45rem] text-ink leading-tight">
+                    {it.title}
+                  </h3>
+                  <p class="mt-3 text-sm text-ink-soft leading-relaxed line-clamp-3">
+                    {it.excerpt}
+                  </p>
+                  <span class="mt-4 inline-flex items-center gap-1.5 font-mono text-[0.7rem] uppercase tracking-[0.18em] text-solar-bright">
+                    Lire la story
+                    <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
+                      <path d="M2.5 6h7m0 0L7 3.5M9.5 6L7 8.5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                  </span>
+                </footer>
+              </article>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </div>
+</section>
+
+<style>
+  .no-scrollbar::-webkit-scrollbar { display: none; }
+  .no-scrollbar { scrollbar-width: none; -ms-overflow-style: none; }
+</style>
+
+<script>
+  const track = document.querySelector<HTMLElement>("[data-pubs-track]");
+  const prev = document.querySelector<HTMLButtonElement>("[data-pubs-prev]");
+  const next = document.querySelector<HTMLButtonElement>("[data-pubs-next]");
+
+  if (track) {
+    const step = () => Math.min(track.clientWidth * 0.7, 600);
+    prev?.addEventListener("click", () =>
+      track.scrollBy({ left: -step(), behavior: "smooth" })
+    );
+    next?.addEventListener("click", () =>
+      track.scrollBy({ left: step(), behavior: "smooth" })
+    );
+
+    // Drag-to-scroll on desktop (pointer events)
+    let isDown = false;
+    let startX = 0;
+    let startScroll = 0;
+    track.addEventListener("pointerdown", (e) => {
+      if ((e.target as HTMLElement).closest("a")) return;
+      isDown = true;
+      startX = e.clientX;
+      startScroll = track.scrollLeft;
+      track.setPointerCapture(e.pointerId);
+    });
+    track.addEventListener("pointermove", (e) => {
+      if (!isDown) return;
+      track.scrollLeft = startScroll - (e.clientX - startX);
+    });
+    const release = (e: PointerEvent) => {
+      isDown = false;
+      try { track.releasePointerCapture(e.pointerId); } catch {}
+    };
+    track.addEventListener("pointerup", release);
+    track.addEventListener("pointercancel", release);
+
+    // Update prev disabled state
+    const updateNav = () => {
+      if (prev) prev.disabled = track.scrollLeft <= 4;
+    };
+    track.addEventListener("scroll", updateNav, { passive: true });
+    updateNav();
+  }
+</script>
