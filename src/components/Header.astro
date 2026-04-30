@@ -1,0 +1,174 @@
+---
+interface Props {
+  transparent?: boolean;
+}
+const { transparent = false } = Astro.props;
+
+const links = [
+  { href: "/#innovation", label: "Innovation" },
+  { href: "/#publications", label: "Publications" },
+  { href: "/#realisations", label: "Réalisations" },
+  { href: "/services", label: "Services" },
+  { href: "/contact", label: "Contact" },
+];
+const path = Astro.url.pathname.replace(/\/$/, "") || "/";
+
+// Extract the pathname portion of a link (strips hash and trailing slash) so
+// hash-anchor entries like "/#innovation" can match when on the home page.
+const linkPath = (href: string) => {
+  const noHash = href.split("#")[0] || "/";
+  return noHash.replace(/\/$/, "") || "/";
+};
+---
+
+<header
+  id="site-header"
+  class:list={[
+    "fixed top-0 left-0 right-0 z-40 transition-[background-color,backdrop-filter,padding,border-color] duration-300 py-5 lg:py-6 border-b border-transparent",
+    transparent && "dark-section",
+  ]}
+  data-transparent={transparent ? "true" : "false"}
+>
+  <div class="container-wide flex items-center justify-between gap-4">
+    <a href="/" class="flex items-center gap-3 group shrink-0" aria-label="Cleanoov — Accueil">
+      <!-- Light logo (white) — used when header sits over the dark hero -->
+      <img
+        src="/imgs/brand/logo-dark.png"
+        alt="Cleanoov"
+        class="logo-light h-6 sm:h-7 lg:h-8 w-auto select-none transition-opacity group-hover:opacity-80"
+        width="484"
+        height="90"
+        decoding="async"
+      />
+      <!-- Dark logo — used when header is solid on light backgrounds -->
+      <img
+        src="/imgs/brand/logo.png"
+        alt="Cleanoov"
+        class="logo-dark hidden h-6 sm:h-7 lg:h-8 w-auto select-none transition-opacity group-hover:opacity-80"
+        width="484"
+        height="90"
+        decoding="async"
+      />
+    </a>
+
+    <nav
+      class="hidden md:flex items-center gap-5 lg:gap-9"
+      aria-label="Navigation principale"
+    >
+      {
+        links.map((l) => (
+          <a
+            href={l.href}
+            class:list={[
+              "text-[0.78rem] lg:text-[0.85rem] font-medium tracking-wide transition-colors whitespace-nowrap",
+              path === linkPath(l.href) ? "text-leaf" : "text-ink-soft hover:text-ink",
+            ]}
+          >
+            {l.label}
+          </a>
+        ))
+      }
+    </nav>
+
+    <div class="flex items-center gap-3 shrink-0">
+      <a
+        href="/contact"
+        class="hidden md:inline-flex btn btn-primary text-[0.8rem] lg:text-sm py-2 lg:py-2.5 px-4 lg:px-5"
+      >
+        Devis
+      </a>
+      <button
+        type="button"
+        class="md:hidden inline-flex flex-col items-center justify-center w-10 h-10 rounded-full border border-line-strong bg-bg-elev/70 backdrop-blur"
+        aria-label="Menu"
+        aria-expanded="false"
+        data-mobile-toggle
+      >
+        <span class="block w-5 h-px bg-ink mb-1.5"></span>
+        <span class="block w-5 h-px bg-ink"></span>
+      </button>
+    </div>
+  </div>
+
+  <div
+    class="md:hidden hidden border-t border-line bg-bg-elev/95 backdrop-blur-xl"
+    data-mobile-menu
+  >
+    <nav class="container-wide py-6 flex flex-col gap-1" aria-label="Navigation mobile">
+      {
+        links.map((l) => (
+          <a
+            href={l.href}
+            class="block py-3 text-base font-medium text-ink-soft border-b border-line last:border-0 hover:text-leaf"
+          >
+            {l.label}
+          </a>
+        ))
+      }
+      <a href="/contact" class="btn btn-primary mt-5 self-start">
+        Demander un devis
+      </a>
+    </nav>
+  </div>
+</header>
+
+{!transparent && <div aria-hidden="true" class="h-20 lg:h-24"></div>}
+
+<script>
+  const header = document.getElementById("site-header");
+  const transparent = header?.dataset.transparent === "true";
+  const SOLID = [
+    "bg-bg-elev/85",
+    "backdrop-blur-xl",
+    "py-3",
+    "lg:py-4",
+    "border-line",
+  ];
+  const AIRY = ["py-5", "lg:py-6"];
+
+  const setLogo = (showLight: boolean) => {
+    const light = header?.querySelector<HTMLImageElement>(".logo-light");
+    const dark = header?.querySelector<HTMLImageElement>(".logo-dark");
+    if (!light || !dark) return;
+    light.classList.toggle("hidden", !showLight);
+    dark.classList.toggle("hidden", showLight);
+  };
+
+  // Non-transparent pages always show dark logo (light header on light page)
+  if (!transparent) setLogo(false);
+
+  const onScroll = () => {
+    if (!header) return;
+    const scrolled = window.scrollY > 24;
+    if (scrolled) {
+      header.classList.add(...SOLID);
+      header.classList.remove(...AIRY);
+      // When scrolled the header is on a light surface — disable dark-section override
+      if (transparent) header.classList.remove("dark-section");
+      setLogo(false);
+    } else {
+      header.classList.remove(...SOLID);
+      header.classList.add(...AIRY);
+      if (transparent) {
+        header.classList.add("dark-section");
+        setLogo(true);
+      }
+    }
+  };
+  window.addEventListener("scroll", onScroll, { passive: true });
+  onScroll();
+
+  const toggle = document.querySelector<HTMLButtonElement>("[data-mobile-toggle]");
+  const menu = document.querySelector<HTMLElement>("[data-mobile-menu]");
+  toggle?.addEventListener("click", () => {
+    if (!menu) return;
+    const isOpen = menu.classList.toggle("hidden") === false;
+    toggle.setAttribute("aria-expanded", String(isOpen));
+  });
+  document.querySelectorAll("[data-mobile-menu] a").forEach((a) => {
+    a.addEventListener("click", () => {
+      menu?.classList.add("hidden");
+      toggle?.setAttribute("aria-expanded", "false");
+    });
+  });
+</script>

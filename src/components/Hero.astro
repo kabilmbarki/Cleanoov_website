@@ -1,0 +1,119 @@
+---
+// Full-bleed video hero — Fondation-Tunisie style.
+// Header sits over the hero; reduced-motion users see the static poster.
+---
+
+<section class="dark-section relative w-full h-[100svh] min-h-[560px] md:min-h-[640px] overflow-hidden">
+  <!-- Video layer -->
+  <video
+    class="absolute inset-0 w-full h-full object-cover motion-reduce:hidden"
+    poster="/video/hero-poster.jpg"
+    autoplay
+    muted
+    loop
+    playsinline
+    preload="metadata"
+    aria-hidden="true"
+  >
+    <source src="/video/hero.webm" type="video/webm" />
+    <source src="/video/hero.mp4" type="video/mp4" />
+  </video>
+  <img
+    src="/video/hero-poster.jpg"
+    alt=""
+    class="absolute inset-0 w-full h-full object-cover hidden motion-reduce:block"
+    aria-hidden="true"
+  />
+
+  <!-- Overlays: vertical gradient for legibility + ambient solar wash -->
+  <div
+    class="absolute inset-0 bg-[linear-gradient(180deg,rgba(7,9,13,0.65)_0%,rgba(7,9,13,0.30)_28%,rgba(7,9,13,0.50)_58%,rgba(7,9,13,0.94)_100%)]"
+    aria-hidden="true"
+  ></div>
+  <div
+    class="absolute inset-0 bg-[radial-gradient(800px_400px_at_85%_30%,rgba(43,182,115,0.20),transparent_60%)] mix-blend-screen"
+    aria-hidden="true"
+  ></div>
+
+  <!-- Subtle grid texture, faded -->
+  <div
+    class="absolute inset-0 grid-bg opacity-[0.06] pointer-events-none"
+    aria-hidden="true"
+  ></div>
+
+  <!-- Content -->
+  <div class="relative h-full container-wide flex flex-col justify-end pt-24 md:pt-32 pb-14 md:pb-20 lg:pb-28">
+    <div class="max-w-3xl">
+      <p class="eyebrow text-ink-soft reveal">
+        <span class="sm:hidden">Cleanoov · Innovation TN</span>
+        <span class="hidden sm:inline">Cleanoov · Innovation solaire tunisienne</span>
+      </p>
+
+      <h1
+        class="mt-5 md:mt-6 text-ink reveal text-[2.1rem] sm:text-[2.6rem] md:text-[3.4rem] lg:text-[4.5rem] xl:text-[5.25rem] leading-[1.05]"
+        style="text-wrap: balance;"
+      >
+        L'énergie du soleil,
+        <span class="block sm:inline">
+          <span class="gradient-solar italic font-semibold">décuplée</span> par la technique.
+        </span>
+      </h1>
+
+      <p class="mt-5 md:mt-6 text-base md:text-lg lg:text-xl text-ink-soft max-w-2xl leading-relaxed reveal">
+        Nettoyage, diagnostic et maintenance préventive — nous restaurons jusqu'à
+        <span class="text-ink font-medium">25 %</span> du rendement d'une centrale
+        solaire et sécurisons sa production dans la durée. Sur le terrain, en Tunisie.
+      </p>
+
+      <div class="mt-7 md:mt-9 flex flex-wrap gap-3 sm:gap-4 reveal">
+        <a
+          href="/#innovation"
+          class="btn btn-primary text-sm md:text-base px-5 md:px-6 py-3 md:py-3.5"
+        >
+          Notre démarche
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+            <path d="M3 7h8M7 3l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </a>
+        <a
+          href="/#realisations"
+          class="btn btn-secondary text-sm md:text-base px-5 md:px-6 py-3 md:py-3.5"
+        >
+          Voir nos chantiers
+        </a>
+      </div>
+
+      <!-- Award strip -->
+      <div class="mt-8 md:mt-12 lg:mt-16 flex flex-wrap items-center gap-2 sm:gap-3 reveal">
+        <span class="chip chip-solar text-[0.65rem] sm:text-[0.72rem]">
+          <svg width="11" height="11" viewBox="0 0 12 12" fill="none" aria-hidden="true" class="shrink-0">
+            <path d="M6 1l1.5 3 3.5.5-2.5 2.5.5 3.5-3-1.7-3 1.7.5-3.5L1 4.5 4.5 4 6 1z" fill="currentColor"/>
+          </svg>
+          Lauréat iptic
+        </span>
+        <span class="chip chip-solar text-[0.65rem] sm:text-[0.72rem]">
+          <svg width="11" height="11" viewBox="0 0 12 12" fill="none" aria-hidden="true" class="shrink-0">
+            <path d="M6 1l1.5 3 3.5.5-2.5 2.5.5 3.5-3-1.7-3 1.7.5-3.5L1 4.5 4.5 4 6 1z" fill="currentColor"/>
+          </svg>
+          <span class="sm:hidden">Lauréat ctama</span>
+          <span class="hidden sm:inline">Lauréat du concours ctama</span>
+        </span>
+        <span class="chip chip-leaf text-[0.65rem] sm:text-[0.72rem]">
+          <span class="dot-pulse shrink-0" style="width:6px;height:6px"></span>
+          <span class="sm:hidden">JCI World Congress</span>
+          <span class="hidden sm:inline">Exposants — JCI World Congress</span>
+        </span>
+      </div>
+    </div>
+
+    <!-- Scroll indicator (desktop only) -->
+    <a
+      href="#mission"
+      class="absolute bottom-8 right-6 lg:right-12 hidden md:flex items-center gap-3 text-xs font-mono uppercase tracking-[0.18em] text-ink-muted hover:text-ink transition-colors"
+      aria-label="Faire défiler"
+    >
+      <span>Scroll</span>
+      <span class="block w-px h-10 bg-gradient-to-b from-ink-muted to-transparent"></span>
+    </a>
+  </div>
+</section>

@@ -1,0 +1,158 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+---
+
+<BaseLayout
+  title="Contact — Devis nettoyage et maintenance de panneaux solaires en Tunisie | Cleanoov"
+  description="Demandez votre devis nettoyage, diagnostic ou maintenance préventive de panneaux photovoltaïques. Cleanoov, startup tunisienne basée à Tunis — réponse sous 48h ouvrées."
+>
+  <section class="pt-16 lg:pt-24 pb-24 lg:pb-32">
+    <div class="container-wide">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-20">
+        <!-- Left: info -->
+        <div class="lg:col-span-5 reveal">
+          <p class="eyebrow">Contact</p>
+          <h1 class="mt-8" style="text-wrap: balance;">
+            Parlons de votre
+            <span class="gradient-solar italic font-semibold">projet</span>.
+          </h1>
+          <p class="mt-6 text-lg text-ink-soft leading-relaxed">
+            Décrivez-nous votre site, vos objectifs ou vos contraintes. Notre équipe
+            revient vers vous sous 48 heures ouvrées avec une première analyse.
+          </p>
+
+          <dl class="mt-12 space-y-7 border-t border-line pt-10">
+            <div>
+              <dt class="font-mono text-[0.72rem] uppercase tracking-[0.18em] text-ink-muted">
+                Téléphone
+              </dt>
+              <dd class="mt-2 font-display text-2xl text-ink">
+                <a href="tel:+216000000000" class="link-underline">+216 00 000 000</a>
+              </dd>
+            </div>
+            <div>
+              <dt class="font-mono text-[0.72rem] uppercase tracking-[0.18em] text-ink-muted">
+                Email
+              </dt>
+              <dd class="mt-2 font-display text-xl text-ink">
+                <a href="mailto:contact@cleanoov.tn" class="link-underline">
+                  contact@cleanoov.tn
+                </a>
+              </dd>
+            </div>
+            <div>
+              <dt class="font-mono text-[0.72rem] uppercase tracking-[0.18em] text-ink-muted">
+                Adresse
+              </dt>
+              <dd class="mt-2 text-ink-soft">
+                Tunis, Tunisie
+              </dd>
+            </div>
+            <div>
+              <dt class="font-mono text-[0.72rem] uppercase tracking-[0.18em] text-ink-muted">
+                Horaires
+              </dt>
+              <dd class="mt-2 text-ink-soft">
+                Lun – Ven · 9h00 – 18h00
+              </dd>
+            </div>
+          </dl>
+        </div>
+
+        <!-- Right: form -->
+        <div class="lg:col-span-7 reveal">
+          <div class="surface-strong p-8 lg:p-10">
+            <form
+              name="contact"
+              method="POST"
+              data-netlify="true"
+              netlify-honeypot="bot-field"
+              class="grid grid-cols-1 md:grid-cols-2 gap-5"
+            >
+              <input type="hidden" name="form-name" value="contact" />
+              <p class="hidden">
+                <label>Ne pas remplir : <input name="bot-field" /></label>
+              </p>
+
+              <label class="block">
+                <span class="block font-mono text-[0.72rem] uppercase tracking-[0.18em] text-ink-muted mb-2">
+                  Nom complet *
+                </span>
+                <input
+                  type="text"
+                  name="name"
+                  required
+                  class="w-full bg-bg-elev rounded-lg px-4 py-3 border border-line text-ink placeholder:text-ink-muted focus:outline-none focus:border-solar focus:ring-1 focus:ring-solar transition-colors"
+                />
+              </label>
+
+              <label class="block">
+                <span class="block font-mono text-[0.72rem] uppercase tracking-[0.18em] text-ink-muted mb-2">
+                  Entreprise
+                </span>
+                <input
+                  type="text"
+                  name="company"
+                  class="w-full bg-bg-elev rounded-lg px-4 py-3 border border-line text-ink placeholder:text-ink-muted focus:outline-none focus:border-solar focus:ring-1 focus:ring-solar transition-colors"
+                />
+              </label>
+
+              <label class="block md:col-span-2">
+                <span class="block font-mono text-[0.72rem] uppercase tracking-[0.18em] text-ink-muted mb-2">
+                  Email *
+                </span>
+                <input
+                  type="email"
+                  name="email"
+                  required
+                  class="w-full bg-bg-elev rounded-lg px-4 py-3 border border-line text-ink placeholder:text-ink-muted focus:outline-none focus:border-solar focus:ring-1 focus:ring-solar transition-colors"
+                />
+              </label>
+
+              <label class="block md:col-span-2">
+                <span class="block font-mono text-[0.72rem] uppercase tracking-[0.18em] text-ink-muted mb-2">
+                  Type de projet
+                </span>
+                <select
+                  name="type"
+                  class="w-full bg-bg-elev rounded-lg px-4 py-3 border border-line text-ink focus:outline-none focus:border-solar focus:ring-1 focus:ring-solar transition-colors"
+                >
+                  <option value="">Choisir…</option>
+                  <option value="nettoyage">Nettoyage</option>
+                  <option value="diagnostic">Diagnostic</option>
+                  <option value="maintenance">Maintenance préventive</option>
+                  <option value="autre">Autre</option>
+                </select>
+              </label>
+
+              <label class="block md:col-span-2">
+                <span class="block font-mono text-[0.72rem] uppercase tracking-[0.18em] text-ink-muted mb-2">
+                  Message *
+                </span>
+                <textarea
+                  name="message"
+                  rows="5"
+                  required
+                  placeholder="Décrivez votre projet, votre site, vos objectifs…"
+                  class="w-full bg-bg-elev rounded-lg px-4 py-3 border border-line text-ink placeholder:text-ink-muted focus:outline-none focus:border-solar focus:ring-1 focus:ring-solar transition-colors resize-y"
+                ></textarea>
+              </label>
+
+              <div class="md:col-span-2 flex items-center justify-between gap-4 pt-2">
+                <p class="text-xs text-ink-muted font-mono uppercase tracking-[0.14em]">
+                  * Champs obligatoires
+                </p>
+                <button type="submit" class="btn btn-primary">
+                  Envoyer la demande
+                  <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+                    <path d="M3 7h8M7 3l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

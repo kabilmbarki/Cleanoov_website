@@ -1,0 +1,132 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import CtaBanner from "../../components/CtaBanner.astro";
+
+const services = [
+  {
+    id: "nettoyage",
+    eyebrow: "Service · 01",
+    title: "Nettoyage de panneaux",
+    image: "/imgs/chantiers/chantier-02.jpg",
+    intro:
+      "Le sable, la poussière et les fientes peuvent réduire le rendement d'une centrale jusqu'à 25 %. Notre intervention restaure la production et prolonge la durée de vie des modules.",
+    method: [
+      { n: "01", title: "Audit initial", text: "Inspection visuelle, évaluation du soiling, mesure des pertes de production." },
+      { n: "02", title: "Plan d'intervention", text: "Sélection de la méthode (à sec, eau dosée, brossage robotisé selon le site) et planning." },
+      { n: "03", title: "Opération sur site", text: "Équipe qualifiée, matériel dédié, eau déminéralisée à dosage maîtrisé." },
+      { n: "04", title: "Reporting", text: "Rapport photo + courbe de rendement avant/après et recommandations de maintenance." },
+    ],
+  },
+  {
+    id: "diagnostic",
+    eyebrow: "Service · 02",
+    title: "Diagnostic technique",
+    image: "/imgs/chantiers/chantier-toit.jpg",
+    intro:
+      "Avant d'agir, on mesure. Imagerie thermique infrarouge, inspection optique, analyse des courbes de production : on identifie précisément où votre installation perd du rendement.",
+    method: [
+      { n: "01", title: "Visite de site", text: "Reconnaissance complète, prise de mesures, conditions d'exploitation et historique de production." },
+      { n: "02", title: "Imagerie IR & optique", text: "Caméra thermique pour repérer hot-spots et modules défaillants ; inspection visuelle haute résolution." },
+      { n: "03", title: "Analyse", text: "Corrélation des images, des mesures électriques et des données de monitoring pour quantifier les pertes." },
+      { n: "04", title: "Rapport & recommandations", text: "Document détaillé avec priorisation des actions correctives — nettoyage, remplacement, ajustement." },
+    ],
+  },
+  {
+    id: "maintenance",
+    eyebrow: "Service · 03",
+    title: "Maintenance & diagnostic préventif",
+    image: "/imgs/chantiers/chantier-06.jpg",
+    intro:
+      "Sécuriser le rendement dans la durée. Contrats annuels avec visites planifiées, diagnostic préventif et alertes anticipées — pour anticiper les pannes plutôt que les subir.",
+    method: [
+      { n: "01", title: "Convention annuelle", text: "Cadre clair : périmètre, fréquence des visites, indicateurs suivis, niveau de service garanti." },
+      { n: "02", title: "Calendrier d'interventions", text: "Visites planifiées selon les saisons critiques (sirocco, fientes, post-pluies) et profil du site." },
+      { n: "03", title: "Détection précoce", text: "Diagnostic préventif à chaque passage : on repère les dégradations avant qu'elles n'affectent la production." },
+      { n: "04", title: "Suivi de production", text: "Reporting périodique et alertes — vous gardez la visibilité sur la performance de votre actif." },
+    ],
+  },
+];
+---
+
+<BaseLayout
+  title="Nettoyage, diagnostic et maintenance de panneaux solaires en Tunisie | Cleanoov"
+  description="Cleanoov, jeune startup tunisienne d'innovation solaire. Nettoyage robotisé, diagnostic thermique infrarouge et maintenance préventive de centrales photovoltaïques. Tunis, Sousse, Monastir, Sfax, Béjà — restaurez jusqu'à +25 % de rendement."
+>
+  <!-- Hero page -->
+  <section class="pt-16 lg:pt-24 pb-12 border-b border-line">
+    <div class="container-wide">
+      <p class="eyebrow reveal">Nos services</p>
+      <h1 class="mt-8 max-w-4xl reveal" style="text-wrap: balance;">
+        Du diagnostic au suivi long-terme,
+        <span class="gradient-solar italic font-semibold">une expertise complète</span>.
+      </h1>
+      <p class="mt-8 max-w-2xl text-lg text-ink-soft reveal">
+        Cleanoov accompagne ses clients sur l'ensemble du cycle de vie d'une centrale
+        solaire — nettoyage, diagnostic et maintenance préventive — avec une exigence
+        d'ingénierie et un ancrage local fort.
+      </p>
+    </div>
+  </section>
+
+  {
+    services.map((s, i) => (
+      <section
+        id={s.id}
+        class:list={[
+          "py-24 lg:py-32",
+          i % 2 === 1 ? "border-t border-line bg-bg-elev/40" : "",
+        ]}
+      >
+        <div class="container-wide">
+          <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 items-start">
+            <div class="lg:col-span-5 reveal">
+              <p class="eyebrow">{s.eyebrow}</p>
+              <h2 class="mt-6">{s.title}</h2>
+              <p class="mt-6 text-lg text-ink-soft leading-relaxed">{s.intro}</p>
+              <a href="/contact" class="mt-9 inline-flex btn btn-primary">
+                Discuter d'un projet
+                <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+                  <path d="M3 7h8M7 3l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </a>
+            </div>
+            <div class="lg:col-span-7 reveal">
+              <div class="aspect-[4/3] overflow-hidden rounded-xl border border-line">
+                <img
+                  src={s.image}
+                  alt={s.title}
+                  class="h-full w-full object-cover"
+                  loading="lazy"
+                />
+              </div>
+            </div>
+          </div>
+
+          <div class="mt-20">
+            <p class="eyebrow reveal">Notre méthode</p>
+            <ol class="mt-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8">
+              {s.method.map((m) => (
+                <li class="reveal surface p-6 lg:p-7">
+                  <span class="font-mono text-[0.72rem] tracking-[0.18em] text-solar-bright">
+                    {m.n}
+                  </span>
+                  <h3 class="mt-3 font-display text-xl text-ink leading-tight">
+                    {m.title}
+                  </h3>
+                  <p class="mt-3 text-ink-soft text-sm leading-relaxed">
+                    {m.text}
+                  </p>
+                </li>
+              ))}
+            </ol>
+          </div>
+        </div>
+      </section>
+    ))
+  }
+
+  <CtaBanner
+    title="Un site, un besoin précis ? Parlons-en."
+    subtitle="Chaque centrale est unique. Décrivez-nous votre contexte, nous revenons vers vous avec une proposition adaptée."
+  />
+</BaseLayout>

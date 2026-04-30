@@ -1,0 +1,48 @@
+---
+// Mission — large editorial statement + 3 KPI strip.
+const stats = [
+  { value: "+25%", label: "rendement restauré sur des panneaux encrassés" },
+  { value: "Lauréats", label: "du concours national ctama · édition 2025" },
+  { value: "3 ans", label: "d'innovation continue depuis le lancement" },
+];
+---
+
+<section id="mission" class="relative py-28 lg:py-40 border-t border-line">
+  <div class="container-narrow">
+    <p class="eyebrow reveal">Manifeste</p>
+    <h2
+      class="mt-8 font-display text-[2rem] sm:text-[2.6rem] lg:text-[3.2rem] leading-[1.1] tracking-tight reveal"
+      style="text-wrap: balance;"
+    >
+      Cleanoov est une jeune équipe tunisienne qui pense le solaire
+      <span class="text-ink-muted">comme</span>
+      <span class="gradient-solar italic font-semibold">un terrain de R&amp;D</span>
+      <span class="text-ink-muted">— pas comme une commodité.</span>
+    </h2>
+    <p class="mt-8 max-w-2xl text-lg text-ink-soft leading-relaxed reveal">
+      Nous croyons que la performance d'une centrale se joue dans les détails :
+      la méthode de nettoyage, la précision du diagnostic, l'intelligence du dimensionnement.
+      Notre vocation est d'apporter la rigueur d'un labo aux centrales solaires d'Afrique du Nord.
+    </p>
+  </div>
+
+  <div class="container-wide mt-24 lg:mt-28">
+    <dl class="grid grid-cols-1 md:grid-cols-3 gap-px bg-line border border-line rounded-xl overflow-hidden">
+      {
+        stats.map((s) => (
+          <div class="bg-bg-elev px-8 py-10 lg:px-10 lg:py-14 reveal">
+            <dt class="font-mono text-[0.72rem] uppercase tracking-[0.18em] text-ink-muted">
+              Indicateur
+            </dt>
+            <dd class="mt-4 font-display text-4xl lg:text-5xl xl:text-6xl text-ink leading-[1] tracking-tight">
+              {s.value}
+            </dd>
+            <p class="mt-4 text-ink-soft text-sm max-w-xs leading-relaxed">
+              {s.label}
+            </p>
+          </div>
+        ))
+      }
+    </dl>
+  </div>
+</section>

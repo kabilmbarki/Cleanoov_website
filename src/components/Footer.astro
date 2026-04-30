@@ -1,0 +1,138 @@
+---
+const year = new Date().getFullYear();
+
+const cols = [
+  {
+    title: "Innovation",
+    links: [
+      { href: "/#innovation", label: "Concours & distinctions" },
+      { href: "/#publications", label: "Publications" },
+      { href: "/#realisations", label: "Réalisations" },
+      { href: "/#faq", label: "Questions fréquentes" },
+    ],
+  },
+  {
+    title: "Services",
+    links: [
+      { href: "/services#nettoyage", label: "Nettoyage" },
+      { href: "/services#diagnostic", label: "Diagnostic" },
+      { href: "/services#maintenance", label: "Maintenance préventive" },
+    ],
+  },
+  {
+    title: "Contact",
+    links: [
+      { href: "/contact", label: "Demander un devis" },
+      { href: "mailto:contact@cleanoov.tn", label: "contact@cleanoov.tn" },
+      { href: "tel:+216000000000", label: "+216 00 000 000" },
+    ],
+  },
+];
+---
+
+<footer class="dark-section relative mt-32 border-t border-line">
+  <div
+    class="absolute inset-0 grid-bg grid-bg-fade opacity-20 pointer-events-none"
+    aria-hidden="true"
+  ></div>
+
+  <div class="container-wide py-20 relative">
+    <div class="grid grid-cols-1 md:grid-cols-12 gap-12 md:gap-8">
+      <div class="md:col-span-4">
+        <a href="/" class="inline-flex items-center gap-2">
+          <img
+            src="/imgs/brand/logo-dark.png"
+            alt="Cleanoov"
+            class="h-10 w-auto"
+            width="483"
+            height="88"
+            loading="lazy"
+          />
+        </a>
+        <p class="mt-6 text-sm leading-relaxed text-ink-soft max-w-xs">
+          Startup tunisienne d'innovation solaire.<br />
+          Lauréate <span class="text-ink">iptic</span> & <span class="text-ink">ctama</span>,
+          exposants au congrès mondial JCI.
+        </p>
+        <div class="mt-6 flex items-center gap-2">
+          <span class="dot-pulse" aria-hidden="true"></span>
+          <span class="font-mono text-xs text-ink-muted uppercase tracking-[0.16em]">
+            Tunis · Active
+          </span>
+        </div>
+
+        <div class="mt-7 flex items-center gap-3">
+          <a
+            href="https://www.facebook.com/profile.php?id=61577362184751"
+            target="_blank"
+            rel="noopener"
+            aria-label="Cleanoov sur Facebook"
+            class="w-9 h-9 rounded-full border border-line-strong text-ink-soft hover:text-leaf-bright hover:border-leaf/40 transition-colors flex items-center justify-center"
+          >
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+              <path d="M13.5 22v-8h2.7l.4-3.2h-3.1V8.7c0-.9.3-1.6 1.6-1.6h1.7V4.3c-.3 0-1.3-.1-2.5-.1-2.5 0-4.2 1.5-4.2 4.3v2.4H7.4V14h2.7v8h3.4z"/>
+            </svg>
+          </a>
+          <a
+            href="https://www.instagram.com/cleanoov/"
+            target="_blank"
+            rel="noopener"
+            aria-label="Cleanoov sur Instagram"
+            class="w-9 h-9 rounded-full border border-line-strong text-ink-soft hover:text-leaf-bright hover:border-leaf/40 transition-colors flex items-center justify-center"
+          >
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+              <rect x="3" y="3" width="18" height="18" rx="5"/>
+              <circle cx="12" cy="12" r="4"/>
+              <circle cx="17.5" cy="6.5" r="0.8" fill="currentColor"/>
+            </svg>
+          </a>
+          <a
+            href="https://www.youtube.com/@BayoudhSoulaymen"
+            target="_blank"
+            rel="noopener"
+            aria-label="Chaîne YouTube de Soulaymen Bayoudh — fondateur Cleanoov"
+            class="w-9 h-9 rounded-full border border-line-strong text-ink-soft hover:text-leaf-bright hover:border-leaf/40 transition-colors flex items-center justify-center"
+          >
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+              <path d="M23 7.4s-.2-1.6-.9-2.3c-.9-.9-1.8-.9-2.3-1C16.4 3.7 12 3.7 12 3.7s-4.4 0-7.8.4c-.5.1-1.4.1-2.3 1C1.2 5.8 1 7.4 1 7.4S.7 9.3.7 11.2v1.6c0 1.9.3 3.8.3 3.8s.2 1.6.9 2.3c.9.9 2.1.9 2.6 1 1.9.2 8 .3 8 .3s4.4 0 7.8-.4c.5-.1 1.4-.1 2.3-1 .7-.7.9-2.3.9-2.3s.3-1.9.3-3.8v-1.6c0-1.9-.3-3.7-.3-3.7zM9.7 14.9V8.7l5.7 3.1-5.7 3.1z"/>
+            </svg>
+          </a>
+        </div>
+      </div>
+
+      <div class="md:col-span-8 grid grid-cols-1 sm:grid-cols-3 gap-10">
+        {
+          cols.map((col) => (
+            <div>
+              <h4 class="font-mono text-[0.7rem] font-medium uppercase tracking-[0.18em] text-ink-muted">
+                {col.title}
+              </h4>
+              <ul class="mt-5 space-y-3">
+                {col.links.map((l) => (
+                  <li>
+                    <a
+                      href={l.href}
+                      class="text-sm text-ink-soft hover:text-solar transition-colors"
+                    >
+                      {l.label}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+
+    <div
+      class="mt-16 pt-8 border-t border-line flex flex-col md:flex-row gap-4 md:items-center md:justify-between text-xs text-ink-muted font-mono uppercase tracking-[0.14em]"
+    >
+      <p>© {year} Cleanoov · Tous droits réservés</p>
+      <div class="flex gap-5 normal-case tracking-normal font-body">
+        <a href="/mentions-legales" class="hover:text-ink transition-colors">Mentions légales</a>
+        <a href="/confidentialite" class="hover:text-ink transition-colors">Confidentialité</a>
+      </div>
+    </div>
+  </div>
+</footer>

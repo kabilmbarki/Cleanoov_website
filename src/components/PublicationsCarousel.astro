@@ -1,0 +1,379 @@
+---
+// Horizontal scroll-snap carousel — editorial press-wall style.
+// On lg+, a title rail occupies the left ~25% and the track sits on an
+// elevated background panel that bleeds to the right edge.
+// Cards mix real photographs and "manifesto" text-only tiles for rhythm.
+
+type Item =
+  | {
+      kind: "photo";
+      img: string;
+      chip: string;
+      accent: "solar" | "leaf" | "neutral";
+      title: string;
+      excerpt: string;
+    }
+  | {
+      kind: "manifesto";
+      chip: string;
+      accent: "solar" | "leaf" | "neutral";
+      title: string;
+      excerpt: string;
+      figure: string; // big stat / call
+      caption: string; // small label under figure
+    };
+
+const items: Item[] = [
+  {
+    kind: "photo",
+    img: "/imgs/chantiers/chantier-jawhara.jpg",
+    chip: "Award · 2025",
+    accent: "solar",
+    title: "Lauréat du concours ctama",
+    excerpt:
+      "Distingués au concours national ctama pour notre démarche d'industrialisation du nettoyage robotisé.",
+  },
+  {
+    kind: "photo",
+    img: "/imgs/chantiers/chantier-sousse.jpg",
+    chip: "Programme · 2024",
+    accent: "solar",
+    title: "Sélectionnés au programme iptic",
+    excerpt:
+      "Notre projet retenu parmi les startups d'innovation incubées dans le programme iptic.",
+  },
+  {
+    kind: "manifesto",
+    chip: "International",
+    accent: "leaf",
+    title: "Exposants au JCI World Congress",
+    excerpt:
+      "Cleanoov présente sa technologie aux représentants JCI venus du monde entier.",
+    figure: "120+",
+    caption: "pays représentés",
+  },
+  {
+    kind: "photo",
+    img: "/imgs/publications/pub-06.jpg",
+    chip: "R&D · Terrain",
+    accent: "neutral",
+    title: "Diagnostic thermique sur site",
+    excerpt:
+      "Caméra IR et mesures de soiling pour quantifier la perte de rendement avant intervention.",
+  },
+  {
+    kind: "photo",
+    img: "/imgs/chantiers/chantier-pres.jpg",
+    chip: "Conférence",
+    accent: "neutral",
+    title: "Cleanoov sur scène",
+    excerpt:
+      "Pitch de notre démarche d'innovation devant l'écosystème entrepreneurial tunisien.",
+  },
+  {
+    kind: "photo",
+    img: "/imgs/chantiers/chantier-detail.jpg",
+    chip: "Terrain · Sousse",
+    accent: "neutral",
+    title: "Mission Centrale Jawhara",
+    excerpt:
+      "Restauration de production sur une centrale industrielle après la saison sèche.",
+  },
+  {
+    kind: "manifesto",
+    chip: "Partenaires",
+    accent: "leaf",
+    title: "ANME · Min. Formation Pro.",
+    excerpt:
+      "Conventions signées pour structurer la filière et former les futurs techniciens.",
+    figure: "02",
+    caption: "institutions partenaires",
+  },
+  {
+    kind: "photo",
+    img: "/imgs/chantiers/chantier-toit.jpg",
+    chip: "R&D",
+    accent: "neutral",
+    title: "Banc d'essai en toiture",
+    excerpt:
+      "Tests grandeur nature de nos protocoles de nettoyage sur centrale industrielle.",
+  },
+  {
+    kind: "manifesto",
+    chip: "Annonce · 2026",
+    accent: "solar",
+    title: "Saison post-Sirocco lancée",
+    excerpt:
+      "Audit + nettoyage sur sites du sud — créneaux ouverts pour les industriels.",
+    figure: "+25%",
+    caption: "rendement restauré",
+  },
+];
+---
+
+<section id="publications" class="relative py-20 lg:py-28 overflow-hidden">
+  <!-- Editorial background panel (lg+ only): starts at 25% from left, inset top/bottom, rounded on the left -->
+  <div
+    class="hidden lg:block absolute top-10 bottom-10 left-[25%] right-0 bg-bg-elev/55 border border-line border-r-0 rounded-l-3xl"
+    aria-hidden="true"
+  ></div>
+  <div
+    class="hidden lg:block absolute top-10 bottom-10 left-[25%] right-0 grid-bg grid-bg-fade opacity-[0.05] rounded-l-3xl overflow-hidden pointer-events-none"
+    aria-hidden="true"
+  ></div>
+
+  <div class="relative grid grid-cols-1 lg:grid-cols-[25%_1fr] lg:items-start">
+    <!-- Title rail -->
+    <header class="px-6 sm:px-10 lg:pl-12 xl:pl-20 lg:pr-8 lg:py-16 max-w-[28rem] lg:max-w-none">
+      <p class="eyebrow reveal">Stories · Presse</p>
+      <h2 class="mt-5 lg:mt-6 reveal" style="text-wrap: balance;">
+        Ce qu'on raconte de
+        <span class="gradient-solar italic font-semibold">Cleanoov</span>.
+      </h2>
+      <p class="hidden lg:block mt-6 text-ink-soft text-[0.95rem] leading-relaxed reveal max-w-[18rem]">
+        Annonces, presse, partenariats, terrain — un fil de la dernière année.
+      </p>
+      <p class="hidden lg:flex mt-10 items-center gap-2 font-mono text-[0.7rem] uppercase tracking-[0.18em] text-ink-muted reveal">
+        <span class="block w-6 h-px bg-solar"></span>
+        {items.length} stories
+      </p>
+    </header>
+
+    <!-- Track -->
+    <div class="mt-8 lg:mt-0 relative lg:py-16">
+      <div
+        class="overflow-x-auto overflow-y-visible no-scrollbar snap-x snap-mandatory scroll-smooth select-none cursor-grab active:cursor-grabbing"
+        data-pubs-track
+      >
+        <ul class="flex gap-4 sm:gap-5 lg:gap-6 pl-8 sm:pl-12 lg:pl-[clamp(64px,6vw,140px)] pr-8 sm:pr-12 lg:pr-12 pb-2">
+          {
+            items.map((it) => (
+              <li
+                class="snap-start shrink-0 w-[78%] xs:w-[64%] sm:w-[46%] md:w-[38%] lg:w-[34%] xl:w-[30%] max-w-[320px]"
+                data-pubs-item
+              >
+                {it.kind === "photo" ? (
+                  <article class="group relative aspect-[3/4] overflow-hidden rounded-2xl border border-line bg-surface">
+                    <img
+                      src={it.img}
+                      alt={it.title}
+                      class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-[1.05]"
+                      loading="lazy"
+                      draggable="false"
+                    />
+                    <div
+                      class="absolute inset-0 bg-[linear-gradient(180deg,rgba(7,9,13,0.10)_0%,rgba(7,9,13,0.20)_40%,rgba(7,9,13,0.78)_78%,rgba(7,9,13,0.96)_100%)]"
+                      aria-hidden="true"
+                    />
+
+                    <header class="absolute top-4 left-4 right-4">
+                      <span
+                        class:list={[
+                          "chip text-[0.62rem] sm:text-[0.68rem] py-1 px-2.5",
+                          it.accent === "solar" && "chip-solar",
+                          it.accent === "leaf" && "chip-leaf",
+                        ]}
+                      >
+                        {it.chip}
+                      </span>
+                    </header>
+
+                    <footer class="absolute bottom-0 left-0 right-0 p-5 sm:p-6">
+                      <h3 class="font-display text-[1rem] sm:text-[1.05rem] lg:text-[1.1rem] text-ink leading-snug">
+                        {it.title}
+                      </h3>
+                      <p class="mt-2.5 text-[0.78rem] sm:text-[0.82rem] text-ink-soft leading-relaxed line-clamp-2">
+                        {it.excerpt}
+                      </p>
+                    </footer>
+                  </article>
+                ) : (
+                  <article
+                    class:list={[
+                      "group relative aspect-[3/4] overflow-hidden rounded-2xl border flex flex-col",
+                      it.accent === "solar" && "bg-gradient-to-br from-[#F4F8F2] via-surface to-[#EAF1E7] border-leaf/30",
+                      it.accent === "leaf" && "bg-gradient-to-br from-[#E8F3EC] via-surface to-[#F0F7EE] border-leaf/30",
+                      it.accent === "neutral" && "bg-surface border-line-strong",
+                    ]}
+                  >
+                    <div
+                      class:list={[
+                        "absolute inset-0 pointer-events-none",
+                        it.accent === "solar" && "bg-[radial-gradient(420px_280px_at_85%_15%,rgba(43,182,115,0.10),transparent_60%)]",
+                        it.accent === "leaf" && "bg-[radial-gradient(420px_280px_at_15%_85%,rgba(43,182,115,0.10),transparent_60%)]",
+                        it.accent === "neutral" && "bg-[radial-gradient(420px_280px_at_85%_15%,rgba(10,26,18,0.04),transparent_60%)]",
+                      ]}
+                      aria-hidden="true"
+                    />
+                    <div class="absolute inset-0 grid-bg opacity-[0.06] pointer-events-none" aria-hidden="true" />
+
+                    <header class="relative p-5 sm:p-6">
+                      <span
+                        class:list={[
+                          "chip text-[0.62rem] sm:text-[0.68rem] py-1 px-2.5",
+                          it.accent === "solar" && "chip-solar",
+                          it.accent === "leaf" && "chip-leaf",
+                        ]}
+                      >
+                        {it.chip}
+                      </span>
+                    </header>
+
+                    <div class="relative flex-1 flex items-center justify-center px-5 sm:px-6">
+                      <div class="text-center">
+                        <p
+                          class:list={[
+                            "font-display leading-none text-[3.4rem] sm:text-[3.8rem] lg:text-[4.2rem]",
+                            it.accent === "solar" && "gradient-solar",
+                            it.accent === "leaf" && "text-leaf-deep",
+                            it.accent === "neutral" && "text-ink",
+                          ]}
+                          style="text-wrap: balance;"
+                        >
+                          {it.figure}
+                        </p>
+                        <p class="mt-2 font-mono text-[0.62rem] sm:text-[0.66rem] uppercase tracking-[0.18em] text-ink-muted">
+                          {it.caption}
+                        </p>
+                      </div>
+                    </div>
+
+                    <footer class="relative p-5 sm:p-6 border-t border-line/60">
+                      <h3 class="font-display text-[1rem] sm:text-[1.05rem] lg:text-[1.1rem] text-ink leading-snug">
+                        {it.title}
+                      </h3>
+                      <p class="mt-2 text-[0.78rem] sm:text-[0.82rem] text-ink-soft leading-relaxed line-clamp-2">
+                        {it.excerpt}
+                      </p>
+                    </footer>
+                  </article>
+                )}
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+
+      <!-- Controls (under the track) -->
+      <div class="mt-8 flex items-center justify-between gap-4 px-8 sm:px-12 lg:pl-[clamp(64px,6vw,140px)] lg:pr-12">
+        <div class="flex items-center gap-3 min-w-0 flex-1 max-w-[280px]">
+          <span
+            class="font-mono text-xs text-ink-muted tabular-nums shrink-0"
+            data-pubs-counter
+          >
+            01 / {String(items.length).padStart(2, "0")}
+          </span>
+          <div class="relative h-px w-full bg-line">
+            <div
+              class="absolute inset-y-0 left-0 bg-solar transition-[width] duration-200"
+              style={`width: ${Math.round(100 / items.length)}%`}
+              data-pubs-progress
+            ></div>
+          </div>
+        </div>
+
+        <div class="flex items-center gap-2">
+          <button
+            type="button"
+            class="w-10 h-10 rounded-full border border-line-strong text-ink-soft hover:text-ink hover:border-ink/40 transition-colors flex items-center justify-center disabled:opacity-30 disabled:cursor-not-allowed"
+            aria-label="Précédent"
+            data-pubs-prev
+          >
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+              <path d="M9 11L5 7l4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </button>
+          <button
+            type="button"
+            class="w-10 h-10 rounded-full border border-line-strong text-ink-soft hover:text-ink hover:border-ink/40 transition-colors flex items-center justify-center disabled:opacity-30 disabled:cursor-not-allowed"
+            aria-label="Suivant"
+            data-pubs-next
+          >
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+              <path d="M5 3l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .no-scrollbar::-webkit-scrollbar { display: none; }
+  .no-scrollbar { scrollbar-width: none; -ms-overflow-style: none; }
+</style>
+
+<script>
+  const track = document.querySelector<HTMLElement>("[data-pubs-track]");
+  const prev = document.querySelector<HTMLButtonElement>("[data-pubs-prev]");
+  const next = document.querySelector<HTMLButtonElement>("[data-pubs-next]");
+  const counter = document.querySelector<HTMLElement>("[data-pubs-counter]");
+  const progress = document.querySelector<HTMLElement>("[data-pubs-progress]");
+  const items = Array.from(
+    document.querySelectorAll<HTMLElement>("[data-pubs-item]")
+  );
+
+  if (track && items.length) {
+    const stepDistance = () => {
+      const first = items[0];
+      const second = items[1];
+      if (!second || !first) return track.clientWidth * 0.8;
+      return second.offsetLeft - first.offsetLeft;
+    };
+
+    const pad = (n: number) => String(n).padStart(2, "0");
+
+    const update = () => {
+      const max = track.scrollWidth - track.clientWidth;
+      const ratio = max > 0 ? track.scrollLeft / max : 0;
+
+      const itemW = stepDistance();
+      const idx = Math.min(
+        items.length,
+        Math.max(1, Math.round(track.scrollLeft / itemW) + 1)
+      );
+      if (counter) counter.textContent = `${pad(idx)} / ${pad(items.length)}`;
+      if (progress) {
+        const minPct = 100 / items.length;
+        const pct = Math.max(minPct, Math.min(100, ratio * 100 + minPct));
+        progress.style.width = `${pct}%`;
+      }
+      if (prev) prev.disabled = track.scrollLeft <= 4;
+      if (next) next.disabled = track.scrollLeft >= max - 4;
+    };
+
+    prev?.addEventListener("click", () =>
+      track.scrollBy({ left: -stepDistance(), behavior: "smooth" })
+    );
+    next?.addEventListener("click", () =>
+      track.scrollBy({ left: stepDistance(), behavior: "smooth" })
+    );
+
+    track.addEventListener("scroll", update, { passive: true });
+    window.addEventListener("resize", update, { passive: true });
+    update();
+
+    // Drag-to-scroll on desktop
+    let isDown = false;
+    let startX = 0;
+    let startScroll = 0;
+    track.addEventListener("pointerdown", (e) => {
+      if (e.pointerType === "touch") return;
+      isDown = true;
+      startX = e.clientX;
+      startScroll = track.scrollLeft;
+      track.setPointerCapture(e.pointerId);
+    });
+    track.addEventListener("pointermove", (e) => {
+      if (!isDown) return;
+      track.scrollLeft = startScroll - (e.clientX - startX);
+    });
+    const release = (e: PointerEvent) => {
+      isDown = false;
+      try { track.releasePointerCapture(e.pointerId); } catch {}
+    };
+    track.addEventListener("pointerup", release);
+    track.addEventListener("pointercancel", release);
+  }
+</script>

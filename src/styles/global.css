@@ -1,0 +1,375 @@
+@import "tailwindcss";
+
+/* Cleanoov — Design tokens v4
+   Direction: light-first, refined, competition-grade.
+   Brand colors: green (logo) + white. No gold, no neon, no 80s.
+   Some sections (Hero, Footer, CTA) opt-in to a dark surface via .dark-section.
+*/
+@theme {
+  /* === Surfaces (light) === */
+  --color-bg: #FAFAF7;          /* page background, off-white with warm tint */
+  --color-bg-elev: #F1F3EE;     /* elevated panel / alt section */
+  --color-surface: #FFFFFF;     /* cards, modals — pure white */
+  --color-surface-2: #F5F7F2;   /* secondary card / striped row */
+
+  /* === Ink (dark on light) === */
+  --color-ink: #0A1A12;         /* primary text — deep green-black */
+  --color-ink-soft: #34423A;    /* body text */
+  --color-ink-muted: #6B7B72;   /* tertiary text, captions */
+  --color-ink-faint: #A0AEA5;   /* very faint, hint */
+
+  /* === Lines === */
+  --color-line: rgba(10, 26, 18, 0.08);
+  --color-line-strong: rgba(10, 26, 18, 0.16);
+
+  /* === Brand greens — only color in the system === */
+  --color-leaf: #1A7A4F;          /* brand primary */
+  --color-leaf-bright: #2BB673;   /* highlights, hover */
+  --color-leaf-deep: #0E5535;     /* deep accent */
+
+  /* === "solar" repurposed as a darker green companion ===
+     (Variable names kept so existing `gradient-solar`, `chip-solar`,
+     `text-solar-bright` references remain valid.) */
+  --color-solar: #0E5535;          /* same value as leaf-deep */
+  --color-solar-bright: #1A7A4F;   /* same value as leaf */
+  --color-solar-deep: #07301F;     /* very deep forest */
+
+  /* Optional secondary cool accent — used very sparingly */
+  --color-electric: #0EA5A0;
+
+  /* Typography */
+  --font-display: "Space Grotesk", ui-sans-serif, system-ui, sans-serif;
+  --font-body: "Inter", ui-sans-serif, system-ui, -apple-system, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, monospace;
+
+  /* Container */
+  --container-narrow: 64rem;
+  --container-default: 78rem;
+  --container-wide: 90rem;
+
+  /* Easing */
+  --ease-out-soft: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-out-strong: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@layer base {
+  html {
+    background-color: var(--color-bg);
+    color: var(--color-ink);
+    font-family: var(--font-body);
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+    scroll-behavior: smooth;
+    color-scheme: light;
+  }
+
+  body {
+    font-feature-settings: "ss01", "cv11";
+    line-height: 1.55;
+    /* Subtle ambient green washes layered on the off-white bg */
+    background:
+      radial-gradient(1200px 700px at 85% -10%, rgba(43, 182, 115, 0.06), transparent 60%),
+      radial-gradient(1000px 600px at -10% 30%, rgba(26, 122, 79, 0.05), transparent 60%),
+      var(--color-bg);
+    background-attachment: fixed;
+  }
+
+  h1, h2, h3, h4 {
+    font-family: var(--font-display);
+    font-weight: 500;
+    letter-spacing: -0.02em;
+    line-height: 1.05;
+    color: var(--color-ink);
+  }
+
+  h1 { font-size: clamp(2.75rem, 6vw, 5.25rem); font-weight: 500; }
+  h2 { font-size: clamp(2rem, 4vw, 3.25rem); }
+  h3 { font-size: clamp(1.25rem, 2vw, 1.625rem); }
+
+  p { color: var(--color-ink-soft); }
+
+  a { color: inherit; text-decoration: none; }
+
+  ::selection {
+    background-color: var(--color-leaf);
+    color: white;
+  }
+
+  *:focus-visible {
+    outline: 2px solid var(--color-leaf);
+    outline-offset: 3px;
+    border-radius: 2px;
+  }
+
+  hr {
+    border: 0;
+    border-top: 1px solid var(--color-line);
+  }
+}
+
+@layer components {
+  /* Dark surface override — opt-in for Hero / Footer / CTA banners
+     Re-maps the surface, ink and line tokens locally so all components
+     using text-ink, bg-bg, border-line, etc. switch automatically. */
+  .dark-section {
+    --color-bg: #07120D;
+    --color-bg-elev: #0F1D17;
+    --color-surface: #14211B;
+    --color-surface-2: #1A2922;
+    --color-ink: #F3F6F2;
+    --color-ink-soft: rgba(243, 246, 242, 0.78);
+    --color-ink-muted: rgba(243, 246, 242, 0.55);
+    --color-ink-faint: rgba(243, 246, 242, 0.32);
+    --color-line: rgba(255, 255, 255, 0.10);
+    --color-line-strong: rgba(255, 255, 255, 0.20);
+    background-color: var(--color-bg);
+    color: var(--color-ink);
+    color-scheme: dark;
+  }
+
+  .container-narrow { max-width: var(--container-narrow); margin-inline: auto; padding-inline: 1.5rem; }
+  .container-default { max-width: var(--container-default); margin-inline: auto; padding-inline: 1.5rem; }
+  .container-wide { max-width: var(--container-wide); margin-inline: auto; padding-inline: 1.5rem; }
+
+  /* Eyebrow — small label above titles */
+  .eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    font-weight: 500;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--color-ink-muted);
+  }
+  .eyebrow::before {
+    content: "";
+    width: 28px;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--color-leaf));
+  }
+
+  /* Display titles with subtle gradient on a single word */
+  .gradient-solar {
+    background: linear-gradient(120deg, var(--color-leaf-bright), var(--color-leaf-deep));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+  .gradient-leaf {
+    background: linear-gradient(120deg, var(--color-leaf-bright), var(--color-leaf));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  /* Buttons */
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    padding: 0.95rem 1.5rem;
+    font-family: var(--font-body);
+    font-size: 0.92rem;
+    font-weight: 500;
+    letter-spacing: 0.005em;
+    border-radius: 999px;
+    transition: all 0.3s var(--ease-out-soft);
+    border: 1px solid transparent;
+    cursor: pointer;
+    white-space: nowrap;
+    line-height: 1;
+  }
+
+  .btn-primary {
+    background: linear-gradient(135deg, var(--color-leaf-bright), var(--color-leaf));
+    color: white;
+    box-shadow: 0 0 0 1px rgba(43, 182, 115, 0.30),
+                0 8px 24px -8px rgba(26, 122, 79, 0.45);
+  }
+  .btn-primary:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 0 0 1px rgba(43, 182, 115, 0.45),
+                0 14px 36px -10px rgba(26, 122, 79, 0.6);
+  }
+
+  .btn-secondary {
+    background-color: transparent;
+    color: var(--color-ink);
+    border-color: var(--color-line-strong);
+  }
+  .btn-secondary:hover {
+    border-color: var(--color-ink);
+    background-color: rgba(10, 26, 18, 0.04);
+  }
+  .dark-section .btn-secondary {
+    backdrop-filter: blur(10px);
+  }
+  .dark-section .btn-secondary:hover {
+    background-color: rgba(255, 255, 255, 0.06);
+  }
+
+  .btn-ghost {
+    background-color: transparent;
+    color: var(--color-ink);
+    padding-inline: 0;
+    border-radius: 0;
+    border-bottom: 1px solid var(--color-line-strong);
+    padding-bottom: 0.35rem;
+  }
+  .btn-ghost:hover {
+    color: var(--color-leaf);
+    border-color: var(--color-leaf);
+  }
+
+  /* Card surfaces — light by default, glass when in dark-section */
+  .surface {
+    background: var(--color-surface);
+    border: 1px solid var(--color-line);
+    border-radius: 14px;
+    box-shadow: 0 4px 24px -12px rgba(10, 26, 18, 0.08);
+  }
+  .surface-strong {
+    background: var(--color-surface);
+    border: 1px solid var(--color-line-strong);
+    border-radius: 14px;
+    box-shadow: 0 8px 32px -16px rgba(10, 26, 18, 0.12);
+  }
+  .dark-section .surface {
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.025), rgba(255, 255, 255, 0.012));
+    backdrop-filter: blur(8px);
+    box-shadow: none;
+  }
+  .dark-section .surface-strong {
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.045), rgba(255, 255, 255, 0.018));
+    backdrop-filter: blur(12px);
+    box-shadow: none;
+  }
+
+  /* Underline link with retract-on-hover */
+  .link-underline {
+    position: relative;
+    display: inline-block;
+  }
+  .link-underline::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: -2px;
+    height: 1px;
+    width: 100%;
+    background-color: currentColor;
+    transform-origin: right;
+    transform: scaleX(1);
+    transition: transform 0.4s var(--ease-out-soft);
+  }
+  .link-underline:hover::after {
+    transform-origin: left;
+    transform: scaleX(0);
+  }
+
+  /* Scroll reveal */
+  .reveal {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.7s var(--ease-out-strong),
+                transform 0.7s var(--ease-out-strong);
+  }
+  .reveal.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* Decorative micro-grid (use as bg overlay) */
+  .grid-bg {
+    background-image:
+      linear-gradient(var(--color-line) 1px, transparent 1px),
+      linear-gradient(90deg, var(--color-line) 1px, transparent 1px);
+    background-size: 56px 56px;
+  }
+  .grid-bg-fade {
+    -webkit-mask-image: radial-gradient(circle at 50% 30%, black 30%, transparent 80%);
+            mask-image: radial-gradient(circle at 50% 30%, black 30%, transparent 80%);
+  }
+
+  /* Tag chip */
+  .chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.35rem 0.7rem;
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--color-ink-soft);
+    border: 1px solid var(--color-line-strong);
+    border-radius: 999px;
+    background: rgba(10, 26, 18, 0.04);
+  }
+  .dark-section .chip {
+    background: rgba(255, 255, 255, 0.04);
+  }
+  .chip-solar {
+    color: var(--color-leaf-deep);
+    border-color: rgba(14, 85, 53, 0.30);
+    background: rgba(14, 85, 53, 0.08);
+  }
+  .chip-leaf {
+    color: var(--color-leaf-deep);
+    border-color: rgba(43, 182, 115, 0.32);
+    background: rgba(43, 182, 115, 0.10);
+  }
+  .dark-section .chip-solar {
+    color: var(--color-leaf-bright);
+    border-color: rgba(43, 182, 115, 0.30);
+    background: rgba(43, 182, 115, 0.10);
+  }
+  .dark-section .chip-leaf {
+    color: var(--color-leaf-bright);
+    border-color: rgba(43, 182, 115, 0.32);
+    background: rgba(43, 182, 115, 0.10);
+  }
+
+  /* Pulsing dot indicator (live, active) */
+  .dot-pulse {
+    position: relative;
+    display: inline-block;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--color-leaf-bright);
+  }
+  .dot-pulse::after {
+    content: "";
+    position: absolute;
+    inset: -4px;
+    border-radius: 50%;
+    background: var(--color-leaf-bright);
+    opacity: 0.5;
+    animation: pulse 1.8s var(--ease-out-soft) infinite;
+  }
+}
+
+@keyframes pulse {
+  0%   { transform: scale(0.6); opacity: 0.55; }
+  70%  { transform: scale(1.6); opacity: 0; }
+  100% { transform: scale(1.6); opacity: 0; }
+}
+
+@keyframes drift {
+  0%   { transform: translate3d(0, 0, 0); }
+  50%  { transform: translate3d(0, -8px, 0); }
+  100% { transform: translate3d(0, 0, 0); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+  .reveal { opacity: 1; transform: none; }
+  .dot-pulse::after { animation: none; }
+}

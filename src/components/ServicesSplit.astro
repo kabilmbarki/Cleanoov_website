@@ -1,0 +1,98 @@
+---
+// Services — 3-card preview (the full detail lives at /services).
+const services = [
+  {
+    n: "01",
+    title: "Nettoyage",
+    image: "/imgs/chantiers/chantier-02.jpg",
+    points: [
+      "Eau déminéralisée à dosage maîtrisé",
+      "Brossage robotisé ou manuel selon site",
+      "Jusqu'à +25 % de rendement restauré",
+    ],
+    href: "/services#nettoyage",
+  },
+  {
+    n: "02",
+    title: "Diagnostic",
+    image: "/imgs/chantiers/chantier-toit.jpg",
+    points: [
+      "Imagerie thermique IR & inspection optique",
+      "Détection de hot-spots & modules défaillants",
+      "Rapport de production et recommandations",
+    ],
+    href: "/services#diagnostic",
+  },
+  {
+    n: "03",
+    title: "Maintenance préventive",
+    image: "/imgs/chantiers/chantier-06.jpg",
+    points: [
+      "Contrats annuels & visites planifiées",
+      "Diagnostic préventif & alertes anticipées",
+      "Suivi de production sur la durée",
+    ],
+    href: "/services#maintenance",
+  },
+];
+---
+
+<section class="py-24 lg:py-32 border-t border-line">
+  <div class="container-wide">
+    <div class="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-6 mb-14">
+      <div class="reveal max-w-2xl">
+        <p class="eyebrow">Savoir-faire</p>
+        <h2 class="mt-6" style="text-wrap: balance;">
+          Trois expertises,
+          <span class="gradient-solar italic font-semibold">une exigence</span>.
+        </h2>
+      </div>
+      <a href="/services" class="btn-ghost text-sm font-medium reveal">
+        Voir le détail des services →
+      </a>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 lg:gap-6">
+      {
+        services.map((s) => (
+          <a href={s.href} class="reveal group surface overflow-hidden block">
+            <div class="relative aspect-[16/10] overflow-hidden">
+              <img
+                src={s.image}
+                alt={s.title}
+                class="h-full w-full object-cover transition-transform duration-700 group-hover:scale-[1.04]"
+                loading="lazy"
+              />
+              <div
+                class="absolute inset-0 bg-[linear-gradient(180deg,transparent_45%,rgba(7,9,13,0.85)_100%)]"
+                aria-hidden="true"
+              />
+              <span class="absolute top-5 left-5 chip">
+                Service {s.n}
+              </span>
+            </div>
+            <div class="p-7 lg:p-8">
+              <h3 class="font-display text-2xl lg:text-[1.7rem] text-ink leading-tight">
+                {s.title}
+              </h3>
+              <ul class="mt-6 space-y-3">
+                {s.points.map((p) => (
+                  <li class="flex items-start gap-3 text-ink-soft text-[0.92rem]">
+                    <span class="mt-[0.65rem] block w-3 h-px bg-solar shrink-0" aria-hidden="true" />
+                    <span>{p}</span>
+                  </li>
+                ))}
+              </ul>
+              <span class="mt-7 inline-flex items-center gap-2 text-sm font-medium text-ink-soft group-hover:text-solar transition-colors">
+                En savoir plus
+                <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+                  <path d="M3 7h8M7 3l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </span>
+            </div>
+          </a>
+        ))
+      }
+    </div>
+  </div>
+</section>
