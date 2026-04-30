@@ -6,6 +6,25 @@ const title =
 const description =
   "Décrivez votre installation photovoltaïque (panneaux, environnement, dernier nettoyage) — obtenez une estimation personnalisée des pertes de rendement et du gain potentiel après intervention. Cleanoov, startup tunisienne, réponse sous 48 h.";
 
+// ContactPage JSON-LD — strengthens entity graph and helps local SEO
+const siteUrl = "https://cleanoov.tn/";
+const contactPageSchema = {
+  "@context": "https://schema.org",
+  "@type": "ContactPage",
+  "@id": `${siteUrl}contact#contactpage`,
+  url: `${siteUrl}contact`,
+  name: "Contact & devis Cleanoov",
+  description,
+  inLanguage: "fr-TN",
+  mainEntity: { "@id": `${siteUrl}#business` },
+  isPartOf: { "@id": `${siteUrl}#website` },
+  potentialAction: {
+    "@type": "CommunicateAction",
+    name: "Demander un audit personnalisé",
+    target: `${siteUrl}contact`,
+  },
+};
+
 const installationTypes = [
   { value: "residentiel", label: "Résidentielle", hint: "Maison individuelle" },
   { value: "tertiaire", label: "Tertiaire", hint: "Commerce, bureau" },
@@ -42,7 +61,12 @@ const puissanceOptions = [
 ];
 ---
 
-<BaseLayout title={title} description={description}>
+<BaseLayout
+  title={title}
+  description={description}
+  image="/og-contact.jpg"
+  imageAlt="Cleanoov — diagnostic thermique infrarouge sur panneaux photovoltaïques · audit personnalisé en 60 secondes"
+>
   <!-- Hero -->
   <section class="pt-32 lg:pt-40 pb-12 lg:pb-16">
     <div class="container-narrow">
@@ -725,4 +749,7 @@ const puissanceOptions = [
       requestAnimationFrame(tick);
     }
   </script>
+
+  <!-- ContactPage structured data -->
+  <script type="application/ld+json" set:html={JSON.stringify(contactPageSchema)} />
 </BaseLayout>
