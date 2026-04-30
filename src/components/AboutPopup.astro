@@ -1,0 +1,126 @@
+---
+// Discrete bottom-right toast inviting the visitor to discover /a-propos.
+// - Skipped on /a-propos itself.
+// - Skipped if previously dismissed (localStorage).
+// - Appears after 8 s OR after the user scrolls past 35 % of the page.
+// - Slide-up + fade animation; respects prefers-reduced-motion.
+// - Mobile: full-width bottom drawer with safe-area padding.
+---
+
+<aside
+  id="about-popup"
+  class="about-popup fixed z-40 left-4 right-4 bottom-4 sm:left-auto sm:right-6 sm:bottom-6 sm:max-w-[22rem] rounded-2xl border border-line bg-surface shadow-[0_18px_42px_-18px_rgba(10,26,18,0.30)] opacity-0 translate-y-3 pointer-events-none transition-[opacity,transform] duration-500"
+  role="complementary"
+  aria-label="Découvrir Cleanoov"
+  aria-hidden="true"
+>
+  <div class="relative p-5 sm:p-6">
+    <button
+      type="button"
+      id="about-popup-close"
+      class="absolute top-3 right-3 w-8 h-8 inline-flex items-center justify-center rounded-full text-ink-muted hover:text-ink hover:bg-bg-elev transition-colors"
+      aria-label="Fermer"
+    >
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M18 6L6 18M6 6l12 12"/>
+      </svg>
+    </button>
+
+    <div class="flex items-center gap-2">
+      <span class="dot-pulse" aria-hidden="true"></span>
+      <p class="font-mono text-[0.66rem] uppercase tracking-[0.18em] text-ink-muted">
+        Découvrir · Cleanoov
+      </p>
+    </div>
+
+    <h3 class="mt-3 font-display text-[1.15rem] sm:text-[1.25rem] text-ink leading-tight pr-6">
+      Qui sommes-nous ?
+    </h3>
+
+    <p class="mt-2 text-sm text-ink-soft leading-relaxed">
+      Notre vision, notre mission et les valeurs qui guident une jeune
+      équipe d'innovation solaire en Tunisie.
+    </p>
+
+    <a
+      href="/a-propos"
+      id="about-popup-link"
+      class="mt-4 inline-flex items-center gap-2 text-sm font-medium text-leaf hover:text-leaf-bright transition-colors"
+    >
+      En savoir plus
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M5 12h14M13 5l7 7-7 7"/>
+      </svg>
+    </a>
+  </div>
+</aside>
+
+<script>
+  const STORAGE_KEY = "cleanoov:about-popup-v1";
+  const DELAY_MS = 8000;
+  const SCROLL_THRESHOLD = 0.35;
+
+  const popup = document.getElementById("about-popup");
+  if (popup) {
+    const path = window.location.pathname.replace(/\/$/, "") || "/";
+
+    const skipPaths = ["/a-propos"];
+    const alreadyDismissed = (() => {
+      try {
+        return localStorage.getItem(STORAGE_KEY) === "1";
+      } catch {
+        return false;
+      }
+    })();
+
+    if (skipPaths.includes(path) || alreadyDismissed) {
+      popup.remove();
+    } else {
+      let shown = false;
+
+      const show = () => {
+        if (shown) return;
+        shown = true;
+        popup.classList.remove("opacity-0", "translate-y-3", "pointer-events-none");
+        popup.setAttribute("aria-hidden", "false");
+        cleanup();
+      };
+
+      const dismiss = () => {
+        popup.classList.add("opacity-0", "translate-y-3", "pointer-events-none");
+        popup.setAttribute("aria-hidden", "true");
+        try {
+          localStorage.setItem(STORAGE_KEY, "1");
+        } catch {
+          /* storage blocked, ignore */
+        }
+        window.setTimeout(() => popup.remove(), 500);
+      };
+
+      const onScroll = () => {
+        const scrolled = window.scrollY;
+        const max = document.documentElement.scrollHeight - window.innerHeight;
+        if (max > 0 && scrolled / max >= SCROLL_THRESHOLD) show();
+      };
+
+      const timer = window.setTimeout(show, DELAY_MS);
+      window.addEventListener("scroll", onScroll, { passive: true });
+
+      function cleanup() {
+        window.clearTimeout(timer);
+        window.removeEventListener("scroll", onScroll);
+      }
+
+      const closeBtn = document.getElementById("about-popup-close");
+      const link = document.getElementById("about-popup-link");
+      closeBtn?.addEventListener("click", dismiss);
+      link?.addEventListener("click", () => {
+        try {
+          localStorage.setItem(STORAGE_KEY, "1");
+        } catch {
+          /* ignore */
+        }
+      });
+    }
+  }
+</script>

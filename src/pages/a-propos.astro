@@ -1,0 +1,269 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import CtaBanner from "../components/CtaBanner.astro";
+
+const title =
+  "À propos de Cleanoov — Vision, mission et valeurs d'une startup solaire tunisienne";
+const description =
+  "Découvrez Cleanoov : startup tunisienne d'innovation solaire. Notre vision pour la transition énergétique, notre mission de préservation des installations photovoltaïques, et les valeurs qui guident notre équipe.";
+
+const valeurs = [
+  {
+    label: "Innovation",
+    body:
+      "La technologie au service du concret. Chaque outil, chaque méthode est pensée pour répondre à une réalité terrain — pas à une slide.",
+    icon: "spark",
+  },
+  {
+    label: "Rigueur",
+    body:
+      "Mesurer avant d'agir. Documenter chaque intervention. Reporter chaque gain. La performance se prouve en données, pas en promesses.",
+    icon: "ruler",
+  },
+  {
+    label: "Engagement",
+    body:
+      "Une jeune équipe tunisienne investie à 100 % dans la transition énergétique nationale. La cleantech locale n'est pas un slogan — c'est notre quotidien.",
+    icon: "flag",
+  },
+  {
+    label: "Durabilité",
+    body:
+      "Performance solaire = résilience climatique. Chaque kWh sauvé compte. Chaque centrale optimisée prolonge la vie utile de l'investissement.",
+    icon: "leaf",
+  },
+];
+
+const piliers = [
+  {
+    title: "Nettoyage adapté",
+    desc:
+      "Eau déminéralisée, brossage robotisé, intervention par drone — calibrés sur chaque installation.",
+  },
+  {
+    title: "Diagnostic avancé",
+    desc:
+      "Imagerie thermique infrarouge, inspection optique, analyse fine de production — la santé technique de votre centrale, en clair.",
+  },
+  {
+    title: "Maintenance & IA",
+    desc:
+      "Maintenance préventive pilotée par intelligence artificielle — alertes anticipées, planification dynamique, rendement sécurisé.",
+  },
+];
+
+// AboutPage JSON-LD — strengthens the entity graph for sitelinks & rich results.
+const siteUrl = "https://cleanoov.tn/";
+const aboutPageSchema = {
+  "@context": "https://schema.org",
+  "@type": "AboutPage",
+  "@id": `${siteUrl}a-propos#aboutpage`,
+  url: `${siteUrl}a-propos`,
+  name: "À propos de Cleanoov",
+  description,
+  inLanguage: "fr-TN",
+  mainEntity: { "@id": `${siteUrl}#business` },
+  isPartOf: { "@id": `${siteUrl}#website` },
+};
+---
+
+<BaseLayout title={title} description={description}>
+  <!-- ─────────── PAGE INTRO ─────────── -->
+  <section class="relative pt-36 lg:pt-44 pb-20 lg:pb-28 overflow-hidden border-b border-line">
+    <div
+      class="absolute inset-0 bg-[radial-gradient(900px_500px_at_85%_-5%,rgba(43,182,115,0.10),transparent_60%)] pointer-events-none"
+      aria-hidden="true"
+    ></div>
+
+    <div class="container-narrow relative">
+      <p class="eyebrow reveal">À propos · Cleanoov</p>
+
+      <h1
+        class="mt-10 font-display font-semibold text-[2.4rem] sm:text-[3.4rem] lg:text-[4.4rem] xl:text-[5rem] leading-[1] tracking-tight reveal"
+        style="text-wrap: balance;"
+      >
+        Une <span class="gradient-leaf italic">jeune équipe tunisienne</span>
+        qui pense le solaire comme un terrain de R&amp;D.
+      </h1>
+
+      <p class="mt-10 max-w-2xl text-lg lg:text-xl text-ink-soft leading-relaxed reveal">
+        Cleanoov est une startup tunisienne innovante, spécialisée dans
+        l'<span class="text-ink">optimisation des rendements</span> des installations
+        photovoltaïques — pour le résidentiel, l'industrie et les centrales au sol.
+      </p>
+
+      <div class="mt-12 flex flex-wrap items-center gap-3 reveal">
+        <span class="chip chip-leaf">Lauréat iptic · INNORPI</span>
+        <span class="chip chip-leaf">Lauréat ctama · 2025</span>
+        <span class="chip">Exposants JCI World Congress · 2026</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─────────── VISION ─────────── -->
+  <section class="relative py-28 lg:py-44 overflow-hidden border-b border-line">
+    <span
+      class="absolute pointer-events-none select-none -top-4 -right-4 sm:-top-6 sm:-right-8 lg:-top-12 lg:-right-16 font-display font-bold leading-[0.85] tracking-tighter text-leaf/[0.05] text-[7rem] sm:text-[12rem] lg:text-[20rem] xl:text-[26rem]"
+      aria-hidden="true"
+    >
+      Vision.
+    </span>
+
+    <div class="container-narrow relative">
+      <p class="eyebrow reveal">Notre vision</p>
+
+      <h2
+        class="mt-10 font-display font-semibold text-[2.2rem] sm:text-[3rem] lg:text-[4rem] xl:text-[4.6rem] leading-[1.05] tracking-tight reveal"
+        style="text-wrap: balance;"
+      >
+        Une Tunisie où chaque
+        <span class="gradient-leaf italic">panneau solaire</span>
+        produit à 100 % de son potentiel — année après année.
+      </h2>
+
+      <div class="mt-14 grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16">
+        <p class="lg:col-span-8 text-lg lg:text-xl text-ink-soft leading-relaxed reveal">
+          Nous croyons à une transition énergétique africaine portée par
+          <span class="text-ink">l'innovation locale</span>, où la performance
+          des centrales solaires devient un sujet de R&amp;D — pas une
+          fatalité due à la poussière, à la chaleur ou au manque d'entretien.
+        </p>
+        <div class="lg:col-span-4 reveal">
+          <div class="border-l-2 border-leaf pl-5">
+            <p class="font-mono text-[0.7rem] uppercase tracking-[0.18em] text-ink-muted">
+              Horizon 2030
+            </p>
+            <p class="mt-3 text-base text-ink leading-snug">
+              Devenir la référence cleantech du nettoyage et de la maintenance
+              photovoltaïque en Afrique du Nord.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─────────── MISSION ─────────── -->
+  <section class="dark-section relative py-28 lg:py-44 overflow-hidden border-b border-line">
+    <span
+      class="absolute pointer-events-none select-none -bottom-6 -left-4 sm:-bottom-10 sm:-left-8 lg:-bottom-16 lg:-left-12 font-display font-bold leading-[0.85] tracking-tighter text-leaf/[0.10] text-[7rem] sm:text-[12rem] lg:text-[20rem] xl:text-[26rem]"
+      aria-hidden="true"
+    >
+      Mission.
+    </span>
+
+    <div
+      class="absolute inset-0 grid-bg grid-bg-fade opacity-30 pointer-events-none"
+      aria-hidden="true"
+    ></div>
+
+    <div class="container-narrow relative">
+      <p class="eyebrow reveal">Notre mission</p>
+
+      <h2
+        class="mt-10 font-display font-semibold text-[2.2rem] sm:text-[3rem] lg:text-[4rem] xl:text-[4.6rem] leading-[1.05] tracking-tight reveal"
+        style="text-wrap: balance;"
+      >
+        <span class="gradient-leaf italic">Préserver</span>, mesurer et
+        <span class="gradient-leaf italic">maximiser</span>
+        la valeur de chaque centrale photovoltaïque.
+      </h2>
+
+      <p class="mt-10 max-w-2xl text-lg lg:text-xl text-ink-soft leading-relaxed reveal">
+        Nous combinons trois métiers dans un seul objectif : que vos panneaux
+        produisent à 100 % de leur potentiel, dans la durée — du résidentiel
+        à la centrale industrielle.
+      </p>
+    </div>
+
+    <div class="container-wide mt-16 lg:mt-20 relative">
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4 lg:gap-5">
+        {
+          piliers.map((p, i) => (
+            <article class="reveal group relative rounded-xl lg:rounded-2xl border border-line bg-surface p-7 lg:p-8 transition-colors duration-300 hover:border-leaf/40">
+              <span class="font-mono text-[0.72rem] uppercase tracking-[0.18em] text-ink-muted">
+                0{i + 1}
+              </span>
+              <h3 class="mt-4 font-display text-xl lg:text-[1.4rem] text-ink leading-tight">
+                {p.title}
+              </h3>
+              <p class="mt-3 text-sm lg:text-[0.95rem] text-ink-soft leading-relaxed">
+                {p.desc}
+              </p>
+            </article>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- ─────────── VALEURS ─────────── -->
+  <section class="relative py-28 lg:py-44 overflow-hidden border-b border-line">
+    <span
+      class="absolute pointer-events-none select-none -top-6 left-1/2 -translate-x-1/2 font-display font-bold leading-[0.85] tracking-tighter text-leaf/[0.05] text-[7rem] sm:text-[12rem] lg:text-[20rem] xl:text-[26rem] whitespace-nowrap"
+      aria-hidden="true"
+    >
+      Valeurs.
+    </span>
+
+    <div class="container-narrow relative">
+      <p class="eyebrow reveal">Nos valeurs</p>
+
+      <h2
+        class="mt-10 font-display font-semibold text-[2.2rem] sm:text-[3rem] lg:text-[4rem] xl:text-[4.6rem] leading-[1.05] tracking-tight reveal"
+        style="text-wrap: balance;"
+      >
+        Quatre principes — un seul cap :
+        <span class="gradient-leaf italic">la performance solaire vérifiable</span>.
+      </h2>
+    </div>
+
+    <div class="container-wide mt-16 lg:mt-20 relative">
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-5">
+        {
+          valeurs.map((v) => (
+            <article class="reveal group relative rounded-xl lg:rounded-2xl border border-line bg-surface p-7 lg:p-8 transition-colors duration-300 hover:border-leaf/40 h-full flex flex-col">
+              <span class="inline-flex w-11 h-11 items-center justify-center rounded-full bg-leaf/10 text-leaf transition-transform duration-300 group-hover:scale-110">
+                {v.icon === "spark" && (
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <path d="M12 2v6M12 16v6M2 12h6M16 12h6M5 5l4 4M15 15l4 4M5 19l4-4M15 9l4-4" />
+                  </svg>
+                )}
+                {v.icon === "ruler" && (
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <path d="M3 17l13-13 4 4L7 21z" />
+                    <path d="M7 11l1.5 1.5M10 8l1.5 1.5M13 5l1.5 1.5M5 14l1.5 1.5" />
+                  </svg>
+                )}
+                {v.icon === "flag" && (
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <path d="M4 21V4M4 4h13l-2 4 2 4H4" />
+                  </svg>
+                )}
+                {v.icon === "leaf" && (
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <path d="M11 20A7 7 0 0 1 4 13c0-5 5-9 13-9 0 7-3 13-6 16z" />
+                    <path d="M5 20l8-8" />
+                  </svg>
+                )}
+              </span>
+
+              <h3 class="mt-6 font-display text-xl lg:text-[1.35rem] text-ink leading-tight">
+                {v.label}
+              </h3>
+              <p class="mt-3 text-sm lg:text-[0.95rem] text-ink-soft leading-relaxed">
+                {v.body}
+              </p>
+            </article>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- ─────────── CTA ─────────── -->
+  <CtaBanner />
+
+  <!-- AboutPage structured data -->
+  <script type="application/ld+json" set:html={JSON.stringify(aboutPageSchema)} />
+</BaseLayout>
