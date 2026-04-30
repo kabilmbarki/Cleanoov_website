@@ -4,7 +4,7 @@ import BaseLayout from "../layouts/BaseLayout.astro";
 const title =
   "Contact & devis — Audit personnalisé pour votre installation solaire | Cleanoov";
 const description =
-  "Décrivez votre installation photovoltaïque (panneaux, environnement, dernier nettoyage) — obtenez en direct une estimation des pertes de rendement et du gain potentiel après intervention. Cleanoov, startup tunisienne, réponse sous 48 h.";
+  "Décrivez votre installation photovoltaïque (panneaux, environnement, dernier nettoyage) — obtenez une estimation personnalisée des pertes de rendement et du gain potentiel après intervention. Cleanoov, startup tunisienne, réponse sous 48 h.";
 
 const installationTypes = [
   { value: "residentiel", label: "Résidentielle", hint: "Maison individuelle" },
@@ -14,22 +14,9 @@ const installationTypes = [
 ];
 
 const villes = [
-  "Tunis",
-  "Ariana",
-  "Ben Arous",
-  "Bizerte",
-  "Béja",
-  "Nabeul",
-  "Sousse",
-  "Monastir",
-  "Mahdia",
-  "Sfax",
-  "Kairouan",
-  "Gafsa",
-  "Tozeur",
-  "Gabès",
-  "Médenine",
-  "Autre",
+  "Tunis","Ariana","Ben Arous","Bizerte","Béja","Nabeul",
+  "Sousse","Monastir","Mahdia","Sfax","Kairouan","Gafsa",
+  "Tozeur","Gabès","Médenine","Autre",
 ];
 
 const dernierNettoyage = [
@@ -46,24 +33,31 @@ const environnements = [
   { value: "cotier", label: "Côtier", hint: "Sel, humidité marine" },
   { value: "aride", label: "Aride / Sud", hint: "Sable, poussière intense" },
 ];
+
+const puissanceOptions = [
+  { value: 270, title: "270 W", hint: "Panneaux anciens · avant 2017" },
+  { value: 400, title: "400 W", hint: "Panneaux modernes · 2018 → 2022" },
+  { value: 540, title: "540 W", hint: "Panneaux récents · 2023 et après" },
+  { value: 400, title: "Je ne sais pas", hint: "On prend la moyenne (400 W)", unknown: true },
+];
 ---
 
 <BaseLayout title={title} description={description}>
   <!-- Hero -->
   <section class="pt-32 lg:pt-40 pb-12 lg:pb-16">
     <div class="container-narrow">
-      <p class="eyebrow reveal">Contact · Audit en 60 secondes</p>
+      <p class="eyebrow reveal">Contact · Audit personnalisé</p>
       <h1
         class="mt-8 font-display font-semibold text-[2.2rem] sm:text-[3rem] lg:text-[3.6rem] leading-[1.05] tracking-tight reveal"
         style="text-wrap: balance;"
       >
         Décrivez votre installation —
-        <span class="gradient-leaf italic">on estime le potentiel</span>
-        en direct.
+        <span class="gradient-leaf italic">on calcule votre potentiel</span>
+        en quelques clics.
       </h1>
       <p class="mt-7 max-w-2xl text-lg text-ink-soft leading-relaxed reveal">
         Quelques questions sur vos panneaux, votre environnement et votre
-        dernier nettoyage. Notre moteur calcule en live la perte de rendement
+        dernier nettoyage. Notre moteur estime la perte de rendement
         probable et le gain attendu après intervention.
       </p>
     </div>
@@ -71,32 +65,20 @@ const environnements = [
 
   <!-- Tabs -->
   <section class="pb-4">
-    <div class="container-wide">
+    <div class="container-narrow">
       <div
         role="tablist"
         aria-label="Mode de prise de contact"
         class="inline-flex flex-wrap gap-1 p-1 rounded-full border border-line bg-bg-elev"
       >
-        <button
-          type="button"
-          role="tab"
-          id="tab-audit"
-          aria-controls="panel-audit"
-          aria-selected="true"
-          data-tab="audit"
-          class="tab-btn px-4 sm:px-5 py-2 rounded-full text-sm font-medium transition-colors"
-        >
+        <button type="button" role="tab" id="tab-audit" aria-controls="panel-audit"
+          aria-selected="true" data-tab="audit"
+          class="tab-btn px-4 sm:px-5 py-2 rounded-full text-sm font-medium transition-colors">
           Audit personnalisé
         </button>
-        <button
-          type="button"
-          role="tab"
-          id="tab-message"
-          aria-controls="panel-message"
-          aria-selected="false"
-          data-tab="message"
-          class="tab-btn px-4 sm:px-5 py-2 rounded-full text-sm font-medium transition-colors"
-        >
+        <button type="button" role="tab" id="tab-message" aria-controls="panel-message"
+          aria-selected="false" data-tab="message"
+          class="tab-btn px-4 sm:px-5 py-2 rounded-full text-sm font-medium transition-colors">
           Message direct
         </button>
       </div>
@@ -105,274 +87,252 @@ const environnements = [
 
   <!-- ─────── Panel: Audit ─────── -->
   <section id="panel-audit" role="tabpanel" aria-labelledby="tab-audit" class="pb-24 lg:pb-32">
-    <div class="container-wide">
-      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10">
-        <!-- Left: form -->
-        <form
-          id="audit-form"
-          name="cleanoov-audit"
-          method="POST"
-          data-netlify="true"
-          netlify-honeypot="bot-field"
-          class="lg:col-span-7 space-y-10"
-        >
-          <input type="hidden" name="form-name" value="cleanoov-audit" />
-          <p class="hidden">
-            <label>Ne pas remplir : <input name="bot-field" /></label>
+    <div class="container-narrow">
+      <form
+        id="audit-form"
+        name="cleanoov-audit"
+        method="POST"
+        data-netlify="true"
+        netlify-honeypot="bot-field"
+        class="space-y-10"
+      >
+        <input type="hidden" name="form-name" value="cleanoov-audit" />
+        <input type="hidden" name="puissance_panneau" id="hidden-power" value="" />
+        <input type="hidden" name="kwp_estime" id="hidden-kwp" value="" />
+        <input type="hidden" name="production_estimee" id="hidden-annual" value="" />
+        <input type="hidden" name="pertes_estimees_pct" id="hidden-loss-pct" value="" />
+        <input type="hidden" name="gain_estime" id="hidden-recovery" value="" />
+        <p class="hidden">
+          <label>Ne pas remplir : <input name="bot-field" /></label>
+        </p>
+
+        <!-- Section 1 — Votre site -->
+        <fieldset class="reveal">
+          <legend class="step-legend"><span class="step-num">1</span> Votre site</legend>
+
+          <p class="step-label">Type d'installation</p>
+          <div class="mt-3 grid grid-cols-2 lg:grid-cols-4 gap-2.5">
+            {installationTypes.map((it, i) => (
+              <label class="radio-card">
+                <input type="radio" name="type_installation" value={it.value}
+                  class="peer sr-only" required checked={i === 0} />
+                <span class="radio-card-inner">
+                  <span class="font-display text-base text-ink leading-tight">{it.label}</span>
+                  <span class="mt-1 font-mono text-[0.65rem] uppercase tracking-[0.14em] text-ink-muted">{it.hint}</span>
+                </span>
+              </label>
+            ))}
+          </div>
+
+          <p class="step-label mt-6">Configuration de pose</p>
+          <div class="mt-3 grid grid-cols-2 gap-2.5">
+            <label class="radio-card">
+              <input type="radio" name="pose" value="toiture" class="peer sr-only" required checked />
+              <span class="radio-card-inner">
+                <span class="font-display text-base text-ink">Toiture</span>
+                <span class="mt-1 font-mono text-[0.65rem] uppercase tracking-[0.14em] text-ink-muted">Plate ou inclinée</span>
+              </span>
+            </label>
+            <label class="radio-card">
+              <input type="radio" name="pose" value="sol" class="peer sr-only" />
+              <span class="radio-card-inner">
+                <span class="font-display text-base text-ink">Au sol</span>
+                <span class="mt-1 font-mono text-[0.65rem] uppercase tracking-[0.14em] text-ink-muted">Champ photovoltaïque</span>
+              </span>
+            </label>
+          </div>
+
+          <p class="step-label mt-6">Localisation</p>
+          <select name="ville" required class="input-field mt-3">
+            <option value="" disabled selected>Choisir une ville…</option>
+            {villes.map((v) => <option value={v}>{v}</option>)}
+          </select>
+        </fieldset>
+
+        <!-- Section 2 — L'installation -->
+        <fieldset class="reveal">
+          <legend class="step-legend"><span class="step-num">2</span> L'installation</legend>
+
+          <p class="step-label">Nombre de panneaux : <span id="panels-display" class="text-ink font-display text-lg">12</span></p>
+          <input id="panels-input" type="range" name="nb_panneaux" min="2" max="1000" step="1" value="12" class="slider-leaf mt-3" />
+          <div class="mt-1 flex justify-between font-mono text-[0.64rem] uppercase tracking-[0.14em] text-ink-muted">
+            <span>2</span><span>250</span><span>500</span><span>1000+</span>
+          </div>
+
+          <p class="step-label mt-6">Année d'installation : <span id="year-display" class="text-ink font-display text-lg">2022</span></p>
+          <input id="year-input" type="range" name="annee_installation" min="2010" max="2026" step="1" value="2022" class="slider-leaf mt-3" />
+          <div class="mt-1 flex justify-between font-mono text-[0.64rem] uppercase tracking-[0.14em] text-ink-muted">
+            <span>2010</span><span>2018</span><span>2026</span>
+          </div>
+
+          <p class="step-label mt-6">Dernier nettoyage</p>
+          <div class="mt-3 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-2.5">
+            {dernierNettoyage.map((c, i) => (
+              <label class="radio-pill">
+                <input type="radio" name="dernier_nettoyage" value={c.value} class="peer sr-only" required checked={i === 0} />
+                <span class="radio-pill-inner">{c.label}</span>
+              </label>
+            ))}
+          </div>
+        </fieldset>
+
+        <!-- Section 3 — Environnement -->
+        <fieldset class="reveal">
+          <legend class="step-legend"><span class="step-num">3</span> Environnement</legend>
+          <div class="mt-3 grid grid-cols-2 lg:grid-cols-4 gap-2.5">
+            {environnements.map((e, i) => (
+              <label class="radio-card">
+                <input type="radio" name="environnement" value={e.value} class="peer sr-only" required checked={i === 0} />
+                <span class="radio-card-inner">
+                  <span class="font-display text-base text-ink leading-tight">{e.label}</span>
+                  <span class="mt-1 font-mono text-[0.65rem] uppercase tracking-[0.14em] text-ink-muted">{e.hint}</span>
+                </span>
+              </label>
+            ))}
+          </div>
+        </fieldset>
+
+        <!-- Section 4 — Coordonnées -->
+        <fieldset class="reveal">
+          <legend class="step-legend"><span class="step-num">4</span> Vos coordonnées</legend>
+          <div class="mt-4 grid grid-cols-1 md:grid-cols-2 gap-4">
+            <label class="block">
+              <span class="step-label">Nom complet *</span>
+              <input type="text" name="nom" required class="input-field mt-2" />
+            </label>
+            <label class="block">
+              <span class="step-label">Téléphone *</span>
+              <input type="tel" name="telephone" required inputmode="tel" placeholder="+216 ..." class="input-field mt-2" />
+            </label>
+            <label class="block md:col-span-2">
+              <span class="step-label">Email *</span>
+              <input type="email" name="email" required class="input-field mt-2" />
+            </label>
+            <label class="block md:col-span-2">
+              <span class="step-label">Message (optionnel)</span>
+              <textarea name="message" rows="3" placeholder="Précisions, contraintes d'accès, urgence…" class="input-field mt-2 resize-y"></textarea>
+            </label>
+          </div>
+        </fieldset>
+
+        <!-- CTA -->
+        <div class="reveal flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 pt-2">
+          <p class="text-xs text-ink-muted font-mono uppercase tracking-[0.14em]">
+            * Champs obligatoires
           </p>
+          <button type="button" id="audit-calc-btn" class="btn btn-primary text-base px-6 py-3">
+            Calculer mon potentiel solaire
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+              <path d="M3 7h8M7 3l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </button>
+        </div>
 
-          <!-- Section 1 — Votre site -->
-          <fieldset class="reveal">
-            <legend class="step-legend"><span class="step-num">1</span> Votre site</legend>
+        <!-- ─────── REVEAL AREA (hidden, JS-controlled) ─────── -->
+        <div id="audit-reveal" class="hidden mt-16 pt-12 border-t border-line scroll-mt-24">
 
-            <p class="step-label">Type d'installation</p>
-            <div class="mt-3 grid grid-cols-2 lg:grid-cols-4 gap-2.5">
-              {
-                installationTypes.map((it, i) => (
-                  <label class="radio-card">
-                    <input
-                      type="radio"
-                      name="type_installation"
-                      value={it.value}
-                      class="peer sr-only"
-                      required
-                      checked={i === 0}
-                    />
-                    <span class="radio-card-inner">
-                      <span class="font-display text-base text-ink leading-tight">{it.label}</span>
-                      <span class="mt-1 font-mono text-[0.65rem] uppercase tracking-[0.14em] text-ink-muted">
-                        {it.hint}
-                      </span>
-                    </span>
-                  </label>
-                ))
-              }
+          <!-- Step A: Loading 1 -->
+          <div id="step-loading-1" class="reveal-step text-center py-16">
+            <div class="loader-ring mx-auto"></div>
+            <p class="mt-8 font-display text-xl text-ink">Analyse de votre installation…</p>
+            <ul class="mt-6 inline-block text-left space-y-2 text-sm text-ink-soft">
+              <li class="loader-line" data-delay="0">📐 Lecture du site et de la pose</li>
+              <li class="loader-line" data-delay="350">🌫️ Caractérisation de l'environnement</li>
+              <li class="loader-line" data-delay="700">📅 Évaluation de l'historique d'entretien</li>
+            </ul>
+          </div>
+
+          <!-- Step B: Power question -->
+          <div id="step-power" class="reveal-step hidden">
+            <p class="eyebrow text-center">Une dernière chose</p>
+            <h2 class="mt-6 text-center font-display font-semibold text-[1.8rem] sm:text-[2.4rem] lg:text-[2.8rem] leading-[1.1] tracking-tight" style="text-wrap: balance;">
+              Quelle est la <span class="gradient-leaf italic">puissance</span>
+              de vos panneaux ?
+            </h2>
+            <p class="mt-4 text-center text-ink-soft max-w-xl mx-auto">
+              Cette info finalise le calcul de la puissance installée.
+              Si vous ne savez pas, on prend la moyenne du marché.
+            </p>
+
+            <div class="mt-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 lg:gap-4">
+              {puissanceOptions.map((p) => (
+                <button type="button" class="power-card" data-power={p.value} data-unknown={p.unknown ? "1" : "0"}>
+                  <span class="power-card-value">{p.title}</span>
+                  <span class="power-card-hint">{p.hint}</span>
+                </button>
+              ))}
             </div>
+          </div>
 
-            <p class="step-label mt-6">Configuration de pose</p>
-            <div class="mt-3 grid grid-cols-2 gap-2.5">
-              <label class="radio-card">
-                <input type="radio" name="pose" value="toiture" class="peer sr-only" required checked />
-                <span class="radio-card-inner">
-                  <span class="font-display text-base text-ink">Toiture</span>
-                  <span class="mt-1 font-mono text-[0.65rem] uppercase tracking-[0.14em] text-ink-muted">Plate ou inclinée</span>
-                </span>
-              </label>
-              <label class="radio-card">
-                <input type="radio" name="pose" value="sol" class="peer sr-only" />
-                <span class="radio-card-inner">
-                  <span class="font-display text-base text-ink">Au sol</span>
-                  <span class="mt-1 font-mono text-[0.65rem] uppercase tracking-[0.14em] text-ink-muted">Champ photovoltaïque</span>
-                </span>
-              </label>
+          <!-- Step C: Loading 2 -->
+          <div id="step-loading-2" class="reveal-step hidden text-center py-16">
+            <div class="loader-bars mx-auto" aria-hidden="true">
+              <span></span><span></span><span></span><span></span>
             </div>
+            <p class="mt-8 font-display text-xl text-ink">Calcul du gain potentiel…</p>
+            <p id="loader-2-step" class="mt-3 text-sm text-ink-muted font-mono uppercase tracking-[0.14em]">
+              Initialisation
+            </p>
+          </div>
 
-            <p class="step-label mt-6">Localisation</p>
-            <select
-              name="ville"
-              required
-              class="input-field mt-3"
-            >
-              <option value="" disabled selected>Choisir une ville…</option>
-              {villes.map((v) => <option value={v}>{v}</option>)}
-            </select>
-          </fieldset>
+          <!-- Step D: Result -->
+          <div id="step-result" class="reveal-step hidden">
+            <p class="eyebrow text-center">Votre estimation Cleanoov</p>
+            <h2 class="mt-6 text-center font-display font-semibold text-[1.8rem] sm:text-[2.4rem] lg:text-[2.8rem] leading-[1.1] tracking-tight" style="text-wrap: balance;">
+              Voici le <span class="gradient-leaf italic">potentiel</span> de votre centrale.
+            </h2>
 
-          <!-- Section 2 — L'installation -->
-          <fieldset class="reveal">
-            <legend class="step-legend"><span class="step-num">2</span> L'installation</legend>
-
-            <p class="step-label">Nombre de panneaux : <span id="panels-display" class="text-ink font-display text-lg">12</span></p>
-            <input
-              id="panels-input"
-              type="range"
-              name="nb_panneaux"
-              min="2"
-              max="1000"
-              step="1"
-              value="12"
-              class="slider-leaf mt-3"
-            />
-            <div class="mt-1 flex justify-between font-mono text-[0.64rem] uppercase tracking-[0.14em] text-ink-muted">
-              <span>2</span><span>250</span><span>500</span><span>1000+</span>
-            </div>
-
-            <p class="step-label mt-6">Année d'installation : <span id="year-display" class="text-ink font-display text-lg">2022</span></p>
-            <input
-              id="year-input"
-              type="range"
-              name="annee_installation"
-              min="2010"
-              max="2026"
-              step="1"
-              value="2022"
-              class="slider-leaf mt-3"
-            />
-            <div class="mt-1 flex justify-between font-mono text-[0.64rem] uppercase tracking-[0.14em] text-ink-muted">
-              <span>2010</span><span>2018</span><span>2026</span>
-            </div>
-
-            <p class="step-label mt-6">Dernier nettoyage</p>
-            <div class="mt-3 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-2.5">
-              {
-                dernierNettoyage.map((c, i) => (
-                  <label class="radio-pill">
-                    <input
-                      type="radio"
-                      name="dernier_nettoyage"
-                      value={c.value}
-                      class="peer sr-only"
-                      required
-                      checked={i === 0}
-                    />
-                    <span class="radio-pill-inner">{c.label}</span>
-                  </label>
-                ))
-              }
-            </div>
-          </fieldset>
-
-          <!-- Section 3 — Environnement -->
-          <fieldset class="reveal">
-            <legend class="step-legend"><span class="step-num">3</span> Environnement</legend>
-
-            <div class="mt-3 grid grid-cols-2 lg:grid-cols-4 gap-2.5">
-              {
-                environnements.map((e, i) => (
-                  <label class="radio-card">
-                    <input
-                      type="radio"
-                      name="environnement"
-                      value={e.value}
-                      class="peer sr-only"
-                      required
-                      checked={i === 0}
-                    />
-                    <span class="radio-card-inner">
-                      <span class="font-display text-base text-ink leading-tight">{e.label}</span>
-                      <span class="mt-1 font-mono text-[0.65rem] uppercase tracking-[0.14em] text-ink-muted">
-                        {e.hint}
-                      </span>
-                    </span>
-                  </label>
-                ))
-              }
-            </div>
-          </fieldset>
-
-          <!-- Section 4 — Coordonnées -->
-          <fieldset class="reveal">
-            <legend class="step-legend"><span class="step-num">4</span> Vos coordonnées</legend>
-
-            <div class="mt-4 grid grid-cols-1 md:grid-cols-2 gap-4">
-              <label class="block">
-                <span class="step-label">Nom complet *</span>
-                <input type="text" name="nom" required class="input-field mt-2" />
-              </label>
-              <label class="block">
-                <span class="step-label">Téléphone *</span>
-                <input
-                  type="tel"
-                  name="telephone"
-                  required
-                  inputmode="tel"
-                  placeholder="+216 ..."
-                  class="input-field mt-2"
-                />
-              </label>
-              <label class="block md:col-span-2">
-                <span class="step-label">Email *</span>
-                <input type="email" name="email" required class="input-field mt-2" />
-              </label>
-              <label class="block md:col-span-2">
-                <span class="step-label">Message (optionnel)</span>
-                <textarea
-                  name="message"
-                  rows="3"
-                  placeholder="Précisions, contraintes d'accès, urgence…"
-                  class="input-field mt-2 resize-y"
-                ></textarea>
-              </label>
-            </div>
-
-            <div class="mt-7 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-              <p class="text-xs text-ink-muted font-mono uppercase tracking-[0.14em]">
-                * Champs obligatoires
-              </p>
-              <button type="submit" class="btn btn-primary self-start sm:self-auto">
-                Envoyer ma demande d'audit
-                <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
-                  <path d="M3 7h8M7 3l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                </svg>
-              </button>
-            </div>
-          </fieldset>
-        </form>
-
-        <!-- Right: live estimate sidebar -->
-        <aside class="lg:col-span-5">
-          <div class="lg:sticky lg:top-28">
-            <div class="rounded-2xl border border-leaf/40 bg-gradient-to-br from-[#F4F8F2] via-surface to-[#EAF1E7] p-6 lg:p-7 shadow-[0_18px_42px_-22px_rgba(10,26,18,0.20)]">
-              <div class="flex items-center gap-2">
-                <span class="dot-pulse" aria-hidden="true"></span>
-                <p class="font-mono text-[0.66rem] uppercase tracking-[0.18em] text-ink-muted">
-                  Estimation en temps réel
-                </p>
+            <div class="mt-10 rounded-2xl border border-leaf/40 bg-gradient-to-br from-[#F4F8F2] via-surface to-[#EAF1E7] p-6 sm:p-8 lg:p-10 shadow-[0_24px_48px_-22px_rgba(10,26,18,0.20)]">
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-7 md:gap-8">
+                <div>
+                  <p class="font-mono text-[0.66rem] uppercase tracking-[0.16em] text-ink-muted">Puissance installée</p>
+                  <p class="mt-2 font-display text-4xl lg:text-5xl text-ink tracking-tight">
+                    <span id="r-kwp">0</span> <span class="text-ink-muted text-2xl">kWp</span>
+                  </p>
+                </div>
+                <div>
+                  <p class="font-mono text-[0.66rem] uppercase tracking-[0.16em] text-ink-muted">Production annuelle estimée</p>
+                  <p class="mt-2 font-display text-4xl lg:text-5xl text-ink tracking-tight">
+                    <span id="r-annual">0</span> <span class="text-ink-muted text-xl">kWh/an</span>
+                  </p>
+                </div>
+                <div class="md:border-t md:border-line/70 md:pt-6">
+                  <p class="font-mono text-[0.66rem] uppercase tracking-[0.16em] text-ink-muted">Pertes par encrassement</p>
+                  <p class="mt-2 font-display text-4xl lg:text-5xl text-ink tracking-tight">
+                    <span id="r-loss">0</span> <span class="text-ink-muted text-2xl">%</span>
+                  </p>
+                  <p class="mt-1 text-sm text-ink-muted">soit ≈ <span id="r-loss-kwh">0</span> kWh/an perdus</p>
+                </div>
+                <div class="md:border-t md:border-line/70 md:pt-6">
+                  <p class="font-mono text-[0.66rem] uppercase tracking-[0.16em] text-leaf">Gain attendu après intervention</p>
+                  <p class="mt-2 font-display text-4xl lg:text-5xl text-leaf tracking-tight">
+                    +<span id="r-recovery">0</span> <span class="text-leaf/70 text-xl">kWh/an</span>
+                  </p>
+                </div>
               </div>
 
-              <dl class="mt-5 space-y-5">
-                <div>
-                  <dt class="font-mono text-[0.66rem] uppercase tracking-[0.16em] text-ink-muted">
-                    Puissance installée
-                  </dt>
-                  <dd class="mt-1 font-display text-3xl lg:text-4xl text-ink tracking-tight">
-                    <span id="est-kwp">4,8</span> <span class="text-ink-muted text-xl">kWp</span>
-                  </dd>
-                </div>
-
-                <div>
-                  <dt class="font-mono text-[0.66rem] uppercase tracking-[0.16em] text-ink-muted">
-                    Production annuelle estimée
-                  </dt>
-                  <dd class="mt-1 font-display text-2xl lg:text-3xl text-ink tracking-tight">
-                    <span id="est-annual">8 160</span> <span class="text-ink-muted text-base">kWh/an</span>
-                  </dd>
-                </div>
-
-                <div class="pt-5 border-t border-line/70">
-                  <dt class="font-mono text-[0.66rem] uppercase tracking-[0.16em] text-ink-muted">
-                    Pertes estimées (encrassement)
-                  </dt>
-                  <dd class="mt-1 font-display text-2xl text-ink tracking-tight">
-                    <span id="est-loss">16</span> %
-                    <span class="ml-2 text-ink-muted text-sm font-body">(~<span id="est-loss-kwh">1 305</span> kWh/an)</span>
-                  </dd>
-                </div>
-
-                <div>
-                  <dt class="font-mono text-[0.66rem] uppercase tracking-[0.16em] text-leaf">
-                    Gain attendu après intervention
-                  </dt>
-                  <dd class="mt-1 font-display text-2xl lg:text-3xl text-leaf tracking-tight">
-                    +<span id="est-recovery">1 109</span> <span class="text-leaf/70 text-base">kWh/an</span>
-                  </dd>
-                </div>
-              </dl>
-
-              <p class="mt-6 pt-5 border-t border-line/70 text-xs text-ink-muted leading-relaxed">
+              <p class="mt-8 pt-6 border-t border-line/70 text-xs text-ink-muted leading-relaxed">
                 Estimation basée sur 1 700 kWh/kWp/an pour la Tunisie et les
                 coefficients d'encrassement type. Un audit terrain affine ces
                 chiffres avec mesures IR + analyse de production.
               </p>
             </div>
 
-            <div class="mt-5 px-2 text-xs text-ink-muted leading-relaxed">
-              📞 Préfères parler ? <a href="tel:+216000000000" class="text-leaf font-medium">+216 00 000 000</a>
-              · <a href="mailto:contact@cleanoov.tn" class="text-leaf font-medium">contact@cleanoov.tn</a>
+            <div class="mt-8 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+              <p class="text-sm text-ink-soft max-w-md">
+                Une équipe vous rappelle sous 48 h ouvrées avec un audit
+                terrain gratuit confirmant ces chiffres.
+              </p>
+              <button type="submit" class="btn btn-primary text-base px-6 py-3 self-start sm:self-auto">
+                Envoyer ma demande à Cleanoov
+                <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+                  <path d="M3 7h8M7 3l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </button>
             </div>
           </div>
-        </aside>
-      </div>
+        </div>
+      </form>
     </div>
   </section>
 
@@ -385,7 +345,6 @@ const environnements = [
             Pas envie de remplir l'audit ? Écris-nous directement, on revient
             sous 48 h ouvrées.
           </p>
-
           <dl class="mt-10 space-y-6 border-t border-line pt-8">
             <div>
               <dt class="font-mono text-[0.7rem] uppercase tracking-[0.18em] text-ink-muted">Téléphone</dt>
@@ -407,16 +366,10 @@ const environnements = [
         </div>
 
         <div class="lg:col-span-7">
-          <form
-            name="cleanoov-message"
-            method="POST"
-            data-netlify="true"
-            netlify-honeypot="bot-field"
-            class="rounded-2xl border border-line bg-surface p-6 lg:p-8 grid grid-cols-1 md:grid-cols-2 gap-4"
-          >
+          <form name="cleanoov-message" method="POST" data-netlify="true" netlify-honeypot="bot-field"
+            class="rounded-2xl border border-line bg-surface p-6 lg:p-8 grid grid-cols-1 md:grid-cols-2 gap-4">
             <input type="hidden" name="form-name" value="cleanoov-message" />
             <p class="hidden"><label>Ne pas remplir : <input name="bot-field" /></label></p>
-
             <label class="block">
               <span class="step-label">Nom complet *</span>
               <input type="text" name="nom" required class="input-field mt-2" />
@@ -457,151 +410,157 @@ const environnements = [
     </div>
   </section>
 
-  <!-- ─────── Styles spécifiques au formulaire ─────── -->
+  <!-- ─────── Styles ─────── -->
   <style is:global>
-    /* Tab buttons */
     .tab-btn { color: var(--color-ink-muted); }
-    .tab-btn[aria-selected="true"] {
-      background-color: var(--color-leaf);
-      color: white;
-    }
+    .tab-btn[aria-selected="true"] { background-color: var(--color-leaf); color: white; }
     .tab-btn:not([aria-selected="true"]):hover { color: var(--color-ink); }
 
     .step-legend {
-      display: flex;
-      align-items: center;
-      gap: 0.75rem;
-      font-family: var(--font-display);
-      font-size: 1.35rem;
-      font-weight: 600;
-      letter-spacing: -0.01em;
-      color: var(--color-ink);
-      padding-bottom: 1rem;
-      border-bottom: 1px solid var(--color-line);
-      width: 100%;
+      display: flex; align-items: center; gap: 0.75rem;
+      font-family: var(--font-display); font-size: 1.35rem; font-weight: 600;
+      letter-spacing: -0.01em; color: var(--color-ink);
+      padding-bottom: 1rem; border-bottom: 1px solid var(--color-line); width: 100%;
     }
     @media (min-width: 1024px) { .step-legend { font-size: 1.55rem; } }
 
     .step-num {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      width: 2rem;
-      height: 2rem;
-      border-radius: 9999px;
-      background-color: rgba(43,182,115,0.10);
-      color: var(--color-leaf);
-      font-family: var(--font-mono);
-      font-size: 0.75rem;
-      font-weight: 600;
+      display: inline-flex; align-items: center; justify-content: center;
+      width: 2rem; height: 2rem; border-radius: 9999px;
+      background-color: rgba(43,182,115,0.10); color: var(--color-leaf);
+      font-family: var(--font-mono); font-size: 0.75rem; font-weight: 600;
     }
-
     .step-label {
-      display: block;
-      font-family: var(--font-mono);
-      font-size: 0.72rem;
-      text-transform: uppercase;
-      letter-spacing: 0.18em;
-      color: var(--color-ink-muted);
-      margin-top: 1rem;
+      display: block; font-family: var(--font-mono); font-size: 0.72rem;
+      text-transform: uppercase; letter-spacing: 0.18em;
+      color: var(--color-ink-muted); margin-top: 1rem;
     }
-
     .input-field {
-      width: 100%;
-      background-color: var(--color-bg-elev);
-      border: 1px solid var(--color-line);
-      border-radius: 0.625rem;
-      padding: 0.75rem 1rem;
-      color: var(--color-ink);
+      width: 100%; background-color: var(--color-bg-elev);
+      border: 1px solid var(--color-line); border-radius: 0.625rem;
+      padding: 0.75rem 1rem; color: var(--color-ink);
       transition: border-color 150ms, box-shadow 150ms;
     }
     .input-field::placeholder { color: var(--color-ink-muted); }
     .input-field:focus {
-      outline: none;
-      border-color: var(--color-leaf);
+      outline: none; border-color: var(--color-leaf);
       box-shadow: 0 0 0 3px rgba(43,182,115,0.15);
     }
 
-    /* Radio cards (large) */
-    .radio-card {
-      cursor: pointer;
-      display: block;
-    }
+    .radio-card { cursor: pointer; display: block; }
     .radio-card-inner {
-      display: flex;
-      flex-direction: column;
-      align-items: flex-start;
-      padding: 0.85rem 1rem;
-      border: 1px solid var(--color-line);
-      border-radius: 0.75rem;
-      background-color: var(--color-surface);
-      transition: border-color 150ms, background-color 150ms;
-      height: 100%;
+      display: flex; flex-direction: column; align-items: flex-start;
+      padding: 0.85rem 1rem; border: 1px solid var(--color-line);
+      border-radius: 0.75rem; background-color: var(--color-surface);
+      transition: border-color 150ms, background-color 150ms; height: 100%;
     }
     .radio-card-inner:hover { border-color: rgba(43,182,115,0.45); }
-    .radio-card .peer:checked ~ .radio-card-inner,
-    .radio-card input:checked + .radio-card-inner {
-      border-color: var(--color-leaf);
-      background-color: rgba(43,182,115,0.06);
+    .radio-card .peer:checked ~ .radio-card-inner {
+      border-color: var(--color-leaf); background-color: rgba(43,182,115,0.06);
       box-shadow: inset 0 0 0 1px var(--color-leaf);
     }
     .radio-card .peer:focus-visible ~ .radio-card-inner {
       box-shadow: 0 0 0 3px rgba(43,182,115,0.18);
     }
 
-    /* Radio pills (compact, inline) */
     .radio-pill { cursor: pointer; display: block; }
     .radio-pill-inner {
-      display: block;
-      text-align: center;
-      padding: 0.55rem 0.75rem;
-      border: 1px solid var(--color-line);
-      border-radius: 9999px;
-      background-color: var(--color-surface);
-      font-size: 0.825rem;
-      color: var(--color-ink-soft);
-      transition: all 150ms;
+      display: block; text-align: center; padding: 0.55rem 0.75rem;
+      border: 1px solid var(--color-line); border-radius: 9999px;
+      background-color: var(--color-surface); font-size: 0.825rem;
+      color: var(--color-ink-soft); transition: all 150ms;
     }
     .radio-pill-inner:hover { border-color: rgba(43,182,115,0.45); color: var(--color-ink); }
     .radio-pill .peer:checked ~ .radio-pill-inner {
-      background-color: var(--color-leaf);
-      color: white;
-      border-color: var(--color-leaf);
+      background-color: var(--color-leaf); color: white; border-color: var(--color-leaf);
     }
 
-    /* Range slider — leaf colored */
     input[type="range"].slider-leaf {
-      width: 100%;
-      -webkit-appearance: none;
-      appearance: none;
-      height: 6px;
-      background: var(--color-line);
-      border-radius: 9999px;
-      outline: none;
+      width: 100%; -webkit-appearance: none; appearance: none;
+      height: 6px; background: var(--color-line); border-radius: 9999px; outline: none;
     }
     input[type="range"].slider-leaf::-webkit-slider-thumb {
-      -webkit-appearance: none;
-      appearance: none;
-      width: 22px; height: 22px;
-      border-radius: 9999px;
-      background: var(--color-leaf);
-      border: 3px solid white;
-      box-shadow: 0 2px 6px rgba(10,26,18,0.20);
-      cursor: pointer;
+      -webkit-appearance: none; appearance: none;
+      width: 22px; height: 22px; border-radius: 9999px;
+      background: var(--color-leaf); border: 3px solid white;
+      box-shadow: 0 2px 6px rgba(10,26,18,0.20); cursor: pointer;
       transition: transform 150ms;
     }
     input[type="range"].slider-leaf::-webkit-slider-thumb:hover { transform: scale(1.1); }
     input[type="range"].slider-leaf::-moz-range-thumb {
-      width: 22px; height: 22px;
-      border-radius: 9999px;
-      background: var(--color-leaf);
-      border: 3px solid white;
-      box-shadow: 0 2px 6px rgba(10,26,18,0.20);
-      cursor: pointer;
+      width: 22px; height: 22px; border-radius: 9999px;
+      background: var(--color-leaf); border: 3px solid white;
+      box-shadow: 0 2px 6px rgba(10,26,18,0.20); cursor: pointer;
+    }
+
+    /* ─── Reveal flow ─── */
+    .reveal-step { animation: fadeUp 500ms ease both; }
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(12px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Loader 1 — ring */
+    .loader-ring {
+      width: 56px; height: 56px; border-radius: 9999px;
+      border: 4px solid rgba(43,182,115,0.18);
+      border-top-color: var(--color-leaf);
+      animation: spin 900ms linear infinite;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    .loader-line { opacity: 0; animation: fadeUp 400ms ease both; }
+    .loader-line[data-delay="0"]   { animation-delay: 0ms; }
+    .loader-line[data-delay="350"] { animation-delay: 350ms; }
+    .loader-line[data-delay="700"] { animation-delay: 700ms; }
+
+    /* Loader 2 — bars */
+    .loader-bars { display: inline-flex; gap: 6px; align-items: end; height: 40px; }
+    .loader-bars span {
+      display: block; width: 8px; height: 12px;
+      background: var(--color-leaf); border-radius: 2px;
+      animation: bars 1100ms ease-in-out infinite;
+    }
+    .loader-bars span:nth-child(2) { animation-delay: 130ms; }
+    .loader-bars span:nth-child(3) { animation-delay: 260ms; }
+    .loader-bars span:nth-child(4) { animation-delay: 390ms; }
+    @keyframes bars {
+      0%, 100% { transform: scaleY(0.4); }
+      50%      { transform: scaleY(1.6); }
+    }
+
+    /* Power question cards */
+    .power-card {
+      display: flex; flex-direction: column; align-items: flex-start; text-align: left;
+      padding: 1.1rem 1.25rem; border-radius: 1rem;
+      border: 1px solid var(--color-line); background-color: var(--color-surface);
+      cursor: pointer; transition: all 200ms;
+    }
+    .power-card:hover {
+      border-color: var(--color-leaf);
+      background-color: rgba(43,182,115,0.05);
+      transform: translateY(-2px);
+      box-shadow: 0 12px 28px -16px rgba(10,26,18,0.20);
+    }
+    .power-card-value {
+      font-family: var(--font-display); font-size: 1.4rem; font-weight: 600;
+      color: var(--color-ink); letter-spacing: -0.01em;
+    }
+    .power-card-hint {
+      display: block; margin-top: 0.4rem; font-family: var(--font-mono);
+      font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.14em;
+      color: var(--color-ink-muted);
+    }
+
+    /* Reduced motion */
+    @media (prefers-reduced-motion: reduce) {
+      .reveal-step, .loader-line { animation: none !important; opacity: 1 !important; transform: none !important; }
+      .loader-ring, .loader-bars span { animation: none !important; }
+      .power-card { transition: none !important; }
     }
   </style>
 
-  <!-- ─────── Tabs + live estimate logic ─────── -->
+  <!-- ─────── Logic ─────── -->
   <script>
     // Tabs
     const tabs = document.querySelectorAll<HTMLButtonElement>(".tab-btn");
@@ -620,78 +579,150 @@ const environnements = [
       });
     });
 
-    // Live estimate
-    const PANEL_W = 400;            // average modern Tunisian-deployed panel
-    const TUNISIA_KWHPKWP = 1700;   // average annual yield in Tunisia
+    // ─── Audit reveal flow ───
+    const TUNISIA_KWHPKWP = 1700; // average annual yield in Tunisia
+    const ENV_LOSS: Record<string, number> = { urbain: 10, industriel: 18, cotier: 15, aride: 22 };
+    const CLEAN_FACTOR: Record<string, number> = { jamais: 1.6, "6m": 0.4, "12m": 1.0, old: 1.5, unknown: 1.0 };
 
-    const ENV_LOSS: Record<string, number> = {
-      urbain: 10,
-      industriel: 18,
-      cotier: 15,
-      aride: 22,
-    };
-    const CLEAN_FACTOR: Record<string, number> = {
-      jamais: 1.6,
-      "6m": 0.4,
-      "12m": 1.0,
-      old: 1.5,
-      unknown: 1.0,
-    };
-    const AGE_FACTOR = (year: number) => {
-      const age = Math.max(0, new Date().getFullYear() - year);
-      // very mild — older systems have slightly more accumulated soiling propensity
-      return 1 + age * 0.01;
-    };
+    const fmt = (n: number) => Math.round(n).toLocaleString("fr-FR");
 
-    const fmt = (n: number) => n.toLocaleString("fr-FR");
+    const form = document.getElementById("audit-form") as HTMLFormElement | null;
+    const calcBtn = document.getElementById("audit-calc-btn");
+    const reveal = document.getElementById("audit-reveal");
+    const stepL1 = document.getElementById("step-loading-1");
+    const stepPow = document.getElementById("step-power");
+    const stepL2 = document.getElementById("step-loading-2");
+    const stepRes = document.getElementById("step-result");
+    const loader2Step = document.getElementById("loader-2-step");
 
     const panelsInput = document.getElementById("panels-input") as HTMLInputElement | null;
     const yearInput = document.getElementById("year-input") as HTMLInputElement | null;
     const panelsDisplay = document.getElementById("panels-display");
     const yearDisplay = document.getElementById("year-display");
-    const estKwp = document.getElementById("est-kwp");
-    const estAnnual = document.getElementById("est-annual");
-    const estLoss = document.getElementById("est-loss");
-    const estLossKwh = document.getElementById("est-loss-kwh");
-    const estRecovery = document.getElementById("est-recovery");
 
-    const getRadioValue = (name: string) => {
+    panelsInput?.addEventListener("input", () => {
+      if (panelsDisplay && panelsInput) {
+        const v = parseInt(panelsInput.value, 10);
+        panelsDisplay.textContent = String(v) + (v >= 1000 ? "+" : "");
+      }
+    });
+    yearInput?.addEventListener("input", () => {
+      if (yearDisplay && yearInput) yearDisplay.textContent = yearInput.value;
+    });
+
+    function showStep(el: HTMLElement | null) {
+      [stepL1, stepPow, stepL2, stepRes].forEach((s) => s?.classList.add("hidden"));
+      if (el) {
+        el.classList.remove("hidden");
+        // restart fade-up animation
+        el.style.animation = "none";
+        void (el as HTMLElement).offsetHeight;
+        el.style.animation = "";
+      }
+    }
+
+    calcBtn?.addEventListener("click", () => {
+      if (!form) return;
+      if (!form.reportValidity()) return; // browser shows native errors
+
+      reveal?.classList.remove("hidden");
+      // Smooth scroll
+      requestAnimationFrame(() => {
+        reveal?.scrollIntoView({ behavior: "smooth", block: "start" });
+      });
+
+      showStep(stepL1);
+
+      window.setTimeout(() => {
+        showStep(stepPow);
+      }, 1700);
+    });
+
+    // Power card selection → loading 2 → result
+    document.querySelectorAll<HTMLButtonElement>(".power-card").forEach((btn) => {
+      btn.addEventListener("click", () => {
+        const power = parseInt(btn.dataset.power || "400", 10);
+        runResult(power);
+      });
+    });
+
+    function runResult(panelW: number) {
+      showStep(stepL2);
+
+      // Animate loader-2-step text through stages
+      const stages = [
+        "Calcul de la puissance installée…",
+        "Estimation des pertes par encrassement…",
+        "Calcul du gain potentiel…",
+      ];
+      let i = 0;
+      if (loader2Step) loader2Step.textContent = stages[0];
+      const stageInterval = window.setInterval(() => {
+        i++;
+        if (i < stages.length && loader2Step) loader2Step.textContent = stages[i];
+      }, 600);
+
+      window.setTimeout(() => {
+        window.clearInterval(stageInterval);
+        computeAndShow(panelW);
+      }, 2000);
+    }
+
+    function getRadioValue(name: string) {
       const el = document.querySelector<HTMLInputElement>(`input[name="${name}"]:checked`);
       return el?.value ?? null;
-    };
+    }
 
-    function recompute() {
+    function computeAndShow(panelW: number) {
       const panels = parseInt(panelsInput?.value ?? "12", 10);
       const year = parseInt(yearInput?.value ?? "2022", 10);
       const env = getRadioValue("environnement") ?? "urbain";
       const clean = getRadioValue("dernier_nettoyage") ?? "jamais";
 
-      const kWp = (panels * PANEL_W) / 1000;
-      const annual = Math.round(kWp * TUNISIA_KWHPKWP);
-
+      const kWp = (panels * panelW) / 1000;
+      const annual = kWp * TUNISIA_KWHPKWP;
       const baseLoss = ENV_LOSS[env] ?? 12;
       const cleanMul = CLEAN_FACTOR[clean] ?? 1.0;
-      const ageMul = AGE_FACTOR(year);
+      const ageMul = 1 + Math.max(0, new Date().getFullYear() - year) * 0.01;
       const lossPct = Math.min(35, Math.round(baseLoss * cleanMul * ageMul));
-      const lossKwh = Math.round((annual * lossPct) / 100);
-      const recovery = Math.round(lossKwh * 0.85);
+      const lossKwh = (annual * lossPct) / 100;
+      const recovery = lossKwh * 0.85;
 
-      if (panelsDisplay) panelsDisplay.textContent = String(panels) + (panels >= 1000 ? "+" : "");
-      if (yearDisplay) yearDisplay.textContent = String(year);
-      if (estKwp) estKwp.textContent = kWp.toFixed(1).replace(".", ",");
-      if (estAnnual) estAnnual.textContent = fmt(annual);
-      if (estLoss) estLoss.textContent = String(lossPct);
-      if (estLossKwh) estLossKwh.textContent = fmt(lossKwh);
-      if (estRecovery) estRecovery.textContent = fmt(recovery);
+      // Persist into hidden fields for Netlify submission
+      (document.getElementById("hidden-power") as HTMLInputElement).value = String(panelW);
+      (document.getElementById("hidden-kwp") as HTMLInputElement).value = kWp.toFixed(1);
+      (document.getElementById("hidden-annual") as HTMLInputElement).value = String(Math.round(annual));
+      (document.getElementById("hidden-loss-pct") as HTMLInputElement).value = String(lossPct);
+      (document.getElementById("hidden-recovery") as HTMLInputElement).value = String(Math.round(recovery));
+
+      showStep(stepRes);
+      requestAnimationFrame(() => {
+        stepRes?.scrollIntoView({ behavior: "smooth", block: "start" });
+      });
+
+      // Count-up animations
+      animateNumber("r-kwp", 0, kWp, 900, (v) => v.toFixed(1).replace(".", ","));
+      animateNumber("r-annual", 0, annual, 1100, (v) => fmt(v));
+      animateNumber("r-loss", 0, lossPct, 800, (v) => String(Math.round(v)));
+      animateNumber("r-loss-kwh", 0, lossKwh, 1000, (v) => fmt(v));
+      animateNumber("r-recovery", 0, recovery, 1100, (v) => fmt(v));
     }
 
-    panelsInput?.addEventListener("input", recompute);
-    yearInput?.addEventListener("input", recompute);
-    document.querySelectorAll('input[name="environnement"], input[name="dernier_nettoyage"]').forEach((el) => {
-      el.addEventListener("change", recompute);
-    });
-
-    // Initial compute
-    recompute();
+    function animateNumber(id: string, from: number, to: number, ms: number, fmtFn: (v: number) => string) {
+      const el = document.getElementById(id);
+      if (!el) return;
+      if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+        el.textContent = fmtFn(to);
+        return;
+      }
+      const start = performance.now();
+      const ease = (t: number) => 1 - Math.pow(1 - t, 3);
+      const tick = (now: number) => {
+        const t = Math.min(1, (now - start) / ms);
+        el.textContent = fmtFn(from + (to - from) * ease(t));
+        if (t < 1) requestAnimationFrame(tick);
+      };
+      requestAnimationFrame(tick);
+    }
   </script>
 </BaseLayout>
