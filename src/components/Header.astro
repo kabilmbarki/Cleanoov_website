@@ -6,7 +6,7 @@ const { transparent = false } = Astro.props;
 
 const links = [
   { href: "/a-propos", label: "À propos" },
-  { href: "/#innovation", label: "Innovation" },
+  { href: "/#succes", label: "Nos succès" },
   { href: "/#publications", label: "Publications" },
   { href: "/#realisations", label: "Réalisations" },
   { href: "/services", label: "Services" },
@@ -15,7 +15,7 @@ const links = [
 const path = Astro.url.pathname.replace(/\/$/, "") || "/";
 
 // Extract the pathname portion of a link (strips hash and trailing slash) so
-// hash-anchor entries like "/#innovation" can match when on the home page.
+// hash-anchor entries like "/#succes" can match when on the home page.
 const linkPath = (href: string) => {
   const noHash = href.split("#")[0] || "/";
   return noHash.replace(/\/$/, "") || "/";
