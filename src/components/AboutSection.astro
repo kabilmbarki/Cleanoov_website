@@ -1,0 +1,154 @@
+---
+// À propos — editorial section right after the Hero.
+// Replaces the previous MissionStatement and consolidates company narrative
+// + 3-pillar approach + 3 KPI strip into one cohesive block.
+
+const pillars = [
+  {
+    title: "Nettoyage adapté",
+    body:
+      "Des solutions calibrées sur la réalité de chaque installation — eau déminéralisée, brossage robotisé, intervention par drone selon la configuration.",
+    icon: "drop",
+  },
+  {
+    title: "Diagnostic avancé",
+    body:
+      "Imagerie thermique infrarouge, inspection optique et analyse de production. Une lecture précise de la santé technique de votre centrale.",
+    icon: "scan",
+  },
+  {
+    title: "Maintenance & IA",
+    body:
+      "Une maintenance préventive pilotée par l'intelligence artificielle — alertes anticipées, planification dynamique, rendement sécurisé dans la durée.",
+    icon: "ai",
+  },
+];
+
+const stats = [
+  { value: "+25 %", label: "rendement restauré sur des panneaux encrassés" },
+  { value: "Lauréats", label: "du concours national ctama · édition 2025" },
+  { value: "3 ans", label: "d'innovation continue depuis le lancement" },
+];
+---
+
+<section
+  id="a-propos"
+  class="relative py-28 lg:py-40 border-t border-line overflow-hidden"
+>
+  <!-- subtle decorative wash, top-right -->
+  <div
+    class="absolute inset-0 bg-[radial-gradient(700px_400px_at_90%_8%,rgba(43,182,115,0.06),transparent_60%)] pointer-events-none"
+    aria-hidden="true"
+  ></div>
+
+  <!-- Editorial heading + lead paragraphs -->
+  <div class="container-narrow relative">
+    <p class="eyebrow reveal">À propos · Cleanoov</p>
+
+    <h2
+      class="mt-8 font-display text-[2rem] sm:text-[2.6rem] lg:text-[3.2rem] leading-[1.1] tracking-tight reveal"
+      style="text-wrap: balance;"
+    >
+      Une <span class="gradient-leaf italic font-semibold">startup tunisienne</span>
+      qui repense l'<span class="text-ink-muted">optimisation</span> du solaire.
+    </h2>
+
+    <p class="mt-8 max-w-2xl text-lg lg:text-xl text-ink-soft leading-relaxed reveal">
+      Cleanoov est une startup tunisienne innovante, spécialisée dans les solutions
+      d'optimisation des rendements des installations photovoltaïques.
+    </p>
+
+    <p class="mt-5 max-w-2xl text-base lg:text-lg text-ink-soft leading-relaxed reveal">
+      Nous offrons des solutions complètes et adaptées, aussi bien pour le secteur
+      résidentiel et domestique que pour le secteur central et industriel. Notre objectif :
+      <span class="text-ink">préserver et maximiser la valeur</span>
+      de votre investissement solaire dans le temps.
+    </p>
+  </div>
+
+  <!-- 3 pillars -->
+  <div class="container-wide mt-20 lg:mt-24 relative">
+    <div class="flex items-center gap-4 reveal">
+      <span class="block w-8 h-px bg-leaf"></span>
+      <p class="font-mono text-[0.72rem] uppercase tracking-[0.18em] text-ink-muted">
+        Notre approche · Technologie & innovation
+      </p>
+    </div>
+
+    <div class="mt-10 grid grid-cols-1 md:grid-cols-3 gap-4 lg:gap-5">
+      {
+        pillars.map((p) => (
+          <article class="reveal group relative rounded-xl lg:rounded-2xl border border-line bg-surface p-7 lg:p-8 transition-colors duration-300 hover:border-leaf/40">
+            <span class="inline-flex w-11 h-11 items-center justify-center rounded-full bg-leaf/10 text-leaf transition-transform duration-300 group-hover:scale-110">
+              {p.icon === "drop" && (
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <path d="M12 3s-6 7-6 11a6 6 0 0 0 12 0c0-4-6-11-6-11z" />
+                </svg>
+              )}
+              {p.icon === "scan" && (
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <path d="M3 7V5a2 2 0 0 1 2-2h2" />
+                  <path d="M17 3h2a2 2 0 0 1 2 2v2" />
+                  <path d="M21 17v2a2 2 0 0 1-2 2h-2" />
+                  <path d="M7 21H5a2 2 0 0 1-2-2v-2" />
+                  <path d="M7 12h10" />
+                </svg>
+              )}
+              {p.icon === "ai" && (
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <circle cx="12" cy="12" r="3" />
+                  <path d="M12 3v3M12 18v3M3 12h3M18 12h3M5.6 5.6l2.1 2.1M16.3 16.3l2.1 2.1M5.6 18.4l2.1-2.1M16.3 7.7l2.1-2.1" />
+                </svg>
+              )}
+            </span>
+
+            <h3 class="mt-6 font-display text-xl lg:text-[1.35rem] text-ink leading-tight">
+              {p.title}
+            </h3>
+            <p class="mt-3 text-sm lg:text-[0.95rem] text-ink-soft leading-relaxed">
+              {p.body}
+            </p>
+          </article>
+        ))
+      }
+    </div>
+  </div>
+
+  <!-- Vision + closing tagline -->
+  <div class="container-narrow mt-20 lg:mt-24 relative">
+    <p class="text-base lg:text-lg text-ink-soft leading-relaxed reveal max-w-2xl">
+      Notre vision : transformer la maintenance solaire en un processus
+      <span class="text-ink">plus intelligent, plus efficace et plus durable</span>.
+    </p>
+
+    <blockquote
+      class="reveal mt-10 lg:mt-12 border-l-2 border-leaf pl-6 lg:pl-8 font-display text-2xl lg:text-3xl text-ink leading-snug"
+      style="text-wrap: balance;"
+    >
+      Avec Cleanoov, vos installations ne sont pas seulement nettoyées —
+      elles sont
+      <span class="gradient-leaf italic font-semibold">analysées, optimisées et protégées</span>.
+    </blockquote>
+  </div>
+
+  <!-- KPI strip -->
+  <div class="container-wide mt-24 lg:mt-28 relative">
+    <dl class="grid grid-cols-1 md:grid-cols-3 gap-px bg-line border border-line rounded-xl overflow-hidden">
+      {
+        stats.map((s) => (
+          <div class="bg-bg-elev px-8 py-10 lg:px-10 lg:py-14 reveal">
+            <dt class="font-mono text-[0.72rem] uppercase tracking-[0.18em] text-ink-muted">
+              Indicateur
+            </dt>
+            <dd class="mt-4 font-display text-4xl lg:text-5xl xl:text-6xl text-ink leading-[1] tracking-tight">
+              {s.value}
+            </dd>
+            <p class="mt-4 text-ink-soft text-sm max-w-xs leading-relaxed">
+              {s.label}
+            </p>
+          </div>
+        ))
+      }
+    </dl>
+  </div>
+</section>
