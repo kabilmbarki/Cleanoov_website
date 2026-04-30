@@ -6,18 +6,13 @@
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>https://cleanoov.tn/services/</loc>
+    <loc>https://cleanoov.tn/services</loc>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://cleanoov.tn/contact/</loc>
+    <loc>https://cleanoov.tn/contact</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://cleanoov.tn/#faq</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
   </url>
 </urlset>

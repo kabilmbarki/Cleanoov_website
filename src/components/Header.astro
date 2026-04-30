@@ -11,7 +11,14 @@ const links = [
   { href: "/services", label: "Services" },
   { href: "/contact", label: "Contact" },
 ];
-const path = Astro.url.pathname;
+const path = Astro.url.pathname.replace(/\/$/, "") || "/";
+
+// Extract the pathname portion of a link (strips hash and trailing slash) so
+// hash-anchor entries like "/#innovation" can match when on the home page.
+const linkPath = (href: string) => {
+  const noHash = href.split("#")[0] || "/";
+  return noHash.replace(/\/$/, "") || "/";
+};
 ---
 
 <header
@@ -54,7 +61,7 @@ const path = Astro.url.pathname;
             href={l.href}
             class:list={[
               "text-[0.78rem] lg:text-[0.85rem] font-medium tracking-wide transition-colors whitespace-nowrap",
-              path === l.href ? "text-leaf" : "text-ink-soft hover:text-ink",
+              path === linkPath(l.href) ? "text-leaf" : "text-ink-soft hover:text-ink",
             ]}
           >
             {l.label}
