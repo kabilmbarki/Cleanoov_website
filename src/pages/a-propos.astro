@@ -63,6 +63,15 @@ const aboutPageSchema = {
   mainEntity: { "@id": `${siteUrl}#business` },
   isPartOf: { "@id": `${siteUrl}#website` },
 };
+
+const breadcrumbSchema = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  itemListElement: [
+    { "@type": "ListItem", position: 1, name: "Accueil", item: siteUrl },
+    { "@type": "ListItem", position: 2, name: "À propos", item: `${siteUrl}a-propos` },
+  ],
+};
 ---
 
 <BaseLayout
@@ -272,6 +281,7 @@ const aboutPageSchema = {
   <!-- ─────────── CTA ─────────── -->
   <CtaBanner />
 
-  <!-- AboutPage structured data -->
+  <!-- AboutPage + BreadcrumbList structured data -->
   <script type="application/ld+json" set:html={JSON.stringify(aboutPageSchema)} />
+  <script type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)} />
 </BaseLayout>

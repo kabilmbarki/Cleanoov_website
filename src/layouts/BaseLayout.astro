@@ -88,9 +88,10 @@ const localBusiness = {
         "@type": "Offer",
         itemOffered: {
           "@type": "Service",
-          name: "Nettoyage de panneaux photovoltaïques",
+          "@id": `${siteUrl}services#nettoyage-semi-auto`,
+          name: "Nettoyage semi-automatique des panneaux solaires",
           description:
-            "Restauration du rendement de centrales solaires en Tunisie — eau déminéralisée, brossage robotisé, jusqu'à +25% de production.",
+            "Système de brosses semi-automatiques pour un nettoyage efficace, rapide et économe en eau, qui préserve la surface des panneaux photovoltaïques.",
           areaServed: { "@type": "Country", name: "Tunisia" },
           provider: { "@id": `${siteUrl}#business` },
         },
@@ -99,9 +100,10 @@ const localBusiness = {
         "@type": "Offer",
         itemOffered: {
           "@type": "Service",
-          name: "Diagnostic technique de centrales solaires",
+          "@id": `${siteUrl}services#robot`,
+          name: "Robot de nettoyage pour grandes installations photovoltaïques",
           description:
-            "Audit complet : imagerie thermique infrarouge, inspection optique, analyse de production. Identification précise des pertes de rendement.",
+            "Solution automatisée pour centrales solaires et grandes surfaces — réduit coûts et temps d'intervention, améliore le rendement énergétique.",
           areaServed: { "@type": "Country", name: "Tunisia" },
           provider: { "@id": `${siteUrl}#business` },
         },
@@ -110,9 +112,22 @@ const localBusiness = {
         "@type": "Offer",
         itemOffered: {
           "@type": "Service",
-          name: "Maintenance préventive photovoltaïque",
+          "@id": `${siteUrl}services#maintenance`,
+          name: "Maintenance des installations photovoltaïques",
           description:
-            "Contrats annuels avec visites planifiées, diagnostic préventif et alertes anticipées. Sécurise le rendement de votre installation dans la durée.",
+            "Inspection, mesures électriques et contrôle périodique des systèmes PV pour garantir leur bon fonctionnement et détecter les anomalies techniques.",
+          areaServed: { "@type": "Country", name: "Tunisia" },
+          provider: { "@id": `${siteUrl}#business` },
+        },
+      },
+      {
+        "@type": "Offer",
+        itemOffered: {
+          "@type": "Service",
+          "@id": `${siteUrl}services#diagnostic-preventif`,
+          name: "Diagnostic et maintenance préventive photovoltaïque",
+          description:
+            "Imagerie thermique IR, analyse régulière des performances et alertes anticipées — pour anticiper les pertes de rendement et sécuriser la production sur le long terme.",
           areaServed: { "@type": "Country", name: "Tunisia" },
           provider: { "@id": `${siteUrl}#business` },
         },

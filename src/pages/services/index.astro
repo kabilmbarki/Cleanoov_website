@@ -61,6 +61,32 @@ const services = [
     ],
   },
 ];
+
+// ─── Structured data ───
+const siteUrl = "https://cleanoov.tn/";
+
+// One Service entity per offer — better rich result eligibility for service pages
+const serviceSchemas = services.map((s) => ({
+  "@context": "https://schema.org",
+  "@type": "Service",
+  "@id": `${siteUrl}services#${s.id}`,
+  name: s.title,
+  description: s.intro,
+  serviceType: "Optimisation et maintenance d'installations photovoltaïques",
+  provider: { "@id": `${siteUrl}#business` },
+  areaServed: { "@type": "Country", name: "Tunisia" },
+  url: `${siteUrl}services#${s.id}`,
+  image: `${siteUrl}${s.image.replace(/^\//, "")}`,
+}));
+
+const breadcrumbSchema = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  itemListElement: [
+    { "@type": "ListItem", position: 1, name: "Accueil", item: siteUrl },
+    { "@type": "ListItem", position: 2, name: "Nos services", item: `${siteUrl}services` },
+  ],
+};
 ---
 
 <BaseLayout
@@ -149,4 +175,10 @@ const services = [
     title="Un site, un besoin précis ? Parlons-en."
     subtitle="Chaque centrale est unique. Décrivez-nous votre contexte, nous revenons vers vous avec une proposition adaptée."
   />
+
+  <!-- Structured data: 4 Service entities + BreadcrumbList -->
+  {serviceSchemas.map((s) => (
+    <script type="application/ld+json" set:html={JSON.stringify(s)} />
+  ))}
+  <script type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)} />
 </BaseLayout>
