@@ -7,7 +7,8 @@ const services = [
     id: "nettoyage-semi-auto",
     eyebrow: "Service · 01",
     title: "Nettoyage semi-automatique des panneaux solaires",
-    image: "/imgs/chantiers/chantier-06.jpg",
+    image: "/imgs/chantiers/chantier-02.jpg",
+    imgPos: "object-[50%_28%]",
     intro:
       "Un système de brosses semi-automatiques permettant un nettoyage efficace, rapide et économe en eau, tout en protégeant les panneaux.",
     method: [
@@ -111,7 +112,10 @@ const services = [
                 <img
                   src={s.image}
                   alt={s.title}
-                  class="h-full w-full object-cover"
+                  class:list={[
+                    "h-full w-full object-cover",
+                    s.imgPos ?? "object-center",
+                  ]}
                   loading="lazy"
                 />
               </div>

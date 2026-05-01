@@ -6,7 +6,8 @@ const services = [
   {
     n: "01",
     title: "Nettoyage semi-automatique",
-    image: "/imgs/chantiers/chantier-06.jpg",
+    image: "/imgs/chantiers/chantier-02.jpg",
+    imgPos: "object-[50%_28%]",
     points: [
       "Brosses semi-automatiques, gestes précis",
       "Nettoyage rapide et économe en eau",
@@ -78,7 +79,10 @@ const services = [
               <img
                 src={s.image}
                 alt={s.title}
-                class="h-full w-full object-cover transition-transform duration-700 group-hover:scale-[1.04]"
+                class:list={[
+                  "h-full w-full object-cover transition-transform duration-700 group-hover:scale-[1.04]",
+                  s.imgPos ?? "object-center",
+                ]}
                 loading="lazy"
               />
               <div
