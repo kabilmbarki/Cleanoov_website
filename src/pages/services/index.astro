@@ -4,45 +4,59 @@ import CtaBanner from "../../components/CtaBanner.astro";
 
 const services = [
   {
-    id: "nettoyage",
+    id: "nettoyage-semi-auto",
     eyebrow: "Service · 01",
-    title: "Nettoyage de panneaux",
-    image: "/imgs/chantiers/chantier-02.jpg",
+    title: "Nettoyage semi-automatique des panneaux solaires",
+    image: "/imgs/chantiers/chantier-06.jpg",
     intro:
-      "Le sable, la poussière et les fientes peuvent réduire le rendement d'une centrale jusqu'à 25 %. Notre intervention restaure la production et prolonge la durée de vie des modules.",
+      "Un système de brosses semi-automatiques permettant un nettoyage efficace, rapide et économe en eau, tout en protégeant les panneaux.",
     method: [
-      { n: "01", title: "Audit initial", text: "Inspection visuelle, évaluation du soiling, mesure des pertes de production." },
-      { n: "02", title: "Plan d'intervention", text: "Sélection de la méthode (à sec, eau dosée, brossage robotisé selon le site) et planning." },
-      { n: "03", title: "Opération sur site", text: "Équipe qualifiée, matériel dédié, eau déminéralisée à dosage maîtrisé." },
-      { n: "04", title: "Reporting", text: "Rapport photo + courbe de rendement avant/après et recommandations de maintenance." },
+      { n: "01", title: "Audit initial", text: "Visite, évaluation du soiling, mesure des pertes de production sur le site." },
+      { n: "02", title: "Sélection des brosses", text: "Type de brosse adapté au profil du panneau et à la configuration de l'installation." },
+      { n: "03", title: "Intervention", text: "Brossage semi-automatique avec eau déminéralisée à dosage maîtrisé — gestes précis, faible consommation." },
+      { n: "04", title: "Reporting", text: "Rapport photo + courbe de rendement avant/après pour mesurer le gain réel." },
     ],
   },
   {
-    id: "diagnostic",
+    id: "robot",
     eyebrow: "Service · 02",
-    title: "Diagnostic technique",
-    image: "/imgs/chantiers/chantier-toit.jpg",
+    title: "Robot de nettoyage pour grandes installations",
+    image: "/imgs/chantiers/chantier-detail.jpg",
     intro:
-      "Avant d'agir, on mesure. Imagerie thermique infrarouge, inspection optique, analyse des courbes de production : on identifie précisément où votre installation perd du rendement.",
+      "Une solution automatisée destinée aux centrales solaires et grandes surfaces photovoltaïques, conçue pour réduire les coûts, le temps d'intervention et améliorer le rendement énergétique.",
     method: [
-      { n: "01", title: "Visite de site", text: "Reconnaissance complète, prise de mesures, conditions d'exploitation et historique de production." },
-      { n: "02", title: "Imagerie IR & optique", text: "Caméra thermique pour repérer hot-spots et modules défaillants ; inspection visuelle haute résolution." },
-      { n: "03", title: "Analyse", text: "Corrélation des images, des mesures électriques et des données de monitoring pour quantifier les pertes." },
-      { n: "04", title: "Rapport & recommandations", text: "Document détaillé avec priorisation des actions correctives — nettoyage, remplacement, ajustement." },
+      { n: "01", title: "Étude de site", text: "Topographie, dimensions, accès, exposition au sable et aux poussières." },
+      { n: "02", title: "Programmation", text: "Séquences de nettoyage adaptées à la disposition des modules et à la fréquence d'encrassement." },
+      { n: "03", title: "Déploiement robot", text: "Opération autonome sur la centrale, supervisée par notre équipe technique." },
+      { n: "04", title: "Suivi rendement", text: "Métriques de production avant / après et calendrier de passages optimisé." },
     ],
   },
   {
     id: "maintenance",
     eyebrow: "Service · 03",
-    title: "Maintenance & diagnostic préventif",
-    image: "/imgs/chantiers/chantier-06.jpg",
+    title: "Maintenance des installations photovoltaïques",
+    image: "/imgs/illustrations/maintenance.jpg",
     intro:
-      "Sécuriser le rendement dans la durée. Contrats annuels avec visites planifiées, diagnostic préventif et alertes anticipées — pour anticiper les pannes plutôt que les subir.",
+      "Inspection et contrôle des systèmes PV pour garantir leur bon fonctionnement et détecter les anomalies techniques.",
     method: [
-      { n: "01", title: "Convention annuelle", text: "Cadre clair : périmètre, fréquence des visites, indicateurs suivis, niveau de service garanti." },
-      { n: "02", title: "Calendrier d'interventions", text: "Visites planifiées selon les saisons critiques (sirocco, fientes, post-pluies) et profil du site." },
-      { n: "03", title: "Détection précoce", text: "Diagnostic préventif à chaque passage : on repère les dégradations avant qu'elles n'affectent la production." },
-      { n: "04", title: "Suivi de production", text: "Reporting périodique et alertes — vous gardez la visibilité sur la performance de votre actif." },
+      { n: "01", title: "Visite périodique", text: "Inspection visuelle complète des modules, câblages, supports et raccordements." },
+      { n: "02", title: "Mesures électriques", text: "Tests Voc, Vmp, Imp et isolation pour caractériser l'état réel de l'installation." },
+      { n: "03", title: "Détection anomalies", text: "Modules défaillants, connexions oxydées, défauts onduleur — repérage et qualification." },
+      { n: "04", title: "Rapport technique", text: "Document détaillé avec actions correctives priorisées et budget indicatif." },
+    ],
+  },
+  {
+    id: "diagnostic-preventif",
+    eyebrow: "Service · 04",
+    title: "Diagnostic et maintenance préventive",
+    image: "/imgs/chantiers/chantier-toit.jpg",
+    intro:
+      "Analyse régulière des performances pour anticiper les pertes de rendement et assurer une production optimale sur le long terme.",
+    method: [
+      { n: "01", title: "Convention annuelle", text: "Périmètre, fréquence des visites, indicateurs suivis, niveau de service garanti." },
+      { n: "02", title: "Imagerie thermique IR", text: "Caméra thermique à chaque passage pour détecter hot-spots et dégradations précoces." },
+      { n: "03", title: "Analyse production", text: "Corrélation des courbes de production avec les conditions météo — alertes anticipées." },
+      { n: "04", title: "Reporting périodique", text: "Visibilité long-terme sur la performance de votre actif avec recommandations." },
     ],
   },
 ];
@@ -57,13 +71,15 @@ const services = [
     <div class="container-wide">
       <p class="eyebrow reveal">Nos services</p>
       <h1 class="mt-8 max-w-4xl reveal" style="text-wrap: balance;">
-        Du diagnostic au suivi long-terme,
-        <span class="gradient-solar italic font-semibold">une expertise complète</span>.
+        Une approche
+        <span class="gradient-solar italic font-semibold">complète</span>,
+        bien au-delà du simple nettoyage.
       </h1>
       <p class="mt-8 max-w-2xl text-lg text-ink-soft reveal">
-        Cleanoov accompagne ses clients sur l'ensemble du cycle de vie d'une centrale
-        solaire — nettoyage, diagnostic et maintenance préventive — avec une exigence
-        d'ingénierie et un ancrage local fort.
+        Cleanoov optimise les performances des installations photovoltaïques
+        à travers quatre métiers complémentaires — du nettoyage semi-automatique
+        au robot autonome, de la maintenance terrain au diagnostic préventif
+        piloté par IA.
       </p>
     </div>
   </section>
