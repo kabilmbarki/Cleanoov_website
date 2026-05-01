@@ -6,10 +6,10 @@ const { transparent = false } = Astro.props;
 
 const links = [
   { href: "/a-propos", label: "À propos" },
+  { href: "/services", label: "Nos services" },
   { href: "/#succes", label: "Nos succès" },
   { href: "/#publications", label: "Publications" },
   { href: "/#realisations", label: "Réalisations" },
-  { href: "/services", label: "Services" },
   { href: "/contact", label: "Contact" },
 ];
 const path = Astro.url.pathname.replace(/\/$/, "") || "/";
