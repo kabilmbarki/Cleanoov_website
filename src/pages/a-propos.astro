@@ -10,45 +10,43 @@ const description =
 const valeurs = [
   {
     label: "Innovation",
-    body:
-      "La technologie au service du concret. Chaque outil, chaque méthode est pensée pour répondre à une réalité terrain — pas à une slide.",
+    body: "Utiliser la technologie pour transformer la maintenance solaire.",
     icon: "spark",
   },
   {
-    label: "Rigueur",
-    body:
-      "Mesurer avant d'agir. Documenter chaque intervention. Reporter chaque gain. La performance se prouve en données, pas en promesses.",
-    icon: "ruler",
-  },
-  {
-    label: "Engagement",
-    body:
-      "Une jeune équipe tunisienne investie à 100 % dans la transition énergétique nationale. La cleantech locale n'est pas un slogan — c'est notre quotidien.",
-    icon: "flag",
+    label: "Performance",
+    body: "Viser toujours l'optimisation maximale des rendements.",
+    icon: "trend",
   },
   {
     label: "Durabilité",
-    body:
-      "Performance solaire = résilience climatique. Chaque kWh sauvé compte. Chaque centrale optimisée prolonge la vie utile de l'investissement.",
+    body: "Préserver l'environnement et prolonger la vie des installations.",
     icon: "leaf",
+  },
+  {
+    label: "Fiabilité",
+    body: "Des solutions précises, efficaces et professionnelles.",
+    icon: "shield",
+  },
+  {
+    label: "Impact",
+    body: "Contribuer activement à la transition énergétique.",
+    icon: "target",
   },
 ];
 
 const piliers = [
   {
-    title: "Nettoyage adapté",
-    desc:
-      "Eau déminéralisée, brossage robotisé, intervention par drone — calibrés sur chaque installation.",
+    title: "Nettoyage adapté et optimisé",
+    desc: "Calibré sur les besoins réels de chaque installation.",
   },
   {
-    title: "Diagnostic avancé",
-    desc:
-      "Imagerie thermique infrarouge, inspection optique, analyse fine de production — la santé technique de votre centrale, en clair.",
+    title: "Diagnostic intelligent",
+    desc: "Lecture précise de la santé technique de votre centrale.",
   },
   {
-    title: "Maintenance & IA",
-    desc:
-      "Maintenance préventive pilotée par intelligence artificielle — alertes anticipées, planification dynamique, rendement sécurisé.",
+    title: "Maintenance préventive · IA",
+    desc: "Pilotée par intelligence artificielle, alertes anticipées.",
   },
 ];
 
@@ -67,7 +65,12 @@ const aboutPageSchema = {
 };
 ---
 
-<BaseLayout title={title} description={description}>
+<BaseLayout
+  title={title}
+  description={description}
+  image="/og-a-propos.jpg"
+  imageAlt="Cleanoov — Soulaymen Bayoudh, fondateur, présentant la startup solaire tunisienne · Vision, Mission, Valeurs"
+>
   <!-- ─────────── PAGE INTRO ─────────── -->
   <section class="relative pt-36 lg:pt-44 pb-20 lg:pb-28 overflow-hidden border-b border-line">
     <div
@@ -87,9 +90,8 @@ const aboutPageSchema = {
       </h1>
 
       <p class="mt-10 max-w-2xl text-lg lg:text-xl text-ink-soft leading-relaxed reveal">
-        Cleanoov est une startup tunisienne innovante, spécialisée dans
-        l'<span class="text-ink">optimisation des rendements</span> des installations
-        photovoltaïques — pour le résidentiel, l'industrie et les centrales au sol.
+        Startup tunisienne d'<span class="text-ink">innovation cleantech</span> —
+        résidentiel, industrie, centrales au sol.
       </p>
 
       <div class="mt-12 flex flex-wrap items-center gap-3 reveal">
@@ -113,29 +115,28 @@ const aboutPageSchema = {
       <p class="eyebrow reveal">Notre vision</p>
 
       <h2
-        class="mt-10 font-display font-semibold text-[2.2rem] sm:text-[3rem] lg:text-[4rem] xl:text-[4.6rem] leading-[1.05] tracking-tight reveal"
+        class="mt-10 font-display font-semibold text-[2rem] sm:text-[2.6rem] lg:text-[3.4rem] xl:text-[4rem] leading-[1.08] tracking-tight reveal"
         style="text-wrap: balance;"
       >
-        Une Tunisie où chaque
-        <span class="gradient-leaf italic">panneau solaire</span>
-        produit à 100 % de son potentiel — année après année.
+        Devenir le
+        <span class="gradient-leaf italic">leader en Tunisie et en Afrique</span>
+        de l'optimisation intelligente du photovoltaïque.
       </h2>
 
       <div class="mt-14 grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16">
-        <p class="lg:col-span-8 text-lg lg:text-xl text-ink-soft leading-relaxed reveal">
-          Nous croyons à une transition énergétique africaine portée par
-          <span class="text-ink">l'innovation locale</span>, où la performance
-          des centrales solaires devient un sujet de R&amp;D — pas une
-          fatalité due à la poussière, à la chaleur ou au manque d'entretien.
+        <p class="lg:col-span-7 text-lg lg:text-xl text-ink-soft leading-relaxed reveal">
+          Rendre chaque système solaire
+          <span class="text-ink">plus performant, durable et intelligent</span> —
+          grâce à la technologie et à l'innovation.
         </p>
-        <div class="lg:col-span-4 reveal">
+        <div class="lg:col-span-5 reveal">
           <div class="border-l-2 border-leaf pl-5">
             <p class="font-mono text-[0.7rem] uppercase tracking-[0.18em] text-ink-muted">
               Horizon 2030
             </p>
             <p class="mt-3 text-base text-ink leading-snug">
-              Devenir la référence cleantech du nettoyage et de la maintenance
-              photovoltaïque en Afrique du Nord.
+              La référence de l'optimisation photovoltaïque en
+              Tunisie et en Afrique.
             </p>
           </div>
         </div>
@@ -161,18 +162,17 @@ const aboutPageSchema = {
       <p class="eyebrow reveal">Notre mission</p>
 
       <h2
-        class="mt-10 font-display font-semibold text-[2.2rem] sm:text-[3rem] lg:text-[4rem] xl:text-[4.6rem] leading-[1.05] tracking-tight reveal"
+        class="mt-10 font-display font-semibold text-[2rem] sm:text-[2.6rem] lg:text-[3.4rem] xl:text-[4rem] leading-[1.08] tracking-tight reveal"
         style="text-wrap: balance;"
       >
-        <span class="gradient-leaf italic">Préserver</span>, mesurer et
-        <span class="gradient-leaf italic">maximiser</span>
-        la valeur de chaque centrale photovoltaïque.
+        <span class="gradient-leaf italic">Maximiser</span> la production
+        solaire — réduire les pertes et les coûts de maintenance.
       </h2>
 
       <p class="mt-10 max-w-2xl text-lg lg:text-xl text-ink-soft leading-relaxed reveal">
-        Nous combinons trois métiers dans un seul objectif : que vos panneaux
-        produisent à 100 % de leur potentiel, dans la durée — du résidentiel
-        à la centrale industrielle.
+        Des solutions complètes et accessibles à travers
+        <span class="text-ink">trois métiers</span>, pour améliorer le
+        rendement de chaque installation.
       </p>
     </div>
 
@@ -210,16 +210,16 @@ const aboutPageSchema = {
       <p class="eyebrow reveal">Nos valeurs</p>
 
       <h2
-        class="mt-10 font-display font-semibold text-[2.2rem] sm:text-[3rem] lg:text-[4rem] xl:text-[4.6rem] leading-[1.05] tracking-tight reveal"
+        class="mt-10 font-display font-semibold text-[2rem] sm:text-[2.6rem] lg:text-[3.4rem] xl:text-[4rem] leading-[1.08] tracking-tight reveal"
         style="text-wrap: balance;"
       >
-        Quatre principes — un seul cap :
+        Cinq principes — un seul cap :
         <span class="gradient-leaf italic">la performance solaire vérifiable</span>.
       </h2>
     </div>
 
     <div class="container-wide mt-16 lg:mt-20 relative">
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-5">
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-4 lg:gap-5">
         {
           valeurs.map((v) => (
             <article class="reveal group relative rounded-xl lg:rounded-2xl border border-line bg-surface p-7 lg:p-8 transition-colors duration-300 hover:border-leaf/40 h-full flex flex-col">
@@ -229,21 +229,29 @@ const aboutPageSchema = {
                     <path d="M12 2v6M12 16v6M2 12h6M16 12h6M5 5l4 4M15 15l4 4M5 19l4-4M15 9l4-4" />
                   </svg>
                 )}
-                {v.icon === "ruler" && (
+                {v.icon === "trend" && (
                   <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                    <path d="M3 17l13-13 4 4L7 21z" />
-                    <path d="M7 11l1.5 1.5M10 8l1.5 1.5M13 5l1.5 1.5M5 14l1.5 1.5" />
-                  </svg>
-                )}
-                {v.icon === "flag" && (
-                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                    <path d="M4 21V4M4 4h13l-2 4 2 4H4" />
+                    <path d="M3 17l6-6 4 4 8-8" />
+                    <path d="M14 7h7v7" />
                   </svg>
                 )}
                 {v.icon === "leaf" && (
                   <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                     <path d="M11 20A7 7 0 0 1 4 13c0-5 5-9 13-9 0 7-3 13-6 16z" />
                     <path d="M5 20l8-8" />
+                  </svg>
+                )}
+                {v.icon === "shield" && (
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <path d="M12 3l8 3v6c0 5-3.5 8.5-8 9-4.5-.5-8-4-8-9V6l8-3z" />
+                    <path d="M9 12l2 2 4-4" />
+                  </svg>
+                )}
+                {v.icon === "target" && (
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <circle cx="12" cy="12" r="9" />
+                    <circle cx="12" cy="12" r="5" />
+                    <circle cx="12" cy="12" r="1.5" fill="currentColor" stroke="none" />
                   </svg>
                 )}
               </span>

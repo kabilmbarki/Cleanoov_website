@@ -1,6 +1,10 @@
 ---
 // AboutSection — slim teaser on the home page that links to /a-propos.
-// The full Vision / Mission / Valeurs editorial lives on the dedicated page.
+// Right column shows a Cleanoov YouTube field video (lite-embed: thumbnail
+// + play overlay; iframe only loads on click for performance).
+
+const videoId = "Arjrj2yZd0c";
+const videoUrl = `https://www.youtube.com/watch?v=${videoId}`;
 
 const stats = [
   { value: "+25 %", label: "rendement restauré sur des panneaux encrassés" },
@@ -18,29 +22,95 @@ const stats = [
     aria-hidden="true"
   ></div>
 
-  <div class="container-narrow relative">
+  <div class="container-wide relative">
     <p class="eyebrow reveal">À propos · Cleanoov</p>
 
-    <h2
-      class="mt-8 font-display text-[2rem] sm:text-[2.6rem] lg:text-[3.2rem] leading-[1.1] tracking-tight reveal"
-      style="text-wrap: balance;"
-    >
-      Une <span class="gradient-leaf italic font-semibold">startup tunisienne</span>
-      qui repense l'<span class="text-ink-muted">optimisation</span> du solaire.
-    </h2>
+    <div class="mt-10 grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-center">
+      <!-- Left: heading + CTA -->
+      <div class="lg:col-span-7 reveal">
+        <h2
+          class="font-display text-[1.7rem] sm:text-[2rem] lg:text-[2.4rem] xl:text-[2.6rem] leading-[1.15] tracking-tight"
+          style="text-wrap: balance;"
+        >
+          Cleanoov est une
+          <span class="gradient-leaf italic font-semibold">startup tunisienne innovante</span>,
+          spécialisée dans les solutions d'<span class="text-ink">optimisation des rendements</span>
+          des installations photovoltaïques.
+        </h2>
 
-    <p class="mt-7 max-w-2xl text-lg text-ink-soft leading-relaxed reveal">
-      La rigueur d'un labo au service des centrales photovoltaïques —
-      du nettoyage robotisé au diagnostic piloté par IA.
-    </p>
+        <div class="mt-10">
+          <a href="/a-propos" class="btn btn-primary inline-flex items-center gap-2">
+            Découvrir qui nous sommes
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M5 12h14M13 5l7 7-7 7"/>
+            </svg>
+          </a>
+        </div>
+      </div>
 
-    <div class="mt-10 reveal">
-      <a href="/a-propos" class="btn btn-primary inline-flex items-center gap-2">
-        Découvrir qui nous sommes
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-          <path d="M5 12h14M13 5l7 7-7 7"/>
-        </svg>
-      </a>
+      <!-- Right: YouTube lite-embed (field video) -->
+      <div
+        id="about-video"
+        class="lg:col-span-5 reveal relative rounded-2xl overflow-hidden border border-leaf/40 shadow-[0_24px_48px_-24px_rgba(10,26,18,0.30)] aspect-video bg-bg-elev"
+        data-video-id={videoId}
+      >
+        <button
+          type="button"
+          id="about-video-trigger"
+          class="absolute inset-0 w-full h-full group cursor-pointer"
+          aria-label="Lancer la vidéo Cleanoov sur YouTube"
+        >
+          <img
+            src={`https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`}
+            onerror={`this.onerror=null;this.src='https://img.youtube.com/vi/${videoId}/hqdefault.jpg';`}
+            alt="Cleanoov en action sur le terrain — chantier de nettoyage de panneaux solaires en Tunisie · vidéo YouTube"
+            class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-[1.04]"
+            loading="lazy"
+            width="1280"
+            height="720"
+          />
+          <div
+            class="absolute inset-0 bg-[linear-gradient(180deg,rgba(7,18,13,0.10)_0%,rgba(7,18,13,0.30)_50%,rgba(7,18,13,0.85)_100%)] pointer-events-none transition-opacity duration-300 group-hover:opacity-90"
+            aria-hidden="true"
+          ></div>
+
+          <!-- Play button overlay -->
+          <span
+            class="absolute inset-0 flex items-center justify-center pointer-events-none"
+            aria-hidden="true"
+          >
+            <span class="relative w-16 h-16 sm:w-20 sm:h-20 lg:w-24 lg:h-24 rounded-full bg-leaf/95 group-hover:bg-leaf-bright shadow-[0_0_0_8px_rgba(43,182,115,0.18),0_0_0_18px_rgba(43,182,115,0.10)] transition-all duration-300 flex items-center justify-center">
+              <svg width="22" height="22" viewBox="0 0 22 22" fill="white" class="ml-1">
+                <path d="M5 3l14 8-14 8V3z"/>
+              </svg>
+            </span>
+          </span>
+
+          <!-- Caption -->
+          <span class="absolute left-4 right-4 bottom-4 sm:left-5 sm:right-5 sm:bottom-5 text-left">
+            <span class="inline-flex items-center gap-1.5 bg-white text-ink py-1 px-2.5 rounded-full font-mono text-[0.62rem] sm:text-[0.65rem] uppercase tracking-[0.16em] font-medium shadow-[0_2px_10px_rgba(7,18,13,0.35)]">
+              <svg width="9" height="9" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" class="text-leaf">
+                <path d="M5 3l14 8-14 8V3z"/>
+              </svg>
+              Vidéo · YouTube
+            </span>
+            <span class="block mt-3 font-display text-base sm:text-lg text-white leading-snug">
+              Cleanoov en action sur le terrain
+            </span>
+          </span>
+        </button>
+
+        <!-- Fallback link for users without JS / when iframe fails -->
+        <noscript>
+          <a
+            href={videoUrl}
+            target="_blank"
+            rel="noopener"
+            class="absolute inset-0 z-10"
+            aria-label="Voir la vidéo sur YouTube"
+          ></a>
+        </noscript>
+      </div>
     </div>
   </div>
 
@@ -64,3 +134,23 @@ const stats = [
     </dl>
   </div>
 </section>
+
+<script>
+  // Lite YouTube embed: replace the trigger with a real iframe on click.
+  const trigger = document.getElementById("about-video-trigger");
+  const wrapper = document.getElementById("about-video");
+  if (trigger && wrapper) {
+    trigger.addEventListener("click", () => {
+      const id = wrapper.dataset.videoId;
+      if (!id) return;
+      const iframe = document.createElement("iframe");
+      iframe.src = `https://www.youtube-nocookie.com/embed/${id}?autoplay=1&rel=0&modestbranding=1`;
+      iframe.title = "Cleanoov — chantier de nettoyage de panneaux photovoltaïques";
+      iframe.allow =
+        "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share";
+      iframe.setAttribute("allowfullscreen", "");
+      iframe.className = "absolute inset-0 w-full h-full border-0";
+      wrapper.replaceChildren(iframe);
+    });
+  }
+</script>

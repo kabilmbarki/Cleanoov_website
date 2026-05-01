@@ -1,66 +1,88 @@
 ---
-// Services — 3-card preview (the full detail lives at /services).
+// Services teaser on the home page (the full detail lives at /services).
+// Four offers — semi-auto cleaning, autonomous robot, maintenance, diagnostic.
+
 const services = [
   {
     n: "01",
-    title: "Nettoyage",
+    title: "Nettoyage semi-automatique",
     image: "/imgs/chantiers/chantier-02.jpg",
+    imgPos: "object-[50%_28%]",
     points: [
-      "Eau déminéralisée à dosage maîtrisé",
-      "Brossage robotisé ou manuel selon site",
-      "Jusqu'à +25 % de rendement restauré",
+      "Brosses semi-automatiques, gestes précis",
+      "Nettoyage rapide et économe en eau",
+      "Préservation de la surface des panneaux",
     ],
-    href: "/services#nettoyage",
+    href: "/services#nettoyage-semi-auto",
   },
   {
     n: "02",
-    title: "Diagnostic",
-    image: "/imgs/chantiers/chantier-toit.jpg",
+    title: "Robot de nettoyage",
+    image: "/imgs/chantiers/chantier-detail.jpg",
     points: [
-      "Imagerie thermique IR & inspection optique",
-      "Détection de hot-spots & modules défaillants",
-      "Rapport de production et recommandations",
+      "Solution automatisée pour grandes surfaces",
+      "Coûts et temps d'intervention réduits",
+      "Rendement énergétique optimisé",
     ],
-    href: "/services#diagnostic",
+    href: "/services#robot",
   },
   {
     n: "03",
-    title: "Maintenance préventive",
-    image: "/imgs/chantiers/chantier-06.jpg",
+    title: "Maintenance des installations",
+    image: "/imgs/illustrations/maintenance.jpg",
     points: [
-      "Contrats annuels & visites planifiées",
-      "Diagnostic préventif & alertes anticipées",
-      "Suivi de production sur la durée",
+      "Inspection et contrôle complets",
+      "Détection des anomalies techniques",
+      "Garantie de bon fonctionnement",
     ],
     href: "/services#maintenance",
+  },
+  {
+    n: "04",
+    title: "Diagnostic préventif",
+    image: "/imgs/chantiers/chantier-toit.jpg",
+    points: [
+      "Imagerie thermique IR, analyse fine",
+      "Anticipation des pertes de rendement",
+      "Production optimale sur le long terme",
+    ],
+    href: "/services#diagnostic-preventif",
   },
 ];
 ---
 
-<section class="py-24 lg:py-32 border-t border-line">
+<section id="services" class="py-24 lg:py-32 border-t border-line scroll-mt-24">
   <div class="container-wide">
     <div class="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-6 mb-14">
       <div class="reveal max-w-2xl">
-        <p class="eyebrow">Savoir-faire</p>
+        <p class="eyebrow">Nos services · Aperçu</p>
         <h2 class="mt-6" style="text-wrap: balance;">
-          Trois expertises,
-          <span class="gradient-solar italic font-semibold">une exigence</span>.
+          Quatre expertises pour une
+          <span class="gradient-solar italic font-semibold">approche complète</span>.
         </h2>
+        <p class="mt-6 text-ink-soft text-[0.95rem] lg:text-base leading-relaxed">
+          Chez Cleanoov, nous proposons une approche complète pour
+          l'optimisation des performances des installations photovoltaïques —
+          bien au-delà du simple nettoyage.
+        </p>
       </div>
       <a href="/services" class="btn-ghost text-sm font-medium reveal">
-        Voir le détail des services →
+        Voir la page Nos services →
       </a>
     </div>
 
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 lg:gap-6">
+    <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-5 lg:gap-6">
       {
         services.map((s) => (
-          <a href={s.href} class="reveal group surface overflow-hidden block">
+          <a href={s.href} class="reveal group surface overflow-hidden block h-full flex flex-col">
             <div class="relative aspect-[16/10] overflow-hidden">
               <img
                 src={s.image}
                 alt={s.title}
-                class="h-full w-full object-cover transition-transform duration-700 group-hover:scale-[1.04]"
+                class:list={[
+                  "h-full w-full object-cover transition-transform duration-700 group-hover:scale-[1.04]",
+                  s.imgPos ?? "object-center",
+                ]}
                 loading="lazy"
               />
               <div
@@ -71,19 +93,19 @@ const services = [
                 Service {s.n}
               </span>
             </div>
-            <div class="p-7 lg:p-8">
-              <h3 class="font-display text-2xl lg:text-[1.7rem] text-ink leading-tight">
+            <div class="p-6 lg:p-7 flex flex-col grow">
+              <h3 class="font-display text-xl lg:text-[1.45rem] text-ink leading-tight">
                 {s.title}
               </h3>
-              <ul class="mt-6 space-y-3">
+              <ul class="mt-5 space-y-3 grow">
                 {s.points.map((p) => (
-                  <li class="flex items-start gap-3 text-ink-soft text-[0.92rem]">
-                    <span class="mt-[0.65rem] block w-3 h-px bg-solar shrink-0" aria-hidden="true" />
+                  <li class="flex items-start gap-3 text-ink-soft text-[0.9rem] leading-snug">
+                    <span class="mt-[0.5rem] block w-3 h-px bg-solar shrink-0" aria-hidden="true" />
                     <span>{p}</span>
                   </li>
                 ))}
               </ul>
-              <span class="mt-7 inline-flex items-center gap-2 text-sm font-medium text-ink-soft group-hover:text-solar transition-colors">
+              <span class="mt-6 inline-flex items-center gap-2 text-sm font-medium text-ink-soft group-hover:text-solar transition-colors">
                 En savoir plus
                 <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
                   <path d="M3 7h8M7 3l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
