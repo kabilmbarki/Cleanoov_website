@@ -18,29 +18,56 @@ const stats = [
     aria-hidden="true"
   ></div>
 
-  <div class="container-narrow relative">
+  <div class="container-wide relative">
     <p class="eyebrow reveal">À propos · Cleanoov</p>
 
-    <h2
-      class="mt-8 font-display text-[2rem] sm:text-[2.6rem] lg:text-[3.2rem] leading-[1.1] tracking-tight reveal"
-      style="text-wrap: balance;"
-    >
-      Une <span class="gradient-leaf italic font-semibold">startup tunisienne</span>
-      qui repense l'<span class="text-ink-muted">optimisation</span> du solaire.
-    </h2>
+    <div class="mt-10 grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-center">
+      <!-- Left: heading + CTA -->
+      <div class="lg:col-span-7 reveal">
+        <h2
+          class="font-display text-[1.7rem] sm:text-[2rem] lg:text-[2.4rem] xl:text-[2.6rem] leading-[1.15] tracking-tight"
+          style="text-wrap: balance;"
+        >
+          Cleanoov est une
+          <span class="gradient-leaf italic font-semibold">startup tunisienne innovante</span>,
+          spécialisée dans les solutions d'<span class="text-ink">optimisation des rendements</span>
+          des installations photovoltaïques.
+        </h2>
 
-    <p class="mt-7 max-w-2xl text-lg text-ink-soft leading-relaxed reveal">
-      La rigueur d'un labo au service des centrales photovoltaïques —
-      du nettoyage robotisé au diagnostic piloté par IA.
-    </p>
+        <div class="mt-10">
+          <a href="/a-propos" class="btn btn-primary inline-flex items-center gap-2">
+            Découvrir qui nous sommes
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M5 12h14M13 5l7 7-7 7"/>
+            </svg>
+          </a>
+        </div>
+      </div>
 
-    <div class="mt-10 reveal">
-      <a href="/a-propos" class="btn btn-primary inline-flex items-center gap-2">
-        Découvrir qui nous sommes
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-          <path d="M5 12h14M13 5l7 7-7 7"/>
-        </svg>
-      </a>
+      <!-- Right: dust image showing the problem -->
+      <figure class="lg:col-span-5 reveal relative rounded-2xl overflow-hidden border border-line shadow-[0_24px_48px_-24px_rgba(10,26,18,0.25)]">
+        <img
+          src="/imgs/illustrations/encrassement.jpg"
+          alt="Main couverte de poussière passée sur un panneau photovoltaïque très encrassé — Cleanoov, problème de soiling en Tunisie"
+          class="block w-full h-auto"
+          loading="lazy"
+          width="1205"
+          height="625"
+        />
+        <div
+          class="absolute inset-0 bg-[linear-gradient(180deg,rgba(7,18,13,0)_0%,rgba(7,18,13,0.10)_50%,rgba(7,18,13,0.85)_100%)] pointer-events-none"
+          aria-hidden="true"
+        ></div>
+        <figcaption class="absolute left-4 right-4 bottom-4 sm:left-5 sm:right-5 sm:bottom-5">
+          <span class="chip chip-leaf text-[0.62rem] sm:text-[0.65rem] py-1 px-2.5">
+            Le problème · L'encrassement
+          </span>
+          <p class="mt-3 text-white text-sm sm:text-[0.95rem] leading-snug max-w-md">
+            Sable, poussière, suie — chaque mois sans nettoyage coûte
+            2 à 5 % de production solaire en Tunisie.
+          </p>
+        </figcaption>
+      </figure>
     </div>
   </div>
 
