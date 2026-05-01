@@ -1,6 +1,10 @@
 ---
 // AboutSection — slim teaser on the home page that links to /a-propos.
-// The full Vision / Mission / Valeurs editorial lives on the dedicated page.
+// Right column shows a Cleanoov YouTube field video (lite-embed: thumbnail
+// + play overlay; iframe only loads on click for performance).
+
+const videoId = "Arjrj2yZd0c";
+const videoUrl = `https://www.youtube.com/watch?v=${videoId}`;
 
 const stats = [
   { value: "+25 %", label: "rendement restauré sur des panneaux encrassés" },
@@ -44,30 +48,66 @@ const stats = [
         </div>
       </div>
 
-      <!-- Right: dust image showing the problem -->
-      <figure class="lg:col-span-5 reveal relative rounded-2xl overflow-hidden border border-line shadow-[0_24px_48px_-24px_rgba(10,26,18,0.25)]">
-        <img
-          src="/imgs/illustrations/encrassement.jpg"
-          alt="Main couverte de poussière passée sur un panneau photovoltaïque très encrassé — Cleanoov, problème de soiling en Tunisie"
-          class="block w-full h-auto"
-          loading="lazy"
-          width="1205"
-          height="625"
-        />
-        <div
-          class="absolute inset-0 bg-[linear-gradient(180deg,rgba(7,18,13,0)_0%,rgba(7,18,13,0.10)_50%,rgba(7,18,13,0.85)_100%)] pointer-events-none"
-          aria-hidden="true"
-        ></div>
-        <figcaption class="absolute left-4 right-4 bottom-4 sm:left-5 sm:right-5 sm:bottom-5">
-          <span class="chip chip-leaf text-[0.62rem] sm:text-[0.65rem] py-1 px-2.5">
-            Le problème · L'encrassement
+      <!-- Right: YouTube lite-embed (field video) -->
+      <div
+        id="about-video"
+        class="lg:col-span-5 reveal relative rounded-2xl overflow-hidden border border-leaf/40 shadow-[0_24px_48px_-24px_rgba(10,26,18,0.30)] aspect-video bg-bg-elev"
+        data-video-id={videoId}
+      >
+        <button
+          type="button"
+          id="about-video-trigger"
+          class="absolute inset-0 w-full h-full group cursor-pointer"
+          aria-label="Lancer la vidéo Cleanoov sur YouTube"
+        >
+          <img
+            src={`https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`}
+            onerror={`this.onerror=null;this.src='https://img.youtube.com/vi/${videoId}/hqdefault.jpg';`}
+            alt="Cleanoov en action sur le terrain — chantier de nettoyage de panneaux solaires en Tunisie · vidéo YouTube"
+            class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-[1.04]"
+            loading="lazy"
+            width="1280"
+            height="720"
+          />
+          <div
+            class="absolute inset-0 bg-[linear-gradient(180deg,rgba(7,18,13,0.10)_0%,rgba(7,18,13,0.30)_50%,rgba(7,18,13,0.85)_100%)] pointer-events-none transition-opacity duration-300 group-hover:opacity-90"
+            aria-hidden="true"
+          ></div>
+
+          <!-- Play button overlay -->
+          <span
+            class="absolute inset-0 flex items-center justify-center pointer-events-none"
+            aria-hidden="true"
+          >
+            <span class="relative w-16 h-16 sm:w-20 sm:h-20 lg:w-24 lg:h-24 rounded-full bg-leaf/95 group-hover:bg-leaf-bright shadow-[0_0_0_8px_rgba(43,182,115,0.18),0_0_0_18px_rgba(43,182,115,0.10)] transition-all duration-300 flex items-center justify-center">
+              <svg width="22" height="22" viewBox="0 0 22 22" fill="white" class="ml-1">
+                <path d="M5 3l14 8-14 8V3z"/>
+              </svg>
+            </span>
           </span>
-          <p class="mt-3 text-white text-sm sm:text-[0.95rem] leading-snug max-w-md">
-            Sable, poussière, suie — chaque mois sans nettoyage coûte
-            2 à 5 % de production solaire en Tunisie.
-          </p>
-        </figcaption>
-      </figure>
+
+          <!-- Caption -->
+          <span class="absolute left-4 right-4 bottom-4 sm:left-5 sm:right-5 sm:bottom-5 text-left">
+            <span class="chip chip-leaf text-[0.62rem] sm:text-[0.65rem] py-1 px-2.5">
+              Vidéo · YouTube
+            </span>
+            <span class="block mt-3 font-display text-base sm:text-lg text-white leading-snug">
+              Cleanoov en action sur le terrain
+            </span>
+          </span>
+        </button>
+
+        <!-- Fallback link for users without JS / when iframe fails -->
+        <noscript>
+          <a
+            href={videoUrl}
+            target="_blank"
+            rel="noopener"
+            class="absolute inset-0 z-10"
+            aria-label="Voir la vidéo sur YouTube"
+          ></a>
+        </noscript>
+      </div>
     </div>
   </div>
 
@@ -91,3 +131,23 @@ const stats = [
     </dl>
   </div>
 </section>
+
+<script>
+  // Lite YouTube embed: replace the trigger with a real iframe on click.
+  const trigger = document.getElementById("about-video-trigger");
+  const wrapper = document.getElementById("about-video");
+  if (trigger && wrapper) {
+    trigger.addEventListener("click", () => {
+      const id = wrapper.dataset.videoId;
+      if (!id) return;
+      const iframe = document.createElement("iframe");
+      iframe.src = `https://www.youtube-nocookie.com/embed/${id}?autoplay=1&rel=0&modestbranding=1`;
+      iframe.title = "Cleanoov — chantier de nettoyage de panneaux photovoltaïques";
+      iframe.allow =
+        "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share";
+      iframe.setAttribute("allowfullscreen", "");
+      iframe.className = "absolute inset-0 w-full h-full border-0";
+      wrapper.replaceChildren(iframe);
+    });
+  }
+</script>
