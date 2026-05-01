@@ -419,9 +419,9 @@ const puissanceOptions = [
               <span class="step-label">Message *</span>
               <textarea name="message" rows="5" required placeholder="Décrivez votre projet, votre site, vos objectifs…" class="input-field mt-2 resize-y"></textarea>
             </label>
-            <div class="md:col-span-2 flex items-center justify-between gap-4 pt-2">
+            <div class="md:col-span-2 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 pt-2">
               <p class="text-xs text-ink-muted font-mono uppercase tracking-[0.14em]">* Champs obligatoires</p>
-              <button type="submit" class="btn btn-primary">
+              <button type="submit" class="btn btn-primary self-start sm:self-auto">
                 Envoyer le message
                 <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
                   <path d="M3 7h8M7 3l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
@@ -463,6 +463,8 @@ const puissanceOptions = [
       width: 100%; background-color: var(--color-bg-elev);
       border: 1px solid var(--color-line); border-radius: 0.625rem;
       padding: 0.75rem 1rem; color: var(--color-ink);
+      font-size: 1rem;
+      line-height: 1.5;
       transition: border-color 150ms, box-shadow 150ms;
     }
     .input-field::placeholder { color: var(--color-ink-muted); }
@@ -470,6 +472,22 @@ const puissanceOptions = [
       outline: none; border-color: var(--color-leaf);
       box-shadow: 0 0 0 3px rgba(43,182,115,0.15);
     }
+    /* Native selects: custom chevron + clean appearance on every browser */
+    select.input-field {
+      -webkit-appearance: none;
+      -moz-appearance: none;
+      appearance: none;
+      background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%2354666B' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 1rem center;
+      background-size: 14px 14px;
+      padding-right: 2.75rem;
+      cursor: pointer;
+    }
+    select.input-field:focus {
+      background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%231A7A4F' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
+    }
+    select.input-field::-ms-expand { display: none; }
 
     .radio-card { cursor: pointer; display: block; }
     .radio-card-inner {
