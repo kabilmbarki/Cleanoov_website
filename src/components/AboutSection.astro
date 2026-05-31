@@ -7,15 +7,16 @@ const videoId = "Arjrj2yZd0c";
 const videoUrl = `https://www.youtube.com/watch?v=${videoId}`;
 
 const stats = [
-  { value: "+25 %", label: "rendement restauré sur des panneaux encrassés" },
-  { value: "Lauréats", label: "du concours national ctama · édition 2025" },
-  { value: "3 ans", label: "d'innovation continue depuis le lancement" },
+  { count: 25,    prefix: "+", suffix: " %",  display: "+25 %",    label: "rendement restauré sur des panneaux encrassés" },
+  { count: 2,     prefix: "",  suffix: "",     display: "2",         label: "prix nationaux remportés — iptic & ctama" },
+  { count: 30000, prefix: "",  suffix: "",     display: "30 000",    label: "panneaux pilotés sur notre premier site industriel · Maknassi, 10 MW" },
+  { count: 500,   prefix: "",  suffix: " MW",  display: "500 MW",    label: "de capacité solaire installée en Tunisie — notre marché cible" },
 ];
 ---
 
 <section
   id="a-propos"
-  class="relative py-24 lg:py-32 border-t border-line overflow-hidden"
+  class="relative py-14 lg:py-20 border-t border-line overflow-hidden"
 >
   <div
     class="absolute inset-0 bg-[radial-gradient(700px_400px_at_92%_10%,rgba(43,182,115,0.06),transparent_60%)] pointer-events-none"
@@ -32,10 +33,10 @@ const stats = [
           class="font-display text-[1.7rem] sm:text-[2rem] lg:text-[2.4rem] xl:text-[2.6rem] leading-[1.15] tracking-tight"
           style="text-wrap: balance;"
         >
-          Cleanoov est une
-          <span class="gradient-leaf italic font-semibold">startup tunisienne innovante</span>,
-          spécialisée dans les solutions d'<span class="text-ink">optimisation des rendements</span>
-          des installations photovoltaïques.
+          Cleanoov conçoit des
+          <span class="gradient-leaf italic font-semibold">robots intelligents et des solutions IA</span>
+          pour restaurer le rendement des centrales solaires —
+          <span class="text-ink">fondée par des ingénieurs tunisiens qui connaissent le terrain.</span>
         </h2>
 
         <div class="mt-10">
@@ -114,18 +115,23 @@ const stats = [
     </div>
   </div>
 
-  <div class="container-wide mt-20 lg:mt-24 relative">
-    <dl class="grid grid-cols-1 md:grid-cols-3 gap-px bg-line border border-line rounded-xl overflow-hidden">
+  <div class="container-wide mt-14 lg:mt-18 relative" id="stats-block">
+    <dl class="grid grid-cols-2 gap-px bg-line border border-line rounded-xl overflow-hidden">
       {
         stats.map((s) => (
-          <div class="bg-bg-elev px-8 py-10 lg:px-10 lg:py-14 reveal">
-            <dt class="font-mono text-[0.72rem] uppercase tracking-[0.18em] text-ink-muted">
+          <div class="bg-bg-elev px-5 py-7 sm:px-7 sm:py-9 lg:px-9 lg:py-11 reveal">
+            <dt class="font-mono text-[0.68rem] uppercase tracking-[0.18em] text-ink-muted">
               Indicateur
             </dt>
-            <dd class="mt-4 font-display text-4xl lg:text-5xl xl:text-6xl text-ink leading-[1] tracking-tight">
-              {s.value}
+            <dd
+              class="mt-3 font-display text-3xl sm:text-4xl lg:text-5xl text-ink leading-[1] tracking-tight"
+              data-count={s.count}
+              data-prefix={s.prefix}
+              data-suffix={s.suffix}
+            >
+              {s.display}
             </dd>
-            <p class="mt-4 text-ink-soft text-sm max-w-xs leading-relaxed">
+            <p class="mt-3 text-ink-soft text-xs sm:text-sm leading-relaxed">
               {s.label}
             </p>
           </div>
@@ -136,7 +142,7 @@ const stats = [
 </section>
 
 <script>
-  // Lite YouTube embed: replace the trigger with a real iframe on click.
+  // Lite YouTube embed
   const trigger = document.getElementById("about-video-trigger");
   const wrapper = document.getElementById("about-video");
   if (trigger && wrapper) {
@@ -146,11 +152,40 @@ const stats = [
       const iframe = document.createElement("iframe");
       iframe.src = `https://www.youtube-nocookie.com/embed/${id}?autoplay=1&rel=0&modestbranding=1`;
       iframe.title = "Cleanoov — chantier de nettoyage de panneaux photovoltaïques";
-      iframe.allow =
-        "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share";
+      iframe.allow = "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share";
       iframe.setAttribute("allowfullscreen", "");
       iframe.className = "absolute inset-0 w-full h-full border-0";
       wrapper.replaceChildren(iframe);
     });
+  }
+
+  // Count-up animation
+  const fmt = (n: number) => n >= 1000 ? n.toLocaleString("fr-FR") : String(n);
+  const easeOut = (t: number) => 1 - Math.pow(1 - t, 4);
+
+  const animateStat = (el: HTMLElement) => {
+    const target = parseInt(el.dataset.count || "0", 10);
+    const prefix = el.dataset.prefix || "";
+    const suffix = el.dataset.suffix || "";
+    const duration = target >= 10000 ? 2200 : 1600;
+    const start = performance.now();
+    const tick = (now: number) => {
+      const progress = Math.min((now - start) / duration, 1);
+      const value = Math.round(easeOut(progress) * target);
+      el.textContent = prefix + fmt(value) + suffix;
+      if (progress < 1) requestAnimationFrame(tick);
+    };
+    requestAnimationFrame(tick);
+  };
+
+  const statsBlock = document.getElementById("stats-block");
+  if (statsBlock) {
+    const obs = new IntersectionObserver((entries) => {
+      if (entries[0].isIntersecting) {
+        statsBlock.querySelectorAll<HTMLElement>("dd[data-count]").forEach(animateStat);
+        obs.disconnect();
+      }
+    }, { threshold: 0.3 });
+    obs.observe(statsBlock);
   }
 </script>

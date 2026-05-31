@@ -3,6 +3,7 @@ import "../styles/global.css";
 import Header from "../components/Header.astro";
 import Footer from "../components/Footer.astro";
 import AboutPopup from "../components/AboutPopup.astro";
+import SplashScreen from "../components/SplashScreen.astro";
 
 interface Props {
   title?: string;
@@ -39,12 +40,13 @@ const localBusiness = {
   logo: logoUrl,
   image: absImage,
   description,
-  foundingDate: "2023",
-  email: "contact@cleanoov.tn",
-  telephone: "+216 00 000 000",
+  foundingDate: "2024",
+  email: "Clenaoov@gmail.com",
+  telephone: "+216 27 773 723",
   priceRange: "€€",
   address: {
     "@type": "PostalAddress",
+    streetAddress: "Avenue Mourouj, Pépinière d'entreprises, Bureau 9",
     addressLocality: "Tunis",
     addressRegion: "Tunis",
     addressCountry: "TN",
@@ -198,8 +200,40 @@ const websiteSchema = {
     <!-- Structured data — LocalBusiness + WebSite -->
     <script type="application/ld+json" set:html={JSON.stringify(localBusiness)} />
     <script type="application/ld+json" set:html={JSON.stringify(websiteSchema)} />
+
+    <!-- Splash gate: decide before first paint to avoid FOUC. Plays on every
+         page load, skipped for reduced-motion users. -->
+    <style is:inline>
+      #splash {
+        position: fixed;
+        inset: 0;
+        z-index: 9999;
+      }
+      html.splash-seen #splash { display: none !important; }
+      html.splash-playing,
+      html.splash-playing body { overflow: hidden !important; }
+    </style>
+    <script is:inline>
+      (function () {
+        try {
+          var root = document.documentElement;
+          var reduced = window.matchMedia(
+            "(prefers-reduced-motion: reduce)"
+          ).matches;
+          if (reduced) {
+            root.classList.add("splash-seen");
+          } else {
+            root.classList.add("splash-playing");
+          }
+        } catch (e) {
+          document.documentElement.classList.add("splash-seen");
+        }
+      })();
+    </script>
   </head>
   <body class="min-h-screen bg-bg text-ink antialiased">
+    <SplashScreen />
+
     <a
       href="#main"
       class="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-50 focus:bg-solar focus:text-bg focus:px-4 focus:py-2 focus:rounded-full"

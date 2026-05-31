@@ -1,0 +1,133 @@
+---
+// Cinematic "split curtain" splash. Plays once per session (sessionStorage),
+// skipped for reduced-motion users. Gate logic + no-FOUC critical CSS live in
+// BaseLayout <head>; this component owns the markup, visuals and cleanup.
+---
+
+<div id="splash" aria-hidden="true" role="presentation">
+  <span class="splash-panel splash-panel--top"></span>
+  <span class="splash-panel splash-panel--bottom"></span>
+  <div class="splash-stage">
+    <img
+      class="splash-logo"
+      src="/imgs/brand/logo-dark.png"
+      alt=""
+      width="483"
+      height="88"
+      decoding="async"
+      fetchpriority="high"
+    />
+    <span class="splash-rule"></span>
+  </div>
+</div>
+
+<style>
+  #splash {
+    --splash-bg: #07120D;
+    --c-leaf-bright: #2BB673;
+    --curtain-ease: cubic-bezier(0.83, 0, 0.17, 1);
+    --enter-ease: cubic-bezier(0.16, 1, 0.3, 1);
+    overflow: hidden;
+    isolation: isolate;
+  }
+
+  /* ── Curtain panels ───────────────────────────── */
+  .splash-panel {
+    position: absolute;
+    left: 0;
+    right: 0;
+    height: calc(50% + 1px);
+    background: var(--splash-bg);
+    z-index: 1;
+    will-change: transform;
+    backface-visibility: hidden;
+  }
+  .splash-panel--top {
+    top: 0;
+    background:
+      radial-gradient(140% 130% at 50% 100%, rgba(43, 182, 115, 0.10), transparent 55%),
+      var(--splash-bg);
+    animation: splashTop 1.5s var(--curtain-ease) forwards;
+  }
+  .splash-panel--bottom {
+    bottom: 0;
+    background:
+      radial-gradient(140% 130% at 50% 0%, rgba(43, 182, 115, 0.08), transparent 55%),
+      var(--splash-bg);
+    animation: splashBottom 1.5s var(--curtain-ease) forwards;
+  }
+
+  @keyframes splashTop {
+    0%, 60% { transform: translateY(0); }
+    100% { transform: translateY(-100%); }
+  }
+  @keyframes splashBottom {
+    0%, 60% { transform: translateY(0); }
+    100% { transform: translateY(100%); }
+  }
+
+  /* ── Logo stage ───────────────────────────────── */
+  .splash-stage {
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1.15rem;
+    animation: splashStageOut 1.5s var(--curtain-ease) forwards;
+  }
+  @keyframes splashStageOut {
+    0%, 62% { opacity: 1; transform: scale(1); }
+    100% { opacity: 0; transform: scale(1.08); }
+  }
+
+  .splash-logo {
+    width: clamp(150px, 30vw, 250px);
+    height: auto;
+    opacity: 0;
+    filter: blur(10px);
+    transform: translateY(10px) scale(0.92);
+    animation: splashLogoIn 0.85s var(--enter-ease) 0.1s forwards;
+    will-change: transform, opacity, filter;
+  }
+  @keyframes splashLogoIn {
+    to {
+      opacity: 1;
+      filter: blur(0);
+      transform: translateY(0) scale(1);
+    }
+  }
+
+  .splash-rule {
+    width: clamp(80px, 16vw, 150px);
+    height: 2px;
+    border-radius: 999px;
+    background: linear-gradient(90deg, transparent, var(--c-leaf-bright), transparent);
+    transform: scaleX(0);
+    opacity: 0;
+    animation: splashRuleIn 0.7s var(--enter-ease) 0.5s forwards;
+  }
+  @keyframes splashRuleIn {
+    to { transform: scaleX(1); opacity: 1; }
+  }
+</style>
+
+<script>
+  const splash = document.getElementById("splash");
+  const root = document.documentElement;
+
+  if (splash) {
+    if (root.classList.contains("splash-playing")) {
+      // Cinematic play, then unlock scroll + remove from DOM.
+      window.setTimeout(() => {
+        root.classList.remove("splash-playing");
+        splash.remove();
+      }, 1550);
+    } else {
+      // Already seen this session (or reduced motion) — drop it immediately.
+      splash.remove();
+    }
+  }
+</script>

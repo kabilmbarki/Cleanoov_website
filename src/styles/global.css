@@ -61,6 +61,10 @@
     text-rendering: optimizeLegibility;
     scroll-behavior: smooth;
     color-scheme: light;
+    /* Safety net: prevent any stray element from causing horizontal scroll on
+       small screens. `clip` (not `hidden`) keeps sticky/fixed positioning and
+       child scroll containers — e.g. carousels — fully intact. */
+    overflow-x: clip;
   }
 
   body {
