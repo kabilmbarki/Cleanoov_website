@@ -30,6 +30,13 @@ const linkPath = (href: string) => {
   ]}
   data-transparent={transparent ? "true" : "false"}
 >
+  <!-- Scroll progress bar -->
+  <div
+    id="scroll-progress"
+    class="absolute bottom-0 left-0 h-[2px] w-0 bg-gradient-to-r from-leaf to-leaf-bright transition-none pointer-events-none"
+    aria-hidden="true"
+  ></div>
+
   <div class="container-wide flex items-center justify-between gap-4">
     <a href="/" class="flex items-center gap-3 group shrink-0" aria-label="Cleanoov — Accueil">
       <!-- Light logo (white) — used when header sits over the dark hero -->
@@ -237,4 +244,17 @@ const linkPath = (href: string) => {
       document.body.style.overflow = "";
     });
   });
+
+  // Scroll progress bar
+  const progressBar = document.getElementById("scroll-progress");
+  if (progressBar) {
+    const updateProgress = () => {
+      const scrolled = window.scrollY;
+      const total = document.documentElement.scrollHeight - window.innerHeight;
+      const pct = total > 0 ? (scrolled / total) * 100 : 0;
+      progressBar.style.width = pct + "%";
+    };
+    window.addEventListener("scroll", updateProgress, { passive: true });
+    updateProgress();
+  }
 </script>

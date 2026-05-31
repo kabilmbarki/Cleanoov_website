@@ -1,0 +1,136 @@
+---
+const videoId = "7VS8VeRdO8M";
+const videoUrl = `https://www.youtube.com/watch?v=${videoId}`;
+---
+
+<section
+  id="technologie"
+  class="relative py-14 lg:py-20 border-t border-line overflow-hidden"
+>
+  <div
+    class="absolute inset-0 bg-[radial-gradient(700px_400px_at_8%_10%,rgba(43,182,115,0.06),transparent_60%)] pointer-events-none"
+    aria-hidden="true"
+  ></div>
+
+  <div class="container-wide relative">
+    <p class="eyebrow reveal">Technologie · Cleanoov</p>
+
+    <div class="mt-10 grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-center">
+      <!-- Left: heading + CTA -->
+      <div class="lg:col-span-7 reveal">
+        <h2
+          class="font-display text-[1.7rem] sm:text-[2rem] lg:text-[2.4rem] xl:text-[2.6rem] leading-[1.15] tracking-tight"
+          style="text-wrap: balance;"
+        >
+          Un robot autonome, une
+          <span class="gradient-leaf italic font-semibold">intelligence artificielle</span>
+          et une plateforme SaaS — la suite complète pour
+          <span class="text-ink">piloter et optimiser</span>
+          chaque installation photovoltaïque.
+        </h2>
+
+        <p class="mt-6 text-ink-soft text-base lg:text-lg leading-relaxed max-w-xl">
+          Les centrales solaires perdent jusqu'à <span class="text-ink font-medium">30 % de leur production</span> faute d'entretien adapté. Cleanoov y répond avec un écosystème technologique de bout en bout : un
+          <span class="text-ink font-medium">robot de nettoyage solaire autonome</span>
+          pour éliminer les pertes liées à l'encrassement, un module
+          <span class="text-ink font-medium">d'IA embarquée</span> pour la détection
+          précoce des anomalies et le diagnostic prédictif, et une
+          <span class="text-ink font-medium">plateforme SaaS</span> de supervision
+          en temps réel permettant de suivre l'état de santé de chaque station
+          photovoltaïque, où qu'elle soit en Tunisie — déjà déployé sur la centrale de <span class="text-ink font-medium">Maknassi, Sidi Bouzid (10 MW, 30 000 panneaux)</span>.
+        </p>
+
+        <div class="mt-10">
+          <a href="/services" class="btn btn-primary inline-flex items-center gap-2">
+            Découvrir nos solutions
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M5 12h14M13 5l7 7-7 7"/>
+            </svg>
+          </a>
+        </div>
+      </div>
+
+      <!-- Right: YouTube lite-embed -->
+      <div
+        id="tech-video"
+        class="lg:col-span-5 reveal relative rounded-2xl overflow-hidden border border-leaf/40 shadow-[0_24px_48px_-24px_rgba(10,26,18,0.30)] aspect-video bg-bg-elev"
+        data-video-id={videoId}
+      >
+        <button
+          type="button"
+          id="tech-video-trigger"
+          class="absolute inset-0 w-full h-full group cursor-pointer"
+          aria-label="Lancer la vidéo technologie Cleanoov sur YouTube"
+        >
+          <img
+            src={`https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`}
+            onerror={`this.onerror=null;this.src='https://img.youtube.com/vi/${videoId}/hqdefault.jpg';`}
+            alt="Robot de nettoyage solaire Cleanoov — démonstration et plateforme SaaS · vidéo YouTube"
+            class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-[1.04]"
+            loading="lazy"
+            width="1280"
+            height="720"
+          />
+          <div
+            class="absolute inset-0 bg-[linear-gradient(180deg,rgba(7,18,13,0.10)_0%,rgba(7,18,13,0.30)_50%,rgba(7,18,13,0.85)_100%)] pointer-events-none transition-opacity duration-300 group-hover:opacity-90"
+            aria-hidden="true"
+          ></div>
+
+          <!-- Play button overlay -->
+          <span
+            class="absolute inset-0 flex items-center justify-center pointer-events-none"
+            aria-hidden="true"
+          >
+            <span class="relative w-16 h-16 sm:w-20 sm:h-20 lg:w-24 lg:h-24 rounded-full bg-leaf/95 group-hover:bg-leaf-bright shadow-[0_0_0_8px_rgba(43,182,115,0.18),0_0_0_18px_rgba(43,182,115,0.10)] transition-all duration-300 flex items-center justify-center">
+              <svg width="22" height="22" viewBox="0 0 22 22" fill="white" class="ml-1">
+                <path d="M5 3l14 8-14 8V3z"/>
+              </svg>
+            </span>
+          </span>
+
+          <!-- Caption -->
+          <span class="absolute left-4 right-4 bottom-4 sm:left-5 sm:right-5 sm:bottom-5 text-left">
+            <span class="inline-flex items-center gap-1.5 bg-white text-ink py-1 px-2.5 rounded-full font-mono text-[0.62rem] sm:text-[0.65rem] uppercase tracking-[0.16em] font-medium shadow-[0_2px_10px_rgba(7,18,13,0.35)]">
+              <svg width="9" height="9" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" class="text-leaf">
+                <path d="M5 3l14 8-14 8V3z"/>
+              </svg>
+              Vidéo · YouTube
+            </span>
+            <span class="block mt-3 font-display text-base sm:text-lg text-white leading-snug">
+              Robot solaire, IA &amp; SaaS — la technologie Cleanoov
+            </span>
+          </span>
+        </button>
+
+        <noscript>
+          <a
+            href={videoUrl}
+            target="_blank"
+            rel="noopener"
+            class="absolute inset-0 z-10"
+            aria-label="Voir la vidéo sur YouTube"
+          ></a>
+        </noscript>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  const trigger = document.getElementById("tech-video-trigger");
+  const wrapper = document.getElementById("tech-video");
+  if (trigger && wrapper) {
+    trigger.addEventListener("click", () => {
+      const id = wrapper.dataset.videoId;
+      if (!id) return;
+      const iframe = document.createElement("iframe");
+      iframe.src = `https://www.youtube-nocookie.com/embed/${id}?autoplay=1&rel=0&modestbranding=1`;
+      iframe.title = "Cleanoov — robot de nettoyage solaire, IA et plateforme SaaS";
+      iframe.allow =
+        "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share";
+      iframe.setAttribute("allowfullscreen", "");
+      iframe.className = "absolute inset-0 w-full h-full border-0";
+      wrapper.replaceChildren(iframe);
+    });
+  }
+</script>
