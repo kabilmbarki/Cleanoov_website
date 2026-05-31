@@ -1,0 +1,377 @@
+---
+// RoiCalculator — simulateur ROI adapté au marché tunisien (DT, climat TN)
+---
+
+<section id="simulateur" class="relative py-14 lg:py-20 border-t border-line overflow-hidden">
+  <div
+    class="absolute inset-0 bg-[radial-gradient(900px_500px_at_10%_50%,rgba(43,182,115,0.05),transparent_60%)] pointer-events-none"
+    aria-hidden="true"
+  ></div>
+
+  <div class="container-wide relative">
+    <p class="eyebrow reveal">Simulateur · Cleanoov</p>
+    <h2
+      class="mt-4 font-display text-[1.7rem] sm:text-[2rem] lg:text-[2.4rem] leading-[1.15] tracking-tight reveal"
+      style="text-wrap: balance;"
+    >
+      Estimez votre
+      <span class="gradient-leaf italic font-semibold">gain financier</span>
+      — calibré pour la Tunisie
+    </h2>
+    <p class="mt-4 text-ink-soft max-w-2xl text-base lg:text-lg leading-relaxed reveal">
+      Paramètres adaptés au contexte local : ensoleillement moyen
+      <span class="text-ink font-medium">1 650 kWh/kWc/an</span>, tarif de
+      rachat STEG, et pertes de salissure typiques des régions sahéliennes et
+      côtières.
+    </p>
+
+    <div class="mt-10 lg:mt-14 grid grid-cols-1 lg:grid-cols-2 gap-6">
+      <!-- ── Card 1 : Producteur ── -->
+      <div class="bg-bg-elev border border-line rounded-2xl p-6 lg:p-8 reveal">
+        <h3 class="font-display text-lg lg:text-xl text-ink font-semibold">
+          Je suis producteur d'énergie solaire
+        </h3>
+
+        <div class="mt-6 space-y-5">
+          <!-- Capacity -->
+          <div>
+            <label
+              for="pp-capacity"
+              class="font-mono text-[0.68rem] uppercase tracking-[0.18em] text-ink-muted"
+            >
+              Puissance installée (kWc)
+            </label>
+            <input
+              type="number"
+              id="pp-capacity"
+              min="1"
+              max="50000"
+              value="100"
+              class="mt-2 w-full bg-bg border border-line rounded-lg px-4 py-3 text-ink font-mono text-sm focus:border-leaf focus:outline-none transition-colors"
+            />
+          </div>
+
+          <!-- Tariff -->
+          <div>
+            <div class="flex justify-between items-center">
+              <label
+                for="pp-tariff"
+                class="font-mono text-[0.68rem] uppercase tracking-[0.18em] text-ink-muted"
+              >
+                Tarif de rachat STEG
+              </label>
+              <span class="font-mono text-sm text-leaf font-medium">
+                <span id="pp-tariff-val">90</span> millimes/kWh
+              </span>
+            </div>
+            <input
+              type="range"
+              id="pp-tariff"
+              min="60"
+              max="160"
+              value="90"
+              step="5"
+              class="calc-slider mt-2 w-full"
+            />
+            <div
+              class="flex justify-between font-mono text-[0.62rem] text-ink-muted mt-1"
+            >
+              <span>60</span><span>160</span>
+            </div>
+          </div>
+
+          <!-- Yield -->
+          <div>
+            <div class="flex justify-between items-center">
+              <label
+                for="pp-yield"
+                class="font-mono text-[0.68rem] uppercase tracking-[0.18em] text-ink-muted"
+              >
+                Production annuelle
+              </label>
+              <span class="font-mono text-sm text-leaf font-medium">
+                <span id="pp-yield-val">1650</span> kWh/kWc
+              </span>
+            </div>
+            <input
+              type="range"
+              id="pp-yield"
+              min="1200"
+              max="1950"
+              value="1650"
+              step="50"
+              class="calc-slider mt-2 w-full"
+            />
+            <div
+              class="flex justify-between font-mono text-[0.62rem] text-ink-muted mt-1"
+            >
+              <span>Côtier</span><span>Désert</span>
+            </div>
+          </div>
+
+          <!-- Soiling -->
+          <div>
+            <div class="flex justify-between items-center">
+              <label
+                for="pp-soil"
+                class="font-mono text-[0.68rem] uppercase tracking-[0.18em] text-ink-muted"
+              >
+                Perte par encrassement
+              </label>
+              <span class="font-mono text-sm text-leaf font-medium">
+                <span id="pp-soil-val">7</span> %
+              </span>
+            </div>
+            <input
+              type="range"
+              id="pp-soil"
+              min="2"
+              max="30"
+              value="7"
+              step="1"
+              class="calc-slider mt-2 w-full"
+            />
+            <div
+              class="flex justify-between font-mono text-[0.62rem] text-ink-muted mt-1"
+            >
+              <span>Propre</span><span>Très encrassé</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Result -->
+        <div class="mt-6 bg-bg rounded-xl border border-leaf/20 p-5">
+          <p class="text-sm text-ink-soft leading-relaxed">
+            En maintenant mes panneaux propres, mon installation produira
+            <span class="text-leaf font-semibold" id="pp-extra-kwh">—</span> kWh
+            de plus par an, générant
+            <span class="text-leaf font-semibold" id="pp-gain-dt">—</span> DT
+            supplémentaires, tout en évitant
+            <span class="text-leaf font-semibold" id="pp-co2">—</span> kg
+            CO₂eq/an.
+          </p>
+          <a href="/contact" class="btn btn-primary mt-5 w-full justify-center text-sm">
+            Demander un devis détaillé
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+              <path d="M3 7h8M7 3l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </a>
+        </div>
+      </div>
+
+      <!-- ── Card 2 : Prestataire ── -->
+      <div class="bg-bg-elev border border-line rounded-2xl p-6 lg:p-8 reveal">
+        <h3 class="font-display text-lg lg:text-xl text-ink font-semibold">
+          Je suis prestataire de nettoyage
+        </h3>
+
+        <div class="mt-6 space-y-5">
+          <!-- Rate -->
+          <div>
+            <div class="flex justify-between items-center">
+              <label
+                for="sp-rate"
+                class="font-mono text-[0.68rem] uppercase tracking-[0.18em] text-ink-muted"
+              >
+                Tarif de prestation
+              </label>
+              <span class="font-mono text-sm text-leaf font-medium">
+                <span id="sp-rate-val">20</span> DT/m²
+              </span>
+            </div>
+            <input
+              type="range"
+              id="sp-rate"
+              min="5"
+              max="60"
+              value="20"
+              step="1"
+              class="calc-slider mt-2 w-full"
+            />
+            <div
+              class="flex justify-between font-mono text-[0.62rem] text-ink-muted mt-1"
+            >
+              <span>5 DT</span><span>60 DT</span>
+            </div>
+          </div>
+
+          <!-- Area -->
+          <div>
+            <div class="flex justify-between items-center">
+              <label
+                for="sp-area"
+                class="font-mono text-[0.68rem] uppercase tracking-[0.18em] text-ink-muted"
+              >
+                Surface nettoyée / an
+              </label>
+              <span class="font-mono text-sm text-leaf font-medium">
+                <span id="sp-area-val">72</span> 000 m²
+              </span>
+            </div>
+            <input
+              type="range"
+              id="sp-area"
+              min="5"
+              max="500"
+              value="72"
+              step="1"
+              class="calc-slider mt-2 w-full"
+            />
+            <div
+              class="flex justify-between font-mono text-[0.62rem] text-ink-muted mt-1"
+            >
+              <span>Petite centrale</span><span>Grand parc</span>
+            </div>
+          </div>
+
+          <!-- Frequency -->
+          <div>
+            <div class="flex justify-between items-center">
+              <label
+                for="sp-freq"
+                class="font-mono text-[0.68rem] uppercase tracking-[0.18em] text-ink-muted"
+              >
+                Passages / an
+              </label>
+              <span class="font-mono text-sm text-leaf font-medium">
+                <span id="sp-freq-val">4</span> passages
+              </span>
+            </div>
+            <input
+              type="range"
+              id="sp-freq"
+              min="1"
+              max="12"
+              value="4"
+              step="1"
+              class="calc-slider mt-2 w-full"
+            />
+            <div
+              class="flex justify-between font-mono text-[0.62rem] text-ink-muted mt-1"
+            >
+              <span>1×/an</span><span>Mensuel</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Result -->
+        <div class="mt-6 bg-bg rounded-xl border border-leaf/20 p-5">
+          <p class="text-sm text-ink-soft leading-relaxed">
+            Sur la base de ces paramètres, mon chiffre d'affaires annuel
+            estimé sera de
+            <span class="text-leaf font-semibold" id="sp-revenue">—</span> DT,
+            et mon activité contribuera à éviter
+            <span class="text-leaf font-semibold" id="sp-co2">—</span> kg
+            CO₂eq chaque année.
+          </p>
+          <a href="/contact" class="btn btn-primary mt-5 w-full justify-center text-sm">
+            Devenir partenaire Cleanoov
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+              <path d="M3 7h8M7 3l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .calc-slider {
+    -webkit-appearance: none;
+    appearance: none;
+    height: 4px;
+    background: var(--color-line-strong, #2a3a30);
+    border-radius: 999px;
+    outline: none;
+    cursor: pointer;
+    display: block;
+  }
+  .calc-slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background: var(--color-leaf, #1a7a4f);
+    border: 2px solid var(--color-bg-elev, #0f1f17);
+    cursor: pointer;
+    transition: background 150ms, transform 150ms;
+  }
+  .calc-slider::-webkit-slider-thumb:hover {
+    background: var(--color-leaf-bright, #2bb673);
+    transform: scale(1.18);
+  }
+  .calc-slider::-moz-range-thumb {
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background: var(--color-leaf, #1a7a4f);
+    border: 2px solid var(--color-bg-elev, #0f1f17);
+    cursor: pointer;
+  }
+</style>
+
+<script>
+  const fmt = (n: number, dec = 0) =>
+    n.toLocaleString("fr-TN", { minimumFractionDigits: dec, maximumFractionDigits: dec });
+
+  // ── Power producer ──────────────────────────────────────────
+  const ppCapacity = document.getElementById("pp-capacity") as HTMLInputElement;
+  const ppTariff   = document.getElementById("pp-tariff")   as HTMLInputElement;
+  const ppYield    = document.getElementById("pp-yield")    as HTMLInputElement;
+  const ppSoil     = document.getElementById("pp-soil")     as HTMLInputElement;
+
+  const updatePP = () => {
+    const cap    = parseFloat(ppCapacity?.value) || 0;
+    const tariff = parseFloat(ppTariff?.value) / 1000; // millimes → DT
+    const yld    = parseFloat(ppYield?.value);
+    const soil   = parseFloat(ppSoil?.value) / 100;
+
+    const el = (id: string) => document.getElementById(id);
+    if (el("pp-tariff-val")) el("pp-tariff-val")!.textContent = ppTariff.value;
+    if (el("pp-yield-val"))  el("pp-yield-val")!.textContent  = ppYield.value;
+    if (el("pp-soil-val"))   el("pp-soil-val")!.textContent   = ppSoil.value;
+
+    const extraKwh = cap * yld * soil;
+    const gainDt   = extraKwh * tariff;
+    const co2      = extraKwh * 0.632; // facteur d'émission réseau tunisien (tCREM 2023)
+
+    if (el("pp-extra-kwh")) el("pp-extra-kwh")!.textContent = fmt(extraKwh);
+    if (el("pp-gain-dt"))   el("pp-gain-dt")!.textContent   = fmt(gainDt, 1);
+    if (el("pp-co2"))       el("pp-co2")!.textContent       = fmt(co2, 0);
+  };
+
+  ppCapacity?.addEventListener("input", updatePP);
+  ppTariff?.addEventListener("input", updatePP);
+  ppYield?.addEventListener("input", updatePP);
+  ppSoil?.addEventListener("input", updatePP);
+  updatePP();
+
+  // ── Service provider ────────────────────────────────────────
+  const spRate = document.getElementById("sp-rate") as HTMLInputElement;
+  const spArea = document.getElementById("sp-area") as HTMLInputElement;
+  const spFreq = document.getElementById("sp-freq") as HTMLInputElement;
+
+  const updateSP = () => {
+    const rate = parseFloat(spRate?.value);
+    const area = parseFloat(spArea?.value) * 1000; // → m²
+    const freq = parseFloat(spFreq?.value);
+
+    const el = (id: string) => document.getElementById(id);
+    if (el("sp-rate-val")) el("sp-rate-val")!.textContent = spRate.value;
+    if (el("sp-area-val")) el("sp-area-val")!.textContent = spArea.value;
+    if (el("sp-freq-val")) el("sp-freq-val")!.textContent = spFreq.value;
+
+    const revenue = rate * area * freq;
+    // CO2 : ~200 kWc per 1 000 m², pertes moy. 7 %, 1 650 kWh/kWc, 0.632 kg CO₂/kWh
+    const co2 = (area / 1000) * 200 * 0.07 * 1650 * 0.632;
+
+    if (el("sp-revenue")) el("sp-revenue")!.textContent = fmt(revenue);
+    if (el("sp-co2"))     el("sp-co2")!.textContent     = fmt(co2, 0);
+  };
+
+  spRate?.addEventListener("input", updateSP);
+  spArea?.addEventListener("input", updateSP);
+  spFreq?.addEventListener("input", updateSP);
+  updateSP();
+</script>
